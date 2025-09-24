@@ -55,7 +55,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    --error-toast-background-color: #701a1a;
+    #f8d7da: #701a1a;
     --error-toast-font-color: white;
 
 
@@ -241,6 +241,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     background-color: var(--page-background-color);
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
+    box-shadow: 10px 10px;
 }
 
 input[type=text]:disabled, input[type=password]:disabled, input[type=date]:disabled, input[type=number]:disabled,
@@ -386,7 +387,7 @@ h3:not(:first-of-type) {
 }
 
 .error-toast {
-    background-color: var(--error-toast-background-color);
+    background-color: var(#f8d7da);
     color: var(--error-toast-font-color);
     padding: 1rem;
     border-radius: 0.5rem;
