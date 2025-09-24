@@ -242,6 +242,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+
 }
 
 input[type=text]:disabled, input[type=password]:disabled, input[type=date]:disabled, input[type=number]:disabled,
@@ -278,7 +279,7 @@ input[type=submit]:hover, button:hover, .button:hover {
 } */
 
 label {
-    color: var(--main-color);
+    color: #0066cc;
     font-weight: 600;
     width: 100%;
     text-align: left;
