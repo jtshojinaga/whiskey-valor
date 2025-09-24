@@ -278,7 +278,7 @@ input[type=submit]:hover, button:hover, .button:hover {
 } */
 
 label {
-    color: var(--main-color);
+    color: #0066cc;
     font-weight: 600;
     width: 100%;
     text-align: left;
