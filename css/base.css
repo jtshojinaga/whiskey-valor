@@ -580,7 +580,7 @@ main.dashboard > p {
 .dashboard-item:hover {
     background-color: var(--accent-color);
     cursor: pointer;
-    text-shadow: 0px 0px .25rem black;
+    text-shadow: rgb(52, 138, 12);
 }
 
 .dashboard-item > img {
