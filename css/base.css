@@ -55,7 +55,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    #f8d7da: #701a1a;
+    --error-toast-background-color: #f8d7da;
     --error-toast-font-color: white;
 
 
@@ -385,7 +385,7 @@ h3:not(:first-of-type) {
 }
 
 .error-toast {
-    background-color: var(#f8d7da);
+    background-color: var(--error-toast-background-color);
     color: var(--error-toast-font-color);
     padding: 1rem;
     border-radius: 0.5rem;
