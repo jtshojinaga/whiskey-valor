@@ -43,10 +43,10 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: #ffffff;
-    --page-font-color: #333333;
+    --page-background-color: rgb(31, 31, 33);
+    --page-font-color: white;
     --inactive-font-color: #d0d0d0;
-    --inactive-background-color: #f0f0f0;
+    --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
 
     --happy-toast-background-color: #1a7024;
@@ -63,15 +63,15 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --main-color: #808080; /* Changed to Fred SPCA Navy */
 
-    --accent-color: #c52e81;
+    --accent-color: rgb(201, 171, 129);
  
-    --secondary-accent-color: #a3e0f7;
+    --secondary-accent-color: #f7d3a3;
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
 
-    --button-font-color: #3abbab;
+    --button-font-color: rgb(31,31,33);
     --button-padding: 0.5rem 1.5rem;
     --button-border-radius: 0.25rem;
 
@@ -400,9 +400,11 @@ h3:not(:first-of-type) {
 /* Calendar */
 table#calendar {
     border-spacing: 0;
-    width: calc(100% - 1rem);
-    border-collapse: collapse;
-    margin: 0rem 0.5rem 0.5rem 0.5rem;
+    border-width: 0px 1px 1px 1px; /* top | right | bottom | left */
+    border-style: none;
+    width: calc(90% - 1rem);
+    border-collapse: separate;
+    margin: 0rem auto 0.5rem auto;
 }
 
 #calendar-footer {
@@ -425,7 +427,8 @@ main.calendar-view th {
 .calendar-day {
     height: 20vh;
     width: 14.25%;
-    border: var(--light-border);
+    border-radius:10px;
+    border: none var(--light-border);
     cursor: pointer;
 }
 
@@ -441,6 +444,12 @@ main.calendar-view th {
 }
 
 .calendar-day:hover:not(.other-month) {
+    outline: 2px solid var(--accent-color);
+    background-color: rgba(255,255,255,0.25);
+}
+
+.calendar-day:hover:is(.other-month) {
+    background-color: rgba(255,255,255,0.10);
     outline: 2px solid var(--accent-color);
 }
 
@@ -481,9 +490,12 @@ main.calendar-view th {
 
 .today {
     border: var(--calendar-today-border);
+    border-width: 2px;
 }
 
 h1.calendar-header {
+    background-color: var(--accent-color);
+    color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

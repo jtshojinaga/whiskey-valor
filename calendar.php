@@ -91,9 +91,9 @@
             </form>
         </div>
         <main class="calendar-view">
-            <h1 class='calendar-header' style="background: #294877; height: 75px;">
+            <h1 class='calendar-header' style="height: 75px;">
                 <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m", $previousMonth); ?>">
-                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Appointments - <?php echo date('F Y', $month); ?></span>
+                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Events - <?php echo date('F Y', $month); ?></span>
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m", $nextMonth); ?>">
             </h1>
             <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
@@ -147,7 +147,7 @@
                                     $dayEvents = $events[$e];
                                     foreach ($dayEvents as $info) {
 
-                                        $backgroundCol = '#294877'; // default color
+                                        $backgroundCol = '#996d49ff'; // default color
 
                                         if (is_archived($info['id'])) { // archived event
                                             if ($_SESSION['access_level'] < 2) {
