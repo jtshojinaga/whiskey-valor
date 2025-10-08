@@ -24,7 +24,6 @@ div.pair {
     gap: 0.5rem;
 }
 
-
 /* Page Sections */
 
 header {
@@ -206,19 +205,21 @@ li.remove-person {
 table {
     border-bottom: 3px solid var(--shadow-and-border-color);
     padding: 1rem;
-    background-color: var(--standout-background);
+    background-color: var(--page-background-color);
 }
 
 td {
     padding: 0.25rem;
     white-space: nowrap;
+    background-color: var(--page-background-color);
+    color: black;
 }
 
 th {
     padding-top: 0.75rem;
     padding-left: 0.25rem;
     font-size: 1.5rem;
-    color: var(--main-color)
+    color: var(--main-color);
 }
 
 td:first-of-type {
@@ -427,11 +428,12 @@ table {
 }
 
 table tr:nth-child(odd) {
-    background-color: #f9f9f9;
+    background-color: #5f5353;
 }
 
 table td {
     padding: 12px 20px;
+    background-color: var(--page-background-color);
 }
 
 /* Styling for labels to make them bold and aligned */
@@ -586,6 +588,7 @@ td {
     padding-left: 10px; /* Reduced left padding */
     text-align: left; /* Aligns information to the right */
     vertical-align: top;
+    background-color: var(--page-background-color);
 }
 
 
@@ -617,6 +620,7 @@ td {
     margin: 10px;
     padding: 20px;
     text-align: center; /* Ensures text within the event-info is centered */
+    color: var(--main-color);
   }
 
   /* General container styling */

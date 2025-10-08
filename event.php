@@ -252,7 +252,7 @@
         ?>
 
         <!-- Event Information Table -->
-        <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
+        <h2 style="font-size: 2.25em; font-weight: 700;">
             <?php echo htmlspecialchars_decode($event_name); ?>
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">

@@ -70,7 +70,7 @@ if (date("H:i:s") > "18:19:59") {
 
         .full-width-bar {
             width: 100%;
-            background: #294877;
+            background: #297730ff;
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -133,7 +133,7 @@ if (date("H:i:s") > "18:19:59") {
             left: 30px;
             font-size: 14px;
             font-weight: 700;
-            color: #294877;
+            color: #297760ff;
         }
 
         .large-text {
@@ -163,7 +163,7 @@ if (date("H:i:s") > "18:19:59") {
             left: 10%;
             font-size: 14px;
             font-weight: 700;
-            color: #294877;
+            color: #712977ff;
             max-width: 90%;
         }
 
@@ -171,11 +171,11 @@ if (date("H:i:s") > "18:19:59") {
         .navbar {
 	    gap: 10px;
             width: 100%;
-            height: 95px;
+            height: 100px;
             position: fixed;
             top: 0;
             left: 0;
-            background: white;
+            background: rgb(31,31,33);
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -192,15 +192,15 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: #294877;
+            /*background: rgba(73, 63, 50, 1);*/
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
         }
 
         .logo-container img {
-            width: 128px;
-            height: 52px;
+            width: 52px;
+            height: 60px;
             display: block;
         }
 
@@ -292,7 +292,7 @@ if (date("H:i:s") > "18:19:59") {
 
 /* Button Styling */
 .nav-button {
-    background: #274471;
+    background: rgb(201, 171, 129);
     border: none;
     color: white;
     font-size: 20px;
@@ -499,6 +499,7 @@ if (date("H:i:s") > "18:19:59") {
     .font-change {
 	font-size: 30px;
 	font-family: Quicksand;
+    color: white;
     }
 
 
@@ -565,17 +566,17 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
             </div>
             <div class="nav-links">
-		<div class="nav-item"><span class="font-change">Volunteer Management System</span>
+		<div class="nav-item"><span class="font-change">Whiskey Valor Foundation</span>
 		</div>
            </div>
         </div>
 
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
-            <div class="date-box">'); echo date('l, F j, Y'); echo('</div>           
+            <!--<div class="date-box">'); echo date('l, F j, Y'); echo('</div>        -->   
         </div>
     </div>');
 
