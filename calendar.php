@@ -6,8 +6,8 @@
 
     // Ensure user is logged in
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        header('Location: login.php');
-        die();
+        //header('Location: login.php');
+        //die();
     }
 
     // Redirect to current month
@@ -149,19 +149,23 @@
 
                                         $backgroundCol = '#996d49ff'; // default color
 
-                                        if (is_archived($info['id'])) { // archived event
-                                            if ($_SESSION['access_level'] < 2) {
-                                                continue; // users cannot see archived events
+                                        if(isset($_SESSION['access_level'])) {
+                                            if (is_archived($info['id'])) { // archived event
+                                                if ($_SESSION['access_level'] < 2) {
+                                                    continue; // users cannot see archived events
+                                                }
+                                                $backgroundCol = '#aaaaaa'; //TODO
+
+                                            } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
+                                                $backgroundCol = '#4CAF50';
+
                                             }
-                                            $backgroundCol = '#aaaaaa'; //TODO
+                                            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
 
-                                        } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
-                                            $backgroundCol = '#4CAF50';
-
+                                        } else {
+                                            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=guest' . '">' . htmlspecialchars_decode($info['name']) . '</a>';
                                         }
                                         
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
-
                                     }
                                 }
                                 echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">
