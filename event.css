@@ -1,764 +1,133 @@
-@media only screen and (min-width: 1024px) {
-    main.event-info {
-        margin: 0 auto;
-        text-align: center;
-        word-wrap: break-word;
-        max-width: 90%; /* Ensure responsive design */
-        box-sizing: border-box;
-    }
+/* Cleaned event.css; merged several rulesets together to avoid conflicts. 
+   Uses root from base.css for consistency with colors */
 
-    div.pair > input[type=submit] {
-        flex: initial;
-        width: fit-content;
-        font-size: 0.75rem;
-        padding: 0 4rem;
-        line-height: -1;
-    }
-}
-
-div.pair {
-    display: flex;
-    flex-direction: column; /* For narrow screens */
-    width: 100%;
-    align-items: stretch;
-    gap: 0.5rem;
-}
-
-/* Page Sections */
-
-header {
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
-body {
-    background-color: var(--page-background-color);
-    color: var(--page-font-color);
-    font-family: Montserrat;
-}
-
-header > img {
-    height: 5rem;
-}
-
-nav {
-    font-size: 2rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    font-weight: 300;
-}
-
-header ul > li, header span {
-    font-size: 0.75rem;
-    list-style-type: none;
-}
-
-nav {
-    width: 100%;
-}
-
-nav ul {
-    display: inline-flex;
-    flex-direction: row;
-    gap: 1.5rem;
-}
-
-nav img {
-    height: 3rem;
-}
-
-nav ul li a {
-    color: var(--main-color);
-    font-weight: 500;
-    text-decoration: none;
-    transition: color .3s;
-}
-
-nav ul li a:hover {
-    color: var(--accent-color);
-}
-
-span.logo {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    margin-right: 1rem;
-}
-
-#menu-toggle {
-    display: none;
-    height: 1.5rem;
-}
-
-nav {
-    /* position: fixed; */
-    /* margin-top: -5rem; */
-    background-color: var(--page-background-color);
-    /* box-shadow: 0px 3px 1rem var(--shadow-and-border-color); */
-    border-bottom: 2px solid var(--shadow-and-border-color);
-    max-width: 100vw;
-}
-
-#vms-logo {
-    color: var(--main-color);
-    font-weight: 300;
-    font-size: 1.5rem;
-}
-
-/* Header mobile rules */
-@media only screen and (max-width: 1079px) {
-    nav {
-        flex-direction: column;
-        background-color: var(--page-background-color);
-    }
-
-    nav ul {
-        width: 100%;
-        padding-left: 1rem;
-        display: inline-flex;
-        flex-direction: column;
-        align-items: left;
-        display: none;
-        margin-top: 1rem;
-    }
-
-    nav ul li.sub-item {
-        margin-left: 1rem;
-    }
-
-    #menu-toggle {
-        display: inline;
-        filter: opacity(0.25);
-    }
-
-    .nav-divider {
-        display: none;
-    }
-
-    #nav-top {
-        justify-content: space-between;
-        align-items: center;
-        width: calc(100% - 2rem);
-        display: flex;
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
-}
-
-
-@media only screen and (max-width: 719px) {
-    div.pair {
-        flex-direction: column;
-    }
-}
-
-div.pair > select {
-    flex: 1 1 0;
-}
-
-div.pair > * {
-    height: 3rem;
-}
-
+/* Layout and spacing */
 main.event-info {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-sizing: border-box;
 }
 
-input.stripped {
-    background-color: inherit;
-    color: inherit;
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    width: auto;
-    font-weight: inherit;
-    font-size: inherit;
-}
+/* Header / nav behavior retained here only for small tweaks */
+header { position: sticky; top: 0; z-index: 10; }
 
-input.stripped:hover {
-    background-color: inherit;
-}
-
-main ul {
-    margin-bottom: 1rem;
-}
-
-main li {
-    padding: .25rem;
-}
-
-li.remove-person {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    justify-content: center;
-}
-
-table {
-    border-bottom: 3px solid var(--shadow-and-border-color);
-    padding: 1rem;
-    background-color: var(--page-background-color);
-}
-
-td {
-    padding: 0.25rem;
-    white-space: nowrap;
-    background-color: var(--page-background-color);
-    color: black;
-}
-
-th {
-    padding-top: 0.75rem;
-    padding-left: 0.25rem;
-    font-size: 1.5rem;
-    color: var(--main-color);
-}
-
-td:first-of-type {
-    width: 1%;
-}
-
-td.label {
-    font-weight: 500;
-}
-
-.empty-slot, .inactive {
-    color: var(--inactive-font-color);
-}
-
-#assign-volunteer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-#delete-confirmation-wrapper {
-    z-index: 99;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .3);
-}
-
-#complete-confirmation-wrapper {
-    z-index: 99;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .3);
-}
-
-#cancel-confirmation-wrapper {
-    z-index: 99;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .3);
-}
-
-#resolution-confirmation-wrapper {
-    z-index: 99;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .3);
-    max-width: none;
-}
-
-#approve-confirmation-wrapper {
-    z-index: 99;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .3);
-    max-width: none;
-}
-
-#reject-confirmation-wrapper {
-    z-index: 99;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, .3);
-    max-width: none;
-}
-
-#delete-confirmation {
-    z-index: 99;
-    background-color: var(--page-background-color);
-    /* border: 1px solid var(--secondary-accent-color); */
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    border-radius: .5rem;
-    box-shadow: 0px 1rem 1rem rgba(0, 0, 0, 0.5);
-    margin: 0.5rem;
-}
-
-#cancel-confirmation {
-    z-index: 99;
-    background-color: var(--page-background-color);
-    /* border: 1px solid var(--secondary-accent-color); */
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    border-radius: .5rem;
-    box-shadow: 0px 1rem 1rem rgba(0, 0, 0, 0.5);
-    margin: 0.5rem;
-}
-
-#delete-confirmation p {
-    padding: 0.25rem;
-}
-
-
-#complete-confirmation {
-    z-index: 99;
-    background-color: var(--page-background-color);
-    /* border: 1px solid var(--secondary-accent-color); */
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    border-radius: .5rem;
-    box-shadow: 0px 1rem 1rem rgba(0, 0, 0, 0.5);
-    margin: 0.5rem;
-}
-
-#complete-confirmation p {
-    padding: 0.25rem;
-}
-
-#delete-cancel {
-    background-color: var(--cancel-button-background-color);
-}
-
-#delete-cancel:hover {
-    background-color: var(--accent-color);
-}
-
-#cancel-cancel {
-    background-color: var(--cancel-button-background-color);
-}
-
-#cancel-cancel:hover {
-    background-color: var(--accent-color);
-}
-
-#complete-cancel {
-    background-color: var(--cancel-button-background-color);
-}
-
-#complete-cancel:hover {
-    background-color: var(--accent-color);
-}
-
-#description-cell {
-    white-space: normal;
-}
-
-.center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Table wrapper and table */
+.event-head {
+    font-size: 2.25em; 
+    font-weight: 700;
     text-align: center;
-    width: 100%;
-    flex-direction: column;
-    gap: 1rem;
 }
-
-.event-info {
-    margin: 0 auto;
-    max-width: 600px;
-    font-family: Arial, sans-serif;
-}
-
-h1 {
-    text-align: center;
-    font-weight: bold;
-}
-
-h2 {
-    text-align: center;
-    font-size: 4em; /* Increased font size for bigger text */
-    font-weight: 900; /* Maximum boldness */
-    margin-bottom: 20px; /* Adjust this if needed for spacing */
-}
-
 
 #table-wrapper {
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  margin: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* May remove in favor of a :hover selector instead? */
+  overflow: auto;
+  background-color: transparent; /* let table define cell colors (according to stackoverflow) */
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  word-wrap: break-word;
+  font-size: 1rem;
 }
 
-table tr:nth-child(odd) {
-    background-color: #5f5353;
-}
-
+/* Table row / cell colors match rest of site */
+table th,
 table td {
-    padding: 12px 20px;
-    background-color: var(--page-background-color);
+  padding: 0.75rem 1rem;
+  vertical-align: top;
+  background-color: var(--page-background-color);
+  border-bottom: 1px solid var(--shadow-and-border-color);
+  color: var(--page-font-color);
 }
 
-/* Styling for labels to make them bold and aligned */
-.label {
-    font-weight: bold;
-    text-align: left;
-    color: #333;
-    padding: 10px;
-    margin-right: 10px;
+/* Labels column */
+table td.label,
+table th.label {
+  width: 30%;
+  text-align: left;
+  font-weight: 600;
+  color: var(--page-font-color);
+  white-space: normal;
 }
 
-table td .label {
-    font-weight: bold; /* Ensures that all labels are bold */
+table td.value {
+  text-align: left;
+  color: var(--page-font-color);
+  white-space: pre-wrap;
 }
 
-.centered {
-    text-align: center;
-    margin: 0 auto;
+/* Make sure long text wraps */
+table td,
+table th { word-break: break-word; }
+
+/* Small screens adjust layout */
+@media only screen and (max-width: 720px) {
+  table th.label,
+  table td.label { display: block; width: 100%; }
+  table td.value { display: block; width: 100%; }
+  table { font-size: 0.95rem; }
 }
 
-.action-buttons {
-    margin: 20px auto;
-    text-align: center;
+/* Action buttons */
+.action-buttons { text-align: center; margin: 1rem 0; }
+.action-buttons .button { margin: 0.35rem; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; }
+.button.cancel { background-color: var(--cancel-button-background-color); color: var(--button-font-color); }
+.button.signup  { background-color: var(--accent-color); color: var(--button-font-color); }
+.button.success { background-color: #28a745; color: #fff; }
+.button.danger  { background-color: #dc3545; color: #fff; }
+
+/* Toasts */
+.happy-toast { background-color: var(--happy-toast-background-color); color: var(--happy-toast-font-color); padding: 0.75rem; border-radius: 8px; }
+.info-toast  { background-color: var(--info-toast-background-color); color: var(--info-toast-font-color); padding: 0.75rem; border-radius: 6px; }
+.error-toast { background-color: var(--error-toast-background-color); color: var(--error-toast-font-color); padding: 0.75rem; border-radius: 6px; }
+
+/* Modal overlay and content */
+.modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.35); }
+.modal.hidden { display: none; }
+.modal .modal-card {
+  background: var(--page-background-color);
+  color: var(--page-font-color);
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  max-width: 480px;
+  width: calc(100% - 2rem);
 }
 
-.button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+/* Small helpers */
+.centered { text-align: center; }
+.hidden { display: none !important; }
 
-.button.success {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.button.success:hover {
-    background-color: #218838;
-}
-
-.button.danger {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.button.danger:hover {
-    background-color: #c82333;
-}
-
-.button.cancel {
-    background-color: #6c757d !important;
-    color: #fff !important;
-}
-
-.button.cancel:hover {
-    background-color: #5a6268!important;
-}
-
-.button.signup {
-    background-color: #0190d2!important;
-    color: #fff;
-}
-
-.button.signup:hover {
-    background-color: #096e9d!important;
-}
-
-/* Toast Notification Styling */
-.happy-toast {
-    background-color: #28a745;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-}
-
-/* Modal Overlay */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 400px;
-    text-align: center;
-}
-
-.modal p {
-    margin-bottom: 10px;
-}
-
-.event-info {
-    display: flex;
-    justify-content: flex-start;
-    gap: 40px; /* Adjusts space between title cards and main content */
-}
-
-/* Make sure the entire page is centered, without affecting the header */
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%; /* Ensures full height */
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column; /* Allow stacking of header and main content */
-}
-
-
-
-/* Main content wrapper */
-
-/* Wrapper to hold the table */
-#table-wrapper {
-    display: flex;
-    justify-content: center; /* Horizontally center the table */
-    align-items: center; /* Vertically center if necessary */
-    padding: 20px;
-    width: 100%;
-}
-
-/* Style the table */
-table {
-    width: 60%;
-    border-collapse: collapse; /* Remove extra spacing around cells */
-}
-
-/* Style the label cells */
-td.label {
-    padding-right: 10px; /* Reduced space on the right */
-    font-weight: bold;
-    text-align: left;
-    width: 30%; /* Fix width for labels */
-}
-
-/* Style for information cells */
-td {
-    padding-left: 10px; /* Reduced left padding */
-    text-align: left; /* Aligns information to the right */
-    vertical-align: top;
-    background-color: var(--page-background-color);
-}
-
-
-
-/* Adjust the spacing of action buttons if necessary */
-.action-buttons {
-    margin-top: 20px;
-}
-
-#main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 80px; /* Offset to avoid overlap with fixed header */
-}
-
-  
-  .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;  /* Ensures the container takes up the full width */
-  }
-  
-  .event-info {
-    margin: 10px;
-    padding: 20px;
-    text-align: center; /* Ensures text within the event-info is centered */
-    color: var(--main-color);
-  }
-
-  /* General container styling */
-.container {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: visible;
-}
-
-/* Section styling for personal info, contact, etc. */
+/* Section styling — use variables for contrast; keep light "card" variants optional and explicit */
 .section-box {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #fafafa;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: rgba(255,255,255,0.02); 
+  border: 1px solid rgba(255,255,255,0.03);
 }
 
-/* Styling for legend text in section-box */
-.section-box legend {
-    font-weight: bold;
-    color: #333;
-    padding: 0 10px;
+/* If an actual light card is desired, use .card-light explicitly */
+.card-light {
+  background-color: var(--standout-background);
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-/* Field pair styling for consistent spacing */
-.field-pair {
-    margin-bottom: 15px;
-}
+/* Utility for profile picture */
+img.profile-pic { width: 4rem; height: 4rem; object-fit: cover; border-radius: 4px; }
 
-.field-pair label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 2px;
-}
+/* Keep page defaults consistent */
+html, body { background-color: var(--page-background-color); color: var(--page-font-color); }
 
-.field-pair p {
-    margin: 0;
-}
 
-/* Button styling */
-.button {
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 10px 5px 0 0;
-    color: #fff;
-    background-color: #007bff;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 4px;
-}
 
-/* shouldn't we keep cancel as grey? We have red buttons already using "button.danger"
-.button.cancel {
-    background-color: #dc3545;
-}
-*/
-
-/* General styling for the event section */
-.section-box {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #fafafa;
-}
-
-.section-box legend {
-    font-weight: bold;
-    color: #333;
-    padding: 0 10px;
-}
-
-/* Styling for each label-data pair */
-.field-pair {
-    margin-bottom: 15px; /* Space between each field-pair */
-}
-
-.field-pair label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px; /* Space between label and data */
-    color: #333;
-}
-
-.field-pair p {
-    margin: 0;
-    color: #555;
-}
-
-.edit-icon {
-    font-size: 0.8em; /* Resize the icon to fit next to the text */
-    color: #555;
-    margin-left: 5px;
-    text-decoration: none;
-}
-
-.edit-icon:hover {
-    color: #007bff; /* Change color on hover */
-    text-decoration: none;
-}
-
-.delete-icon {
-    font-size: 0.8em; /* Resize the icon to fit next to the text */
-    color: #ed0303;
-    margin-left: 5px;
-    text-decoration: none;
-    text-decoration: none;
-}
-
-.delete-icon:hover {
-    color: #ad0000; /* Change color on hover */
-    text-decoration: none;
-}
-
-.event-info, .description-cell {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-#table-wrapper {
-    max-width: 100%;
-    overflow-x: auto;
-    margin: 0 auto;
-}
-
-table {
-    width: 100%;
-    table-layout: fixed;
-    word-wrap: break-word;
-}
-td {
-    white-space: pre-wrap; /* Ensures text wraps within table cells */
-    word-break: break-word;
-}
 
