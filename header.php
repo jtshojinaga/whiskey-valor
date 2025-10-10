@@ -606,13 +606,13 @@ if (date("H:i:s") > "18:19:59") {
         //pages volunteers can view
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1; //WVF - Might be good to alter this for registered users to be able to see registered events and where they can edit user info 
-        $permission_array['calendar.php'] = 1; //WVF - Everyone can see this
+        $permission_array['calendar.php'] = 0; //WVF - Everyone can see this
         $permission_array['eventsearch.php'] = 1; 
         $permission_array['changepassword.php'] = 1;
         $permission_array['editprofile.php'] = 1; //WVF - Repurpose for SCRUM-5
         $permission_array['inbox.php'] = 1; //WVF - Not for registered users, since they want emails. But would be good for 'suggestions' for ADMINS to see 
         $permission_array['date.php'] = 1; 
-        $permission_array['event.php'] = 1; 
+        $permission_array['event.php'] = 0; 
         $permission_array['viewprofile.php'] = 1;
         $permission_array['viewnotification.php'] = 1;
         $permission_array['volunteerreport.php'] = 1; //WVF - Attendance Report?
