@@ -569,13 +569,27 @@ if (date("H:i:s") > "18:19:59") {
                 <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
             </div>
             <div class="nav-links">
-		<div class="nav-item"><span class="font-change">Whiskey Valor Foundation</span>
-		</div>
-           </div>
+                <div class="nav-item" style="outline: none;">
+                    <a href="index.php" style="color:white; text-decoration: none;">Home</a>
+                </div>
+                <div class="nav-item" style="outline: none;">
+                    <a href="calendar.php" style="color:white; text-decoration: none;">Events Calendar</a>
+                </div>
+            </div>
         </div>
 
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
+            <div class="nav-links">
+                <div class="nav-item" style="outline:none;">
+                    <div class="icon">
+                        <img src="images/usaicon.png" alt="User Icon" style="filter: invert(1);">
+                        <div class="dropdown">
+                            <a href="login.php" style="text-decoration: none;"><div>Log In</div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--<div class="date-box">'); echo date('l, F j, Y'); echo('</div>        -->   
         </div>
     </div>');
@@ -703,7 +717,7 @@ if (date("H:i:s") > "18:19:59") {
         }
         //This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
         $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
-		$venues = array("portland"=>"RMH Portland");
+		$venues = array("portland"=>"RMH Portland"); // Is this used anywhere? Do we need it? -Blue
         
         //they're logged in and session variables are set.
 	//

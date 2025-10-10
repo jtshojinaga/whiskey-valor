@@ -23,9 +23,9 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <link rel="stylesheet" href="css/messages.css"></link>
+        <link rel="stylesheet" href="css/event.css">
         <script src="js/messages.js"></script>
-        <title>Fredericksburg SPCA Volunteer System | Events</title>
+        <title>Viewing All Events | Whiskey Valor Foundation</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -54,8 +54,10 @@
                     return $eventDate >= $today; // Only include events on or after today
                 });
 
-                $user = retrieve_person($userID);
-                $user_training_level = $user->get_training_level();
+                if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != 'guest') {
+                    $user = retrieve_person($userID);
+                    $user_training_level = $user->get_training_level();
+                }
 
                 if (sizeof($upcomingEvents) > 0): ?>
                 <div class="table-wrapper">
@@ -71,7 +73,7 @@
                                 <th style="width:1px"></th>
                             </tr>
                         </thead>
-                        <tbody class="standout">
+                        <tbody>
                             <?php 
                                 #require_once('database/dbPersons.php');
                                 #require_once('include/output.php');
@@ -98,18 +100,24 @@
                                     // Check if the user is signed up for this event
                                     $isSignedUp = check_if_signed_up($eventID, $userID);
 
+                                    //TODO: remove training_level_required and add other necessary fields -Blue
                                     echo "
                                     <tr data-event-id='$eventID'>
                                         <td>$training_level_required</td>
-                                        <td><a href='event.php?id=$eventID'>$title</a></td>
+                                        <td><a href='event.php?id=$eventID' class='event-link'>$title</a></td>
                                         <td>$type</td>
-                                        <td>$date</td>
-                                        <td>$numSignups / $capacity</td>";
+                                        <td>$date</td>";
+                                    if($numSignups >= $capacity) {
+                                        echo "<td class='full-capacity'>Full</td>";
+                                    } else {
+                                        echo "<td>$numSignups / $capacity</td>";
+                                    }
                                     
+                                    if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != 'guest') {
                                     // Display Sign Up or Cancel button based on user sign-up status
-                                        if ($user_training_level != $training_level_required) {
+                                        if ($user_training_level != $training_level_required) { //TODO: replace training errors
                                             echo "
-                                            <td><a class='button sign-up' style='background-color:#c73d06'>Training Not Met!</a></td>";
+                                            <td><a class='button-signup' style='background-color:#c73d06'>Training Not Met!</a></td>";
                                         }
                                         elseif ($isSignedUp) {
                                             echo "
@@ -118,11 +126,14 @@
                                             </td>";
                                         } elseif($numSignups >= $capacity) {
                                             echo "
-                                                <td><a class='button sign-up' style='background-color:#c73d06'>Sign Ups Closed!</a></td>";
+                                                <td><a class='button-signup' style='background-color:#c73d06'>Sign Ups Closed!</a></td>";
                                         } else {
-                                        echo "<td><a class='button sign-up' href='eventSignUp.php?event_name=" . urlencode($title) . "&restricted=" . urlencode($restricted_signup) . "'>Sign Up</a></td>";
+                                        echo "<td><a class='button-signup' href='eventSignUp.php?event_name=" . urlencode($title) . "&restricted=" . urlencode($restricted_signup) . "'>Sign Up</a></td>";
                                         }
-                                    echo "</tr>";
+                                    echo "</tr>"; } else {
+                                        echo "
+                                        <td>
+                                        <a class='button-signup' href='login.php' >Login to Register</a></td>"; }
 
                                     /*echo "
                                         <td>

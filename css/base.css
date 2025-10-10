@@ -55,17 +55,17 @@ table, td, tr, th, form, fieldset, em, button, a {
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    --error-toast-background-color: #f8d7da;
+    --error-toast-background-color: #f0858e;
     --error-toast-font-color: white;
 
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #808080; /* Changed to Fred SPCA Navy */
+    --main-color: rgb(184, 184, 184); /* Changed to Fred SPCA Navy */
 
     --accent-color: rgb(201, 171, 129);
  
-    --secondary-accent-color: #f7d3a3;
+    --secondary-accent-color: rgb(201, 171, 129);
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
@@ -79,7 +79,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --light-border: 1px solid var(--shadow-and-border-color);
     --text-field-border: 2px solid #e8e8e8;
 
-    --cancel-button-background-color: #000;
+    --cancel-button-background-color: #dd3737;
 
     --error-color: red;
 
@@ -256,7 +256,7 @@ input[type=text]:focus, input[type=password]:active, input[type=email]:focus, in
     outline: var(--text-field-border);
 }
 
-input[type=submit], button, .button {
+input[type=submit], button, .button, a.button-signup {
     color: var(--button-font-color);
     background-color: var(--main-color);
     padding: var(--button-padding);
@@ -264,13 +264,12 @@ input[type=submit], button, .button {
     border-radius: var(--button-border-radius);
     font-weight: 500;
     width: 100%;
-
     transition: background-color .3s;
     cursor: pointer;
     text-align: center;
 }
 
-input[type=submit]:hover, button:hover, .button:hover {
+input[type=submit]:hover, button:hover, .button:hover, a.button-signup:hover {
     background-color: var(--accent-color);
 }
 
@@ -279,7 +278,7 @@ input[type=submit]:hover, button:hover, .button:hover {
 } */
 
 label {
-    color: #0066cc;
+    color: var(--accent-color);
     font-weight: 600;
     width: 100%;
     text-align: left;
@@ -643,7 +642,6 @@ form.signup-form .section-box {
     margin-bottom: 20px;
     background-color: #e0f7fa;
 }
-/**/
 
 form.signup-form > fieldset {
     padding: 1.5rem;
@@ -755,7 +753,7 @@ main.date p.none-scheduled {
         text-align: left;
     }
 }
-
+/*
 table.event td:first-of-type {
     width: 1px;
     white-space: nowrap;
@@ -783,7 +781,7 @@ table.event {
     border-bottom: 3px solid var(--shadow-and-border-color);
     padding-bottom: 1rem;
     background-color: var(--standout-background);
-}
+} */
 
 /* Event Search Page */
 main.search-form {
@@ -856,12 +854,28 @@ main.general fieldset > label:not(:first-of-type) {
     margin-top: 0.5rem;
 }
 
-table.general {
+table.general { /* used by View All Events! */
     width: 100%;
+    border-collapse: collapse;
     padding-bottom: 1rem;
 }
 
-table.general th:first-of-type {
+table.general th,
+table.general td {
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+    background-color: var(--page-background-color);
+    border-bottom: 1px solid var(--shadow-and-border-color);
+    color: var(--page-font-color);
+}
+
+table.general td {
+    text-align:left;
+    vertical-align: middle;
+    color: var(--page-font-color);
+}
+
+/*table.general th:first-of-type {
     border-top-left-radius: .25rem;
 }
 
@@ -878,7 +892,7 @@ table.general th {
 table.general th, table.general td {
     padding: 1rem;
     white-space: nowrap;
-}
+} */
 
 .standout {
     border-bottom: 3px solid var(--shadow-and-border-color);
@@ -944,4 +958,23 @@ img.profile-pic {
 .dashboard-item i {
     font-size: 55px; /* Set the desired size */
     color: #ffffff; /* Optional: set color */
+}
+
+a.event-link {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+a.event-link:hover {
+    color: hsl(from var(--accent-color) h s calc(l+3))
+}
+
+.full-capacity {
+    color: var(--error-color) !important; 
+    font-weight: bold;
+}
+
+.full-capacity::after {
+    color: var(--error-color);
+    content: ' Full! ';
 }
