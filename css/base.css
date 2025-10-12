@@ -507,6 +507,28 @@ h1.calendar-header a {
     word-wrap: none;
 }
 
+.calendar-filter {
+    width: 25%;
+    background-color: var(--page-background-color);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+    padding-bottom: 1.5rem;
+    gap: 0.5rem;
+}
+
+img.filter-button {
+    width: 13%;
+    height: auto;
+    text-align: center;
+    border: 2px solid var(--accent-color);
+    border-radius: var(--button-border-radius);
+    padding: 2%;
+    cursor: pointer;
+}
+
 #previous-month-button, #next-month-button {
     height: 2rem;
     filter: invert();

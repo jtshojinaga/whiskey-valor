@@ -93,6 +93,8 @@
         </div>
         
         <!-- TODO: WVF filter calendar to weekly or daily.-->
+         <!-- i'm working on implementing a menu for both this and the list view thing
+          -Blue -->
         <div id="view-filter-wraper" class="hidden"> 
             <form id="filter-view">
                 <p>View by month, week, or day?</p>
@@ -127,6 +129,14 @@
                 <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Events - <?php echo date('F Y', $month); ?></span>
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m", $nextMonth); ?>">
             </h1>
+            <div class="calendar-filter">
+                <!--<button class="filter-button" id="list-view">
+                    <img id="list-view-buttom" src="images/list-view.png" style="width:50px; height:50px; filter: invert(1);">
+                </button>
+                <button class="filter-button" id="calendar-view">C</button> -->
+                <img id="list-view-button" class="filter-button" src="images/list-view.png" style="filter: invert(1);" alt="List view">
+                <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" style="filter: invert(1);" alt="Calendar view">
+            </div>
             <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
             <?php if (isset($_GET['deleteSuccess'])) : ?>
                 <div class="happy-toast">Event deleted successfully.</div>
