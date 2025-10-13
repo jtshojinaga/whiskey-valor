@@ -56,7 +56,8 @@
         <?php require('universal.inc'); ?>
         <?php require('header.php'); ?>
         <script src="js/calendar.js"></script>
-        <title>Fredericksburg SPCA | Events Calendar</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Whiskey Valor Foundation | Events Calendar</title>
         <style>.happy-toast { margin: 0 1rem 1rem 1rem; }</style>
     </head>
     <body>
@@ -124,19 +125,27 @@
 
         </div>
         <main class="calendar-view">
-            <h1 class='calendar-header' style="height: 75px;">
-                <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m", $previousMonth); ?>">
+            
+            <h1 class='calendar-header-title' style="height: 75px;">
                 <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Events - <?php echo date('F Y', $month); ?></span>
+            </h1>
+            <h1 class="calendar-header" style="height: 50px;">
+                <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m", $previousMonth); ?>">
+
+                <div class="filter-wrapper">
+                    <div class="calendar-filter">
+                        <img id="list-view-button" class="filter-button" src="images/list-view.png" alt="List view">
+                        <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
+                    </div>
+                    <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
+                        <img id="day-view-button" class="filter-button" class="hidden" src="images/day-view.png" alt="Day view">
+                        <img id="week-view-button" class="filter-button" class="hidden" src="images/week-view.png" alt="week view">
+                        <img id="month-view-button" class="filter-button" class="hidden" src="images/month-view.png" alt="month view">
+                    </div> -->
+                </div>
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m", $nextMonth); ?>">
             </h1>
-            <div class="calendar-filter">
-                <!--<button class="filter-button" id="list-view">
-                    <img id="list-view-buttom" src="images/list-view.png" style="width:50px; height:50px; filter: invert(1);">
-                </button>
-                <button class="filter-button" id="calendar-view">C</button> -->
-                <img id="list-view-button" class="filter-button" src="images/list-view.png" style="filter: invert(1);" alt="List view">
-                <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" style="filter: invert(1);" alt="Calendar view">
-            </div>
+
             <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
             <?php if (isset($_GET['deleteSuccess'])) : ?>
                 <div class="happy-toast">Event deleted successfully.</div>
@@ -148,8 +157,11 @@
                 <div class="happy-toast">Event canceled successfully.</div>
             <?php endif ?>
                 <!--Here we lay out the week. Table for view. Will likely need to switch this out for each view.-->
-            <div class="table-wrapper">
-                <table id="calendar">
+
+                <!-- to be replaced -Blue -->
+
+            <div class="table-wrapper" id="event-viewer">
+                <!-- <table id="calendar">
                     <thead>
                         <tr>
                             <th>Sunday</th>
@@ -223,7 +235,7 @@
                         }
                     ?>
                     </tbody>
-                </table>
+                </table>-->
             </div>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">            
             

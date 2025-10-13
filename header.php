@@ -535,7 +535,9 @@ if (date("H:i:s") > "18:19:59") {
                     document.querySelectorAll(".nav-item").forEach(nav => {
                         if (nav !== item) {
                             nav.classList.remove("active");
-                            nav.querySelector(".dropdown").style.display = "none";
+                            if(nav.querySelector(".dropdown") !== null) {
+                                nav.querySelector(".dropdown").style.display = "none";
+                            }
                         }
                     });
                     this.classList.toggle("active");
@@ -548,7 +550,9 @@ if (date("H:i:s") > "18:19:59") {
             document.addEventListener("click", function() {
                 document.querySelectorAll(".nav-item").forEach(nav => {
                     nav.classList.remove("active");
-                    nav.querySelector(".dropdown").style.display = "none";
+                    if(nav.querySelector(".dropdown") !== null) {
+                        nav.querySelector(".dropdown").style.display = "none";
+                    }
                 });
             });
         });
