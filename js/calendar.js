@@ -36,30 +36,3 @@ $(function() {
     });
 });
 
-$(document).ready(function() {
-    loadView('calendar-view.php');
-
-    $('list-view-button').on('click', function() {
-        loadView('event-list.php');
-    });
-
-    $('calendar-view-button').on('click', function() {
-        loadView('calendar-view.php');
-    });
-
-    function loadView(viewFile) {
-        $.ajax({
-            url: viewFile,
-            method: 'GET',
-            beforeSend: function () {
-                $('#event-viewer').html('<em>Loading events...</em>');
-            },
-            success: function (response) {
-                $('#event-viewer').html(response);
-            },
-            error: function () {
-                $('#event-viewer').html('<p>Error loading events.</p>');
-            }
-        });
-    }
-});
