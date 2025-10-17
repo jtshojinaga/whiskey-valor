@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    // Get the current month from PHP or URL parameter
+    let currentMonth = new URLSearchParams(window.location.search).get('month') || 
+                      $('#calendar').data('current-month') || 
+                      moment().format('YYYY-MM');
+
     // Load initial calendar view
     loadView(`calendar-view.php?month=${encodeURIComponent(currentMonth)}`);
 
@@ -17,15 +22,21 @@ $(document).ready(function () {
     // Navigate to previous month
     $(document).on("click", "#previous-month-button", function (e) {
         e.preventDefault();
-        const month = $(this).data("month"); // get "YYYY-MM" from data attribute
-        loadView(`calendar-view.php?month=${encodeURIComponent(month)}`);
+        const prevMonth = $('#calendar').data('prev-month');
+        if (prevMonth) {
+            currentMonth = prevMonth;
+            loadView(`calendar-view.php?month=${encodeURIComponent(prevMonth)}`);
+        }
     });
 
     // Navigate to next month
     $(document).on("click", "#next-month-button", function (e) {
         e.preventDefault();
-        const month = $(this).data("month");
-        loadView(`calendar-view.php?month=${encodeURIComponent(month)}`);
+        const nextMonth = $('#calendar').data('next-month');
+        if (nextMonth) {
+            currentMonth = nextMonth;
+            loadView(`calendar-view.php?month=${encodeURIComponent(nextMonth)}`);
+        }
     });
 });
 

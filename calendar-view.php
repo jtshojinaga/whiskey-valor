@@ -47,7 +47,11 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) != $monthEpoch) {
 }
 ?>
 
-                <table id="calendar">
+                <!-- Add navigation data to the calendar -->
+                <table id="calendar" 
+                       data-current-month="<?php echo date('Y-m', $monthEpoch); ?>"
+                       data-prev-month="<?php echo date('Y-m', $previousMonth); ?>"
+                       data-next-month="<?php echo date('Y-m', $nextMonth); ?>">
                     <thead>
                         <tr>
                             <th>Sunday</th>
