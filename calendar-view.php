@@ -1,41 +1,52 @@
-<?php ?>
-
-<!DOCTYPE html>
 <?php
-    $month = date("Y-m");
-    $year = substr($month, 0, 4);
-    $month2digit = substr($month, 5, 2);
 
-    $today = strtotime(date("Y-m-d"));
+date_default_timezone_set("America/New_York");
 
-    $first = $month . '-01';
-    // Convert to date
-    $month = strtotime($month);
-    // Find first day of the month
-    $first = strtotime($first);
-    // Find previous and next month
-    $previousMonth = strtotime(date('Y-m', $month) . ' -1 month');
-    $nextMonth = strtotime(date('Y-m', $month) . ' +1 month');
-    // Validate; redirect if bad arg given
-    if (!$month) {
-        header('Location: calendar.php?month=' . date("Y-m"));
-        die();
-    }
-    $calendarStart = $first;
-    // Back up until we find the first Sunday that should appear on the calendar
-    while (date('w', $calendarStart) > 0) {
-        $calendarStart = strtotime(date('Y-m-d', $calendarStart) . ' -1 day');
-    }
-    $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +34 day'));
+// Accept a ?month=YYYY-MM query param fallback to current month
+if (isset($_GET['month']) && preg_match('/^\d{4}-\d{2}$/', $_GET['month'])) {
+    $monthStr = $_GET['month'];           // string like "2025-10"
+} else {
+    $monthStr = date('Y-m');
+}
+
+// Extract pieces from the string
+$year = substr($monthStr, 0, 4);
+$month2digit = substr($monthStr, 5, 2);  // "01", "02" ... used when comparing date('m', ...)
+
+// canonical epoch/timestamps for the month and first day
+$today = strtotime(date("Y-m-d"));
+$firstOfMonthStr = $monthStr . '-01';
+$firstOfMonthEpoch = strtotime($firstOfMonthStr);
+$monthEpoch = strtotime($monthStr . '-01'); // same as firstOfMonthEpoch; kept for clarity
+
+// Defensive: if invalid month param redirect to calendar.php with current month
+if (!$monthEpoch) {
+    header('Location: calendar.php?month=' . date("Y-m"));
+    exit;
+}
+
+// compute previous and next month (epochs)
+$previousMonth = strtotime(date('Y-m', $monthEpoch) . ' -1 month');
+$nextMonth = strtotime(date('Y-m', $monthEpoch) . ' +1 month');
+
+// Set calendar start to first of month, then back up to the Sunday that should be the first cell
+$calendarStart = $firstOfMonthEpoch;
+while (date('w', $calendarStart) > 0) { // date('w') returns 0 for Sunday
+    $calendarStart = strtotime(date('Y-m-d', $calendarStart) . ' -1 day');
+}
+
+// Start with 5 weeks (35 days) and extend if needed
+$calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +34 day'));
+$calendarEndEpoch = strtotime($calendarEnd);
+$weeks = 5;
+if (date('m', strtotime($calendarEnd . ' +1 day')) != $monthEpoch) {
+    // Need another row (6 weeks) to show all days of the month
+    $weeks = 6;
+    $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +41 day'));
     $calendarEndEpoch = strtotime($calendarEnd);
-    $weeks = 5;
-    // Add another row if it's needed to display all days in the month
-    if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
-        $calendarEnd = date('Y-m-d', strtotime($calendarEnd . ' +7 day'));
-        $calendarEndEpoch = strtotime($calendarEnd);
-        $weeks = 6;
-    }
+}
 ?>
+
                 <table id="calendar">
                     <thead>
                         <tr>
@@ -65,7 +76,7 @@
                                 if ($date == $today) {
                                     $extraClasses = ' today';
                                 }
-                                if (date('m', $date) != date('m', $month)) {
+                                if (date('m', $date) != date('m', $monthEpoch)) {
                                     $extraClasses .= ' other-month';
                                     $extraAttributes .= ' data-month="' . date('Y-m', $date) . '"';
                                 }

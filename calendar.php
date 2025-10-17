@@ -95,8 +95,6 @@
         </div>
         
         <!-- TODO: WVF filter calendar to weekly or daily.-->
-         <!-- i'm working on implementing a menu for both this and the list view thing
-          -Blue -->
         <div id="view-filter-wraper" class="hidden"> 
             <form id="filter-view">
                 <p>View by month, week, or day?</p>
@@ -127,25 +125,27 @@
         </div>
         <main class="calendar-view">
             
-            <h1 class='calendar-header-title' style="height: 75px;">
-                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Events - <?php echo date('F Y', $month); ?></span>
-            </h1>
-            <h1 class="calendar-header" style="height: 50px;">
+            <h1 class='calendar-header' style="height: 75px;">
                 <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m", $previousMonth); ?>">
-
-                <div class="filter-wrapper">
-                    <div class="calendar-filter">
-                        <img id="list-view-button" class="filter-button" src="images/list-view.png" alt="List view">
-                        <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
-                    </div>
-                    <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
-                        <img id="day-view-button" class="filter-button" class="hidden" src="images/day-view.png" alt="Day view">
-                        <img id="week-view-button" class="filter-button" class="hidden" src="images/week-view.png" alt="week view">
-                        <img id="month-view-button" class="filter-button" class="hidden" src="images/month-view.png" alt="month view">
-                    </div> -->
-                </div>
+                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Events - <?php echo date('F Y', $month); ?></span>
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m", $nextMonth); ?>">
             </h1>
+
+            <script>
+            // setting month so we can pass it to the calendar view since its loaded externally
+                const currentMonth = "<?php echo htmlspecialchars($month); ?>";
+            </script>
+            <div class="filter-wrapper">
+                <div class="calendar-filter" style="height: 1rem;">
+                    <img id="list-view-button" class="filter-button" src="images/list-view.png" alt="List view">
+                    <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
+                </div>
+                <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
+                    <img id="day-view-button" class="filter-button" class="hidden" src="images/day-view.png" alt="Day view">
+                    <img id="week-view-button" class="filter-button" class="hidden" src="images/week-view.png" alt="week view">
+                    <img id="month-view-button" class="filter-button" class="hidden" src="images/month-view.png" alt="month view">
+                </div> -->
+            </div>
 
             <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
             <?php if (isset($_GET['deleteSuccess'])) : ?>
