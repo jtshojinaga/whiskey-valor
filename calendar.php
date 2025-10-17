@@ -136,9 +136,13 @@
                 const currentMonth = "<?php echo htmlspecialchars($month); ?>";
             </script>
             <div class="filter-wrapper">
-                <div class="calendar-filter" style="height: 1rem;">
-                    <img id="list-view-button" class="filter-button" src="images/list-view.png" alt="List view">
-                    <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
+                <div class="filter-menu-wrapper">
+                    <input type="checkbox" />
+                    <div class="filter-menu"><img class="filter-menu-icon" src="./images/menu.png" style="filter: invert(1);"></div>
+                    <div class="calendar-filter" style="height: 3rem;">
+                        <img id="list-view-button" class="filter-button" src="images/list-solid.svg" alt="List view">
+                        <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
+                    </div>
                 </div>
                 <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
                     <img id="day-view-button" class="filter-button" class="hidden" src="images/day-view.png" alt="Day view">

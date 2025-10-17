@@ -492,18 +492,14 @@ main.calendar-view th {
     border-width: 2px;
 }
 
-h1.calendar-header,
-h1.calendar-header-title {
+h1.calendar-header {
     background-color: var(--accent-color);
     color: white;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-}
-
-h1.calender-header-title {
-    margin-bottom: none;
+    margin-bottom: 1rem;
 }
 
 h1.calendar-header a {
@@ -512,14 +508,68 @@ h1.calendar-header a {
     word-wrap: none;
 }
 
-.calendar-filter {
-    width: 25%;
+.filter-menu-wrapper {
+    position:absolute;
+    height:50px;
+    width:182px;
+    left: 3rem;
+}
+
+.filter-wrapper input {
+    border-radius: 80px;
+    opacity: 0;
+    height: 43px;
+    width: 54px;
+    margin-left:6%;
+    position:absolute;
+    top:0.4rem;
+    z-index:20;
+    cursor: pointer;
+}
+
+.filter-wrapper input:checked ~ .filter-menu {
+    transform: rotate(-90deg);
+    transition: all .3s ease-in-out;
+}
+
+.filter-menu {
+    position:absolute;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--accent-color);
+    border-radius: 100%;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    color: var(--page-font-color);
+    margin-left: 6%;
     display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
+    z-index:10;
+}
+
+.filter-menu-icon {
     margin: auto;
+}
+
+.calendar-filter {
+    width: 96%;
+    position: absolute;
+    top: 0.0rem;
+    left: -1.54rem;
+    /* top right bottom left */
+    margin: auto auto auto 20%;
     gap: 0.5rem;
+    padding: 6px;
+    border-radius: 60px;
+    background-color: var(--accent-color);
+    box-shadow: 0px 5px 20px black;
+    z-index:5;
+
+    transform:scaleX(0);
+    transition: all 0.2s ease-in-out;
+}
+
+.filter-wrapper input:checked ~ .calendar-filter {
+    transform:scaleX(1);
 }
 
 .time-filter {
@@ -529,16 +579,20 @@ h1.calendar-header a {
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    gap: 0.5rem;
 }
 
 img.filter-button {
     filter: invert(1);
-    width: 20%;
-    height: auto;
-    text-align: center;
-    padding: 2%;
+    position: absolute;
     cursor: pointer;
+    top:0.1rem;
+    width:80px;
+    padding-left:32px;
+    transition: all 0.2s ease-in-out;
+}
+
+#calendar-view-button {
+    left: 4rem;
 }
 
 #previous-month-button, #next-month-button {
