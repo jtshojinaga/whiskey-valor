@@ -1,29 +1,35 @@
 <?php
 
-// class EventMedia {
-//     private $eventID;
-//     private $media;
-//     private $title;
-//     private $format;
-//     private $id;
+ class EventMedia {
+    private $eventID;
+    private $file_name;
+    private $type;
+    private $file_format;
+    private $description;
+    private $time_created;
+    private $id;
 
-//     function __construct($eventID, $media, $title, $format, $id) {
-//         $this->eventID = $eventID;
-//         $this->media = $media;
-//         $this->title = $title;
-//         $this->format = $format;
-//         $this->id = $id;
-//     }
+     function __construct($eventID, $file_name, $type, $file_format,$description, $id, $time_created) {
+         $this->eventID = $eventID;
+         $this->file_name = $file_name;
+         $this->type = $type;
+         $this->file_format = $file_format;
+         $this->description = $description;
+         $this->time_created = $time_created;
+         $this->id = $id;
+     }
 
-//     function getMediaFormat() {
-//         return $format;
-//     }
+    public function getEventID() { return $this->eventID; }
 
-//     function getTitle() {
-//         return $title;
-//     }
+    public function getFileName() { return $this->file_name; }
 
-//     function getID() {
-//         return $id;
-//     }
-// }
+    public function getType() { return $this->type; }
+
+    public function getFileFormat() { return $this->file_format; }
+
+    public function getDescription() { return $this->description; }
+
+    public function getTimeCreated() { return $this->time_created; }
+
+    public function getID() { return $this->id; }
+}
