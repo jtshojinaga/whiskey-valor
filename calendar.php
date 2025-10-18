@@ -178,7 +178,7 @@
                     <thread>
                         <tr>
                             <th>
-                                <?php echo date('l', strtotime($_GET['month'])); ?>
+                                <?php echo date('l', strtotime($month)); ?>
                             </th>
                         </tr>
                     </thread>
@@ -329,7 +329,7 @@
                         } 
                         elseif($filterMode == 2) //One day
                         {
-                            $selectedDateString = $_GET['month'];
+                            $selectedDateString = $month;
                             $date = strtotime($selectedDateString);
                             require_once('database/dbEvents.php');
                                 echo "<script> console.log('daily view date:', '\" . $selectedDateString . \"');</script>";
