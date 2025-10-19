@@ -64,13 +64,13 @@ if (date("H:i:s") > "18:19:59") {
             border-bottom-right-radius: 50px;
         }
          .content-box-test:hover {
-            border: 4px solid #007BFF;
+            border: 4px solid #fdd05eff;
         }
 /*END STYLE TEST*/
 
         .full-width-bar {
             width: 100%;
-            background: #297730ff;
+            background: rgb(31,31,33);
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -192,7 +192,7 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            /*background: rgba(73, 63, 50, 1);*/
+            background: rgb(31,31,33);
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -213,7 +213,7 @@ if (date("H:i:s") > "18:19:59") {
         .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: black;
+            color: white;
             cursor: pointer;
         }
 
@@ -239,12 +239,13 @@ if (date("H:i:s") > "18:19:59") {
             position: absolute;
             top: 150%;
             left: -10%;
-            background-color: white;
-            border: 1px solid #ccc;
+            background-color: rgb(31,31,33);
+            border: 1px solid rgb(31,31,33);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             min-width: 150px;
             padding: 10px;
+            color: white;
         }
         .dropdown div {
             padding: 8px;
@@ -256,8 +257,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .nav-item:hover, .nav-item.active {
-            color: #7aacf5;
-            outline: 1px solid #7aacf5;
+            color: #f5ce7aff;
+            outline: 1px solid #f5d07aff;
             outline-offset: 7px;
         }
 
@@ -391,7 +392,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .social-icons a:hover {
-            color: #dcdcdc;
+            color: rgb(31,31,33);
         }
 
         /* Right Section */
@@ -440,7 +441,7 @@ if (date("H:i:s") > "18:19:59") {
             top: 40px; /* Adjust as needed */
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8); /* Optional background for better visibility */
+            background: rgb(31,31,33); /* Optional background for better visibility */
             padding: 10px;
             border-radius: 50%;
             display: flex;
@@ -452,6 +453,7 @@ if (date("H:i:s") > "18:19:59") {
             width: 40px; /* Adjust size as needed */
             height: 40px;
             opacity: 0.9;
+            filter: invert(1);
         }
 
         .nav-item img {
@@ -461,7 +463,7 @@ if (date("H:i:s") > "18:19:59") {
 
         .nav-item:hover img, .nav-item.active img {
             filter: none;
-            background-color: #cbe0ff;
+            background-color: rgb(31,31,33);
         }
        
         .icon .dropdown{
@@ -483,6 +485,7 @@ if (date("H:i:s") > "18:19:59") {
             height: 40px;
             border-radius: 5px;
             border-bottom-right-radius: 20px;
+            filter: invert(1);
         }
 
 /* for calendar */
@@ -731,35 +734,10 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
             </div>
                 <!--<a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>-->
             <div class="nav-links">
-                <div class="nav-item">Volunteers
-                    <div class="dropdown">
-            
-<a href="VolunteerRegister.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/add-person.svg">
-    <span style="font-size:24px;">Register Volunteer</span>
-  </div>
-</a>
-
-<a href="personSearch.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/person-search.svg">
-    <span>Search Volunteers</span>
-  </div>
-</a>
-<a href="checkedInVolunteers.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clipboard-regular.svg">
-    <span>View Check-Ins</span>
-  </div>
-</a>
-			
-                    </div>
-                </div>
                 <div class="nav-item">Events
                     <div class="dropdown">
 
@@ -831,7 +809,7 @@ if (date("H:i:s") > "18:19:59") {
             <div class="nav-links">
                 <div class="nav-item" style="outline:none;">
                     <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon">
+                        <img src="images/usaicon.png" alt="User Icon" style="filter: invert(1);">
                         <div class="dropdown">
                             <a href="changePassword.php" style="text-decoration: none;"><div>Change Password</div></a>
                             <a href="logout.php" style="text-decoration: none;"><div>Log Out</div></a>

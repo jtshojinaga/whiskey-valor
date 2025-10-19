@@ -263,7 +263,7 @@ input[type=submit], button, .button, a.button-signup {
     border: none;
     border-radius: var(--button-border-radius);
     font-weight: 500;
-    width: 100%;
+    width: 94%;
     transition: background-color .3s;
     cursor: pointer;
     text-align: center;
@@ -500,13 +500,17 @@ h1.calendar-header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    z-index: 20;
 }
 
 h1.calendar-header a {
     color: white;
     text-decoration: none;
     word-wrap: none;
+    z-index: 20;
 }
+
+/* filtering for the calendar */
 
 .filter-menu-wrapper {
     position:absolute;
@@ -538,12 +542,12 @@ h1.calendar-header a {
     height: 3rem;
     background-color: var(--accent-color);
     border-radius: 100%;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 5px 20px rgba(74, 2, 2, 0.269);
     cursor: pointer;
     color: var(--page-font-color);
     margin-left: 6%;
     display: flex;
-    z-index:10;
+    z-index:9;
 }
 
 .filter-menu-icon {
@@ -551,7 +555,7 @@ h1.calendar-header a {
 }
 
 .calendar-filter {
-    width: 96%;
+    width: 153%;
     position: absolute;
     top: 0.0rem;
     left: -1.54rem;
@@ -563,7 +567,6 @@ h1.calendar-header a {
     background-color: var(--accent-color);
     box-shadow: 0px 5px 20px black;
     z-index:5;
-
     transform:scaleX(0);
     transition: all 0.2s ease-in-out;
 }
@@ -572,6 +575,7 @@ h1.calendar-header a {
     transform:scaleX(1);
 }
 
+/* currently unused ~Blue
 .time-filter {
     width: 25%;
     margin: auto;
@@ -579,20 +583,51 @@ h1.calendar-header a {
     align-items: center;
     justify-content: center;
     flex-direction: row;
-}
+} */
 
 img.filter-button {
     filter: invert(1);
     position: absolute;
     cursor: pointer;
     top:0.1rem;
-    width:80px;
-    padding-left:32px;
+    width:48px;
+    margin-left:32px;
+    margin-top: auto;
     transition: all 0.2s ease-in-out;
 }
 
+#list-view-button {
+    left: 1.5rem;
+}
+
 #calendar-view-button {
-    left: 4rem;
+    left: 4.5rem;
+}
+
+#calendar-weekly-view-button {
+    left: 7.4rem;
+}
+
+#calendar-day-view-button {
+    left: 10.5rem;
+}
+
+/* animations */
+.filter-wrapper input:checked ~ .calendar-filter #list-view-button {
+    opacity: 1;
+    transition-delay: .45s;
+}
+.filter-wrapper input:checked ~ .calendar-filter #calendar-view-button {
+    opacity: 1;
+    transition-delay: .45s;
+}
+.filter-wrapper input:checked ~ .calendar-filter #calendar-weekly-view-button {
+    opacity: 1;
+    transition-delay: .45s;
+}
+.filter-wrapper input:checked ~ .calendar-filter #calendar-day-view-button {
+    opacity: 1;
+    transition-delay: .45s;
 }
 
 #previous-month-button, #next-month-button {
@@ -1065,12 +1100,4 @@ a.event-link:hover {
 .full-capacity::after {
     color: var(--error-color);
     content: ' Full! ';
-}
-
-
-.filter-button {
-    height: 2rem;  /* Adjust size as needed */
-    width: 2rem;   /* Adjust size as needed */
-    cursor: pointer;
-    margin: 0 0.25rem; /* Add a little spacing */
 }

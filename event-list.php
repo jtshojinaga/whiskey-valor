@@ -113,7 +113,7 @@
                                         } else {
                                         echo "
                                         <td>
-                                        <a class='button-signup' href='login.php' >Login to Register</a></td>"; }
+                                        <a class='button-signup' href='login.php' style='display:inline-block; width:116%; ' >Login to Register</a></td>"; }
                                 }
                             ?>
                         </tbody>
@@ -121,7 +121,6 @@
                 <?php else: ?>
                 <p class="no-events standout">There are currently no events available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
             <?php endif ?>
-            <a class="button cancel" href="index.php">Return to Dashboard</a>
             </main>
         </body>
     </html>

@@ -107,7 +107,7 @@
         </div>
         
         <!-- TODO: WVF filter calendar to weekly or daily.-->
-        <div id="view-filter-wraper" class="hidden"> 
+        <div id="view-filter-wrapper" class="hidden"> 
             <form id="filter-view">
                 <p>View by month, week, or day?</p>
                 <div>
@@ -144,8 +144,8 @@
             </h1>
 
             <!-- Add JS to show and hide the filter menu.-->
-            <div class="filter-wrapper" class="hidden">
-                <div class="filter-menu-wrapper" class="">
+            <div class="filter-wrapper">
+                <div class="filter-menu-wrapper">
                     <input type="checkbox" /> <!-- Toggle to show/hide filter menu -->
                     <div class="filter-menu"><img class="filter-menu-icon" src="./images/menu.png" style="filter: invert(1);"></div>
                     <div class="calendar-filter" style="height: 3rem;">

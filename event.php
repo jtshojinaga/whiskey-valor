@@ -38,7 +38,7 @@
     }
 
     if($args['user_id'] == 'guest') {
-        echo("Displaying page for guest user");
+        
     } else {
         $user = retrieve_person($_SESSION['_id']);
         $active = $user->get_status() == 'Active';
@@ -182,8 +182,8 @@
     <?php 
         require_once('universal.inc');
     ?>
-    <title>Fredericksburg SPCA | View Event: <?php echo $event_info['name'] ?></title>
-    <link rel="stylesheet" href="css/event.css" type="text/css" />
+    <title>Whiskey Valor Foundation | <?php echo $event_info['name'] ?></title>
+    <link rel="stylesheet" href="event.css" type="text/css" />
     <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
         <script src="js/event.js"></script>
     <?php endif ?>
@@ -377,7 +377,6 @@
             <?php endif ?>
 
             <a href="calendar.php?month=<?= substr($event_info['date'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
-            <a href="viewAllEvents.php" class="button cancel">Return to All Events</a>
 
         </div>
 
