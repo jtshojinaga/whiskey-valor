@@ -335,6 +335,14 @@
                 <?php endif ?>
             <?php endif*/ ?>
 
+            <form action="eventSignUp.php" method="get">
+                <input type="hidden" name="event_name" value="<?php echo htmlspecialchars_decode($event_info['name']); ?>">
+                <button type="submit">Sign Up!</button>
+            </form>
+
+
+
+
             <?php if ($access_level >= 2) : ?>
 
                 <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
