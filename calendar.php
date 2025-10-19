@@ -146,34 +146,13 @@
             <!-- Add JS to show and hide the filter menu.-->
             <div class="filter-wrapper" class="hidden">
                 <div class="filter-menu-wrapper" class="">
-                    <input type="checkbox" />
+                    <input type="checkbox" /> <!-- Toggle to show/hide filter menu -->
                     <div class="filter-menu"><img class="filter-menu-icon" src="./images/menu.png" style="filter: invert(1);"></div>
                     <div class="calendar-filter" style="height: 3rem;">
                         <img id="list-view-button" class="filter-button" src="images/list-solid.svg" alt="List view">
                         <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
                         <img id="calendar-weekly-view-button" class="filter-button" src="images/new-event.png" alt="Calendar view: Weekly">
                         <img id="calendar-day-view-button" class="filter-button" src="images/day-sunny-svgrepo-com.svg" alt="Calendar view: Day">
-                    </div>
-                </div>
-                <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
-                    <img id="day-view-button" class="filter-button" class="hidden" src="images/day-view.png" alt="Day view">
-                    <img id="week-view-button" class="filter-button" class="hidden" src="images/week-view.png" alt="week view">
-                    <img id="month-view-button" class="filter-button" class="hidden" src="images/month-view.png" alt="month view">
-                </div> -->
-            </div>
-
-
-            <script>
-            // setting month so we can pass it to the calendar view since its loaded externally
-                const currentMonth = "<?php echo htmlspecialchars($month); ?>";
-            </script>
-            <div class="filter-wrapper">
-                <div class="filter-menu-wrapper">
-                    <input type="checkbox" />
-                    <div class="filter-menu"><img class="filter-menu-icon" src="./images/menu.png" style="filter: invert(1);"></div>
-                    <div class="calendar-filter" style="height: 3rem;">
-                        <img id="list-view-button" class="filter-button" src="images/list-solid.svg" alt="List view">
-                        <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
                     </div>
                 </div>
                 <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
