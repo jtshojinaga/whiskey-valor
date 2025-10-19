@@ -143,10 +143,6 @@
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m-d", $nextMonth); ?>">
             </h1>
 
-            <script>
-            // setting month so we can pass it to the calendar view since its loaded externally
-                const currentMonth = "<?php echo htmlspecialchars($month); ?>";
-            </script>
             <!-- Add JS to show and hide the filter menu.-->
             <div class="filter-wrapper" class="hidden">
                 <div class="filter-menu-wrapper" class="">
@@ -297,7 +293,7 @@
                     ?>
                     </tbody>
                 </table>-->
-                </table>-->
+                
             </div>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">            
             

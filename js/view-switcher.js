@@ -2,7 +2,7 @@ $(document).ready(function () {
     // Get the current month from PHP or URL parameter
     let currentMonth = new URLSearchParams(window.location.search).get('month') || 
                       $('#calendar').data('current-month') || 
-                      moment().format('YYYY-MM-DD');
+                      new Date().toISOString().slice(0, 10); // Returns YYYY-MM-DD format
 
     // Load initial calendar view
     loadView(`calendar-view.php?month=${encodeURIComponent(currentMonth)}`);
