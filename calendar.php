@@ -4,10 +4,15 @@
 
     date_default_timezone_set("America/New_York");
 
-    // Ensure user is logged in
-    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        //header('Location: login.php');
-        //die();
+    $loggedIn = false;
+    $userID = null;
+    if (isset($_SESSION['_id'])) {
+        $loggedIn = true;
+        echo "Logged in";
+        $userID = $_SESSION['_id'];
+    }  
+    if (!$loggedIn) {
+        echo "Not Logged in";
     }
 
     // Redirect to current month
@@ -17,10 +22,14 @@
         $month = $_GET['month'];
     }
     
+
     $year = substr($month, 0, 4);
     $month2digit = substr($month, 5, 2);
 
+    $timestamp = strtotime($date);
     $today = strtotime(date("Y-m-d"));
+
+ 
 
     $first = $month . '-01';
     // Convert to date
@@ -125,7 +134,9 @@
                         $start = date('Y-m-d', $calendarStart);
                         $end = date('Y-m-d', $calendarEndEpoch);
                         require_once('database/dbEvents.php');
-                        $events = fetch_events_in_date_range($start, $end);
+                        // HERE we want to fetch ALL EVENTS for logged in users
+                        // but users who are not logged in should only be fetching public events
+                        $events = fetch_events_in_date_range($start, $end, $loggedIn);
                         for ($week = 0; $week < $weeks; $week++) {
                             echo '
                                 <tr class="calendar-week">

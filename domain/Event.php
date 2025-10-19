@@ -5,35 +5,39 @@
 class Event {
     private $id;
     private $name;
-    #private $abbrevName;
-    private $date;
+    private $type;
+    private $startDate;
     private $startTime;
     private $endTime;
+    private $endDate;
     private $description;
-    #private $location;
     private $capacity;
+    private $location;
+    private $affiliation;
+    private $branch;
+    private $access;
     private $completed;
-    private $restricted_signup;
-    private $training_level_required;
-    private $type;
     #private $trainingMedia;
     #private $postMedia;
     #private $animalId;
 
     # TODO: need to edit this
 
-    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $training_level_required, $type) {
+    function __construct($id, $name, $type, $startDate, $startTime, $endTime, $endDate, $description, $capacity, $location, $affiliation, $branch, $access, $completed) {
         $this->id = $id;
         $this->name = $name;
-        $this->date = $date;
+        $this->type = $type;
+        $this->startDate = $startDate;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
+        $this->endDate = $endDate;
         $this->description = $description;
         $this->capacity = $capacity;
+        $this->location = $location;
+        $this->affiliation = $affiliation;
+        $this->branch = $branch;
+        $this->access = $access;
         $this->completed = $completed;
-        $this->restricted_signup = $restricted_signup;
-        $this->training_level_required = $training_level_required;
-        $this->type = $type;
     }
 
     function getID() {
@@ -48,8 +52,8 @@ class Event {
     #    return $this->abbrevName;
     #}
     // new Event
-    function getDate() {
-        return $this->date;
+    function getStartDate() {
+        return $this->startDate;
     }
 
     function getStartTime() {
@@ -60,13 +64,16 @@ class Event {
         return $this->endTime;
     }
 
+    function getEndDate() {
+        return $this->endDate;
+    }
     function getDescription() {
         return $this->description;
     }
 
-    #function getLocation() {
-    #    return $this->location;
-    #}
+    function getLocation() {
+        return $this->location;
+    }
 
     function getCapacity() {
         return $this->capacity;
@@ -76,15 +83,19 @@ class Event {
         return $this->completed;
     }
 
-    function getRestrictedSignup() {
-        return $this->restricted_signup;
+    function getAffiliation() {
+        return $this->affiliation;
     }
 
-    function getTrainingLevelRequired() {
-        return $this->training_level_required;
+    function getBranch() {
+        return $this->branch;
     }
-    function getEventType(){
+    function getEventType() {
         return $this->type;
+    }
+
+    function getAccess() {
+        return $this->access;
     }
 
     //TODO DELETE
