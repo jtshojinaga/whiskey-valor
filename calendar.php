@@ -8,8 +8,6 @@
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
         //header('Location: login.php');
         //die();
-        //header('Location: login.php');
-        //die();
     }
 
     // Redirect to current month
@@ -58,10 +56,7 @@
         <?php require('universal.inc'); ?>
         <?php require('header.php'); ?>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="js/calendar.js"></script>
-        <script src="js/view-switcher.js" defer></script>
-        <title>Whiskey Valor Foundation | Events Calendar</title>
         <script src="js/view-switcher.js" defer></script>
         <title>Whiskey Valor Foundation | Events Calendar</title>
         <style>.happy-toast { margin: 0 1rem 1rem 1rem; }</style>
@@ -282,7 +277,7 @@
             //signed up for = green
             //blue = unrestricted
             ?>
-            <center>
+            <!--<center>
             <p></p>
             <i class="fa-solid fa-circle" style="color: #294877"> </i>
                 <span style="font-size: 25px;">
@@ -297,7 +292,7 @@
                     Archived Event
                 </span>
             </center>
-                            <p></p>
+                            <p></p>-->
         
 <div style="display: flex; justify-content: center; align-items: center;">
 <div style="margin-top: 1.5rem;">
