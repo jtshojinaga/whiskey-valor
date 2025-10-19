@@ -1,71 +1,52 @@
+
 <?php
-session_cache_expire(30);
-    session_start();
+session_start(); 
 
-    date_default_timezone_set("America/New_York");
+date_default_timezone_set("America/New_York");
 
-    // Ensure user is logged in
-    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        header('Location: login.php');
-        die();
-    }
 
-    //NOTE: Keeping the variable derrived from the attribute named as $month for now. 
-    // Redirect to current month
-    //TODO: Day Format
-    if (!isset($_GET['month'])) { //If there is no month attribute set then:
-        //Altered to show this.
-        $month = date("Y-m-d");
-    } else {
-        $month = $_GET['month']; //If there is a month
-    }
-    //TODO: Alter the below to add the day and day validation. 
-    
-    //Parsing month attribute into usable variables 2025-10-30
-    $year = substr($month, 0, 4); // Year from $month
-    $month2digit = substr($month, 5, 2); //Month from $month
-    $day = substr($month, 8, 2); // day from $month
+if (isset($_GET['month']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $_GET['month'])) {
+    $dayStr = $_GET['month']; // string like "2025-10-18"
+} else {
+    $dayStr = date('Y-m-d'); // Default to today
+}
 
-    $today = strtotime(date("Y-m-d"));
-    
+// Get the timestamp for the day we are viewing
+$dayEpoch = strtotime($dayStr);
+if (!$dayEpoch) {
 
-    $first = substr($month, 0, 7) . '-01'; //Setting the first of the month 
+    header('Location: calendar.php?month=' . date("Y-m-d"));
+    exit;
+}
 
-    // Convert to date
-    $month = strtotime($month);
-    // Find first day of the month
-    $first = strtotime($first);
-    // Find previous and next month
-    $previousMonth = strtotime(date('Y-m-d', $month) . ' -1 month');
-    $nextMonth = strtotime(date('Y-m-d', $month) . ' +1 month');
-    // Validate; redirect if bad arg given
-    
-    if (!$month) {
-        header('Location: calendar.php?month=' . date("Y-m-d")); //Setting the attribute if there was none
-        die();
-    }
-    $calendarStart = $first;
-    // Back up until we find the first Sunday that should appear on the calendar
-    //  WVF: They're itterating backwards until the day is a sunday, which is a '0' in week('w') format. 
-    while (date('w', $calendarStart) > 0) {
-        $calendarStart = strtotime(datetime: date('Y-m-d', $calendarStart) . ' -1 day');
-    }
-    $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +34 day'));
-    $calendarEndEpoch = strtotime($calendarEnd);
-    $weeks = 5;
-    // Add another row if it's needed to display all days in the month
-    if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) { 
-        $calendarEnd = date('Y-m-d', strtotime($calendarEnd . ' +7 day'));
-        $calendarEndEpoch = strtotime($calendarEnd);
-        $weeks = 6;
+$today = strtotime(date("Y-m-d"));
 
-    
-    }
-    ?>
-<!DOCTYPE html>
-<html>
+// Compute previous and next week
+$previousWeek = strtotime(date('Y-m-d', $dayEpoch) . ' -7 days');
+$nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
+
+
+
+?>
+<table id="calendar"
+       data-current-month="<?php echo date('Y-m-d', $dayEpoch); ?>"
+       data-prev-month="<?php echo date('Y-m-d', $previousWeek); ?>"
+       data-next-month="<?php echo date('Y-m-d', $nextWeek); ?>">
+    <thead>
+        <tr>
+            <th>Sunday</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+        </tr>
+    </thead>
+    <tbody>
+
     <?php
-    $calendarStart = $month;
+    $calendarStart = $dayEpoch;
         //Moving back to the last sunday.
         while (date('w', $calendarStart) > 0) {
             $calendarStart = strtotime(date('Y-m-d', $calendarStart) . ' -1 day');
@@ -94,7 +75,7 @@ session_cache_expire(30);
                     if (date('Y-m-d', $date) == date('Y-m-d',$today)) {
                         $extraClasses = ' today';
                     }
-                    if (date('m', $date) != date('m', $month)) {
+                    if (date('m', $date) != date('m', $dayEpoch)) {
                         $extraClasses .= ' other-month';
                         $extraAttributes .= ' data-month="' . date('Y-m-d', $date) . '"';
                     }
@@ -107,18 +88,26 @@ session_cache_expire(30);
 
                             $backgroundCol = '#294877'; // default color
 
-                            if (is_archived($info['id'])) { // archived event
-                                if ($_SESSION['access_level'] < 2) {
-                                    continue; // users cannot see archived events
+                           if(isset($_SESSION['access_level'])) { 
+    
+                                // This logic is for LOGGED-IN users
+                                if (is_archived($info['id'])) { // archived event
+                                    if ($_SESSION['access_level'] < 2) {
+                                        continue; // users cannot see archived events
+                                    }
+                                    $backgroundCol = '#aaaaaa';
+
+                                } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
+                                    $backgroundCol = '#4CAF50';
                                 }
-                                $backgroundCol = '#aaaaaa'; //TODO
+                                
+                                $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
 
-                            } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
-                                $backgroundCol = '#4CAF50';
-
+                            } else {
+                                
+                                // This logic is for GUEST users (not logged in)
+                                $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=guest' . '">' . htmlspecialchars_decode($info['name']) . '</a>';
                             }
-                            
-                            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
 
                         }
                     }
@@ -133,4 +122,5 @@ session_cache_expire(30);
 
 
         echo '</tr>';?>
-</html>
+        </tbody>
+        </table>
