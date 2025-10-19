@@ -1,14 +1,22 @@
 $(function() {
 
     // Change to selected date when user chooses a new month
-    // let startingMonth = $('#month-jumper').val();
-    // startingMonth = startingMonth.substring(0, startingMonth.length - 3);
+    let startingMonthin = $('#month-jumper').val();
+    const startingMonth = startingMonthin.substring(0, startingMonthin.length - 3);
+    
     $('#month-jumper').change(function() {
         let value = $(this).val();
-        value = value.substring(0, value.length - 3);
+        //Getting the month from the url
+        console.log(value);
+        value = value.substring(0, value.length);
+        console.log("TEST");
+        console.log(startingMonth);
+        console.log(value);
+        
         if (value != startingMonth) {
             document.location = 'calendar.php?month=' + value;
         }
+        
     });
     $('.calendar-day:not(.other-month)').click(function() {
         document.location = 'date.php?date=' + $(this).data('date');
@@ -22,7 +30,9 @@ $(function() {
     $('#month-jumper').submit(function() {
         let month = $('#jumper-month').val();
         let year = $('#jumper-year').val();
-        $('#jumper-value').val(year + '-' + month);
+        let day = $('#jumper-day').val();
+        $('#jumper-value').val(year + '-' + month + '-' + day);
+
     });
 
     $('#jumper-cancel').click(function() {

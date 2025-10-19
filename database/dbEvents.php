@@ -488,6 +488,7 @@ function fetch_events_in_date_range($start_date, $end_date) {
 }
 
 function fetch_events_on_date($date) {
+    echo "<script> console.log('fetch_events_on_date IN:', '\" . $date . \"');</script>";
     $connection = connect();
     $date = mysqli_real_escape_string($connection, $date);
     $query = "select * from dbevents

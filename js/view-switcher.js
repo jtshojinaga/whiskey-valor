@@ -2,7 +2,7 @@ $(document).ready(function () {
     // Get the current month from PHP or URL parameter
     let currentMonth = new URLSearchParams(window.location.search).get('month') || 
                       $('#calendar').data('current-month') || 
-                      moment().format('YYYY-MM');
+                      moment().format('YYYY-MM-DD');
 
     // Load initial calendar view
     loadView(`calendar-view.php?month=${encodeURIComponent(currentMonth)}`);
@@ -17,6 +17,20 @@ $(document).ready(function () {
     $("#list-view-button").click(function (e) {
         e.preventDefault();
         loadView(`event-list.php?month=${encodeURIComponent(currentMonth)}`);
+    });
+
+    // Switch to weekly view
+    $("#calendar-weekly-view-button").click(function (e) {
+        e.preventDefault();
+        // Use backticks (`) instead of single quotes (')
+        loadView(`calendar-view_weekly.php?month=${encodeURIComponent(currentMonth)}`);
+    });
+
+    // Switch to weekly view
+    $("#calendar-day-view-button").click(function (e) {
+        e.preventDefault();
+        // Use backticks (`) instead of single quotes (')
+        loadView(`calendar-view_daily.php?month=${encodeURIComponent(currentMonth)}`);
     });
 
     // Navigate to previous month

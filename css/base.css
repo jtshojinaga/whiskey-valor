@@ -1066,3 +1066,11 @@ a.event-link:hover {
     color: var(--error-color);
     content: ' Full! ';
 }
+
+
+.filter-button {
+    height: 2rem;  /* Adjust size as needed */
+    width: 2rem;   /* Adjust size as needed */
+    cursor: pointer;
+    margin: 0 0.25rem; /* Add a little spacing */
+}
