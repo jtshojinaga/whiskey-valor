@@ -26,6 +26,13 @@ $(document).ready(function () {
         loadView(`calendar-view_weekly.php?month=${encodeURIComponent(currentMonth)}`);
     });
 
+    // Switch to weekly view
+    $("#calendar-day-view-button").click(function (e) {
+        e.preventDefault();
+        // Use backticks (`) instead of single quotes (')
+        loadView(`calendar-view_daily.php?month=${encodeURIComponent(currentMonth)}`);
+    });
+
     // Navigate to previous month
     $(document).on("click", "#previous-month-button", function (e) {
         e.preventDefault();

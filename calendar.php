@@ -151,6 +151,7 @@
                         <img id="list-view-button" class="filter-button" src="images/list-solid.svg" alt="List view">
                         <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
                         <img id="calendar-weekly-view-button" class="filter-button" src="images/new-event.png" alt="Calendar view: Weekly">
+                        <img id="calendar-day-view-button" class="filter-button" src="images/day-sunny-svgrepo-com.svg" alt="Calendar view: Day">
                     </div>
                 </div>
                 <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
