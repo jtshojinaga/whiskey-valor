@@ -99,7 +99,6 @@
                 <input type="submit" value="View">
                 <button id="jumper-cancel" class="cancel" type="button">Cancel</button>
             </form>
-        </div>orm>
         </div>
         
         <!-- TODO: WVF filter calendar to weekly or daily.-->

@@ -929,3 +929,11 @@ img.profile-pic {
     font-size: 55px; /* Set the desired size */
     color: #ffffff; /* Optional: set color */
 }
+
+
+.filter-button {
+    height: 2rem;  /* Adjust size as needed */
+    width: 2rem;   /* Adjust size as needed */
+    cursor: pointer;
+    margin: 0 0.25rem; /* Add a little spacing */
+}
