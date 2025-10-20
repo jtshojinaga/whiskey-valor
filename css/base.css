@@ -59,13 +59,15 @@ table, td, tr, th, form, fieldset, em, button, a {
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    --error-toast-background-color: #701a1a;
+    --error-toast-background-color: #f8d7da;
     --error-toast-font-color: white;
 
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #ffd700; /* Changed to Fred SPCA Navy */
+
+    --main-color: #1F1F21; /* Changed to Fred SPCA Navy */
+
 
     --accent-color: #c52e81;
  
@@ -150,10 +152,12 @@ nav ul li a {
     font-weight: 500;
     text-decoration: none;
     transition: color .3s;
+    font-size: 2.5rem;
 }
 
 nav ul li a:hover {
     color: var(--accent-color);
+    font-size: 1.1 rem;
 }
 
 span.logo {
@@ -246,6 +250,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     background-color: var(--page-background-color);
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
 }
 
 input[type=text]:disabled, input[type=password]:disabled, input[type=date]:disabled, input[type=number]:disabled,
@@ -318,7 +323,8 @@ h1 {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
-    background-color: var(#fc0);
+
+    background-color: var(#C9AB81);
     color: var(--page-background-color);
     width: 100%;
     text-align: center;
@@ -375,7 +381,7 @@ h3:not(:first-of-type) {
     background-color: var(--happy-toast-background-color);
     color: var(--happy-toast-font-color);
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-bottom: 1rem;
     /*thomas*/
     text-align: center;
@@ -587,7 +593,7 @@ main.dashboard > p {
 .dashboard-item:hover {
     background-color: var(--accent-color);
     cursor: pointer;
-    /* text-shadow: 0px 0px .25rem black; */
+    text-shadow: rgb(52, 138, 12);
 }
 
 .dashboard-item > img {

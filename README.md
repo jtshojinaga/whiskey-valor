@@ -1,3 +1,9 @@
+# Student Names
+Michael Glanzmann
+Blue Shojinaga
+Jake Lipinski
+Kassandra Williams
+Alia Carmicheal 
 
 # Fredericksburg SPCA Volunteer Management Web Application 
 
