@@ -43,8 +43,12 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: #ffffff;
-    --page-font-color: #333333;
+    /* --page-background-color: #ffffff;*/
+    --page-background-color: #1f1f21;
+    /* the page graident possibly needs to be changed*/
+    --page-gradient-background: linear-gradient(#1f1f21, #1f1f21);
+    --page-font-color: #333333;  
+    /*--page-font-color: #ffffff;*/
     --inactive-font-color: #d0d0d0;
     --inactive-background-color: #f0f0f0;
     --standout-background: #fafafa;
@@ -61,7 +65,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #294877; /* Changed to Fred SPCA Navy */
+    --main-color: #ffd700; /* Changed to Fred SPCA Navy */
 
     --accent-color: #c52e81;
  
@@ -71,7 +75,10 @@ table, td, tr, th, form, fieldset, em, button, a {
     --calendar-event-color-hover: var(--main-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
 
-    --button-font-color: #3abbab;
+    --button-color: #C9AB81;
+    --button-font-color: #1F1F21;
+    --secondary-button-color: #1F1F21;
+    --secondary-button-font-color: #C9AB81;
     --button-padding: 0.5rem 1.5rem;
     --button-border-radius: 0.25rem;
 
@@ -311,7 +318,7 @@ h1 {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
-    background-color: var(--main-color);
+    background-color: var(#fc0);
     color: var(--page-background-color);
     width: 100%;
     text-align: center;

@@ -43,7 +43,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: #ffffff;
+    --page-background-color: #1F1F21);
     --page-font-color: #333333;
     --inactive-font-color: #d0d0d0;
     --inactive-background-color: #f0f0f0;
@@ -68,7 +68,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --calendar-event-color-hover: var(--main-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
 
-    --button-font-color: white;
+    --button-font-color: #c9ab81;
     --button-padding: 0.5rem 1.5rem;
     --button-border-radius: 0.25rem;
 

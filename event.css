@@ -495,12 +495,12 @@ table td .label {
 }
 
 .button.signup {
-    background-color: #0190d2!important;
+    background-color: #C9AB81!important;
     color: #fff;
 }
 
 .button.signup:hover {
-    background-color: #096e9d!important;
+    background-color: #C9AB81!important;
 }
 
 /* Toast Notification Styling */
@@ -668,7 +668,7 @@ td {
     padding: 10px 15px;
     margin: 10px 5px 0 0;
     color: #fff;
-    background-color: #007bff;
+    background-color: #C9AB81;
     text-align: center;
     text-decoration: none;
     border-radius: 4px;
