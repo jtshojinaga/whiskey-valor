@@ -333,6 +333,21 @@ function remove_event($id) {
     }
     $query = 'DELETE FROM dbevents WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
+
+
+    /* WIP writing code to remove event registrations for events that are cancelled. 
+    (Cleans up database from un-needed entries)
+
+    $query = 'SELECT * FROM dbeventpersons WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+
+    if ($result != null || mysqli_num_rows($result) != 0){
+        $query = 'DELETE FROM dbeventpersons WHERE id = "' . $id . '"';
+        $result = mysqli_query($con,$query);
+    }
+    
+    */
+
     mysqli_close($con);
     return true;
 }
