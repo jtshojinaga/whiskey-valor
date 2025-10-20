@@ -43,10 +43,10 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: #ffffff;
-    --page-font-color: #333333;
+    --page-background-color: rgb(31, 31, 33);
+    --page-font-color: white;
     --inactive-font-color: #d0d0d0;
-    --inactive-background-color: #f0f0f0;
+    --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
 
     --happy-toast-background-color: #1a7024;
@@ -55,23 +55,23 @@ table, td, tr, th, form, fieldset, em, button, a {
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    --error-toast-background-color: #701a1a;
+    --error-toast-background-color: #f0858e;;
     --error-toast-font-color: white;
 
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #808080; /* Changed to Fred SPCA Navy */
+    --main-color: rgb(184, 184, 184); /* Changed to Fred SPCA Navy */
 
-    --accent-color: #c52e81;
+    --accent-color: rgb(201, 171, 129);
  
-    --secondary-accent-color: #a3e0f7;
+    --secondary-accent-color: rgb(201, 171, 129);
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
 
-    --button-font-color: #3abbab;
+    --button-font-color: rgb(31,31,33);
     --button-padding: 0.5rem 1.5rem;
     --button-border-radius: 0.25rem;
 
@@ -79,7 +79,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --light-border: 1px solid var(--shadow-and-border-color);
     --text-field-border: 2px solid #e8e8e8;
 
-    --cancel-button-background-color: #000;
+    --cancel-button-background-color: #dd3737;
 
     --error-color: red;
 
@@ -87,7 +87,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     font-size: 18px;
     font-family: Montserrat;
     font-weight: 300;
-}
+} 
 
 /* Page Sections */
 

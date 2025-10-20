@@ -41,6 +41,8 @@
         }
 
         body {
+            background-color: #1F1F21;
+            color: #C9AB81; 
             font-family: Quicksand, sans-serif;
         }
 
@@ -51,7 +53,7 @@
 
         .full-width-bar {
             width: 100%;
-            background: #294877;
+            background: #C9AB81;
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -114,7 +116,7 @@
             left: 30px;
             font-size: 14px;
             font-weight: 700;
-            color: #294877;
+            color: #C9AB81;
         }
 
         .large-text {
@@ -144,7 +146,7 @@
             left: 10%;
             font-size: 14px;
             font-weight: 700;
-            color: #294877;
+            color: #C9AB81;
             max-width: 90%;
         }
 
@@ -155,7 +157,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: white;
+            background: black;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -172,7 +174,7 @@
 
         /* Logo */
         .logo-container {
-            background: #294877;
+            background: #C9AB81;
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -206,11 +208,11 @@
         }
 
         .date-box {
-            background: #274471;
+            background: #C9AB81;
             padding: 10px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-            color: white;
+            color: #1F1F21;
             font-size: 24px;
             font-weight: 700;
             text-align: center;
@@ -259,7 +261,7 @@
     .circle {
         width: 30px;
         height: 30px;
-        background-color: #294877; /* Blue color */
+        background-color: #C9AB81; /* Blue color */
         color: white;
         border-radius: 50%;
         display: flex;
@@ -274,7 +276,7 @@
     }
 .colored-box {
     display: inline-block; /* Ensures it wraps tightly around the text */
-    background-color: #294877; /* Change to any color */
+    background-color: #C9AB81; /* Change to any color */
     color: white; /* Text color */
     padding: 1px 5px; /* Adds space inside the box */
     border-radius: 5px; /* Optional: Rounds the corners */
@@ -285,7 +287,7 @@
         /* Footer */
         .footer {
             width: 100%;
-            background: #294877;
+            background: #C9AB81;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -490,14 +492,14 @@
 </div>
 
     <div style="margin-top: 50px; padding: 0px 80px;">
-        <h2><b>Admin Dashboard</h2>
+        <h2><b>Admin Dashboard</b></h2>
     </div>
     <div class="full-width-bar-sub">
+        <img class="background-image" src="images/blank-white-background.jpg" />
         <div class="content-box-test" onclick="window.location.href='calendar.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Calendar</div>
             <div class="graph-text">See upcoming events/trainings.</div>
             <button class="arrow-button">→</button>
@@ -625,7 +627,7 @@
 
     <!-- Volunteer of the Month Icon -->
     <a href="selectVOTM.php" style="text-decoration: none;">
-        <div style="font-size: 12px; font-weight: bold; color: #294877; margin-bottom: 5px;">
+        <div style="font-size: 12px; font-weight: bold; color: #C9AB81; margin-bottom: 5px;">
             🎖 Volunteer of the Month
         </div>
         <img src="images/star-icon.svg" alt="Volunteer of the Month Icon" style="width: 55px; height: auto; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
@@ -633,7 +635,7 @@
 
     <!-- Leaderboard Icon -->
     <a href="leaderboard.php" style="text-decoration: none;">
-        <div style="font-size: 12px; font-weight: bold; color: #294877; margin-bottom: 5px;">
+        <div style="font-size: 12px; font-weight: bold; color: #C9AB81; margin-bottom: 5px;">
             👑 Leaderboard
         </div>
         <img src="images/crown.png" alt="Leaderboard Icon" style="width: 55px; height: auto; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
