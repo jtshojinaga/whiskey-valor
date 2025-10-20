@@ -20,6 +20,8 @@ class Event {
     #private $postMedia;
     #private $animalId;
 
+    # TODO: need to edit this
+
     function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $training_level_required, $type) {
         $this->id = $id;
         $this->name = $name;

@@ -43,10 +43,10 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: #ffffff;
-    --page-font-color: #333333;
+    --page-background-color: rgb(31, 31, 33);
+    --page-font-color: white;
     --inactive-font-color: #d0d0d0;
-    --inactive-background-color: #f0f0f0;
+    --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
 
     --happy-toast-background-color: #1a7024;
@@ -55,23 +55,23 @@ table, td, tr, th, form, fieldset, em, button, a {
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    --error-toast-background-color: #f8d7da;
+    --error-toast-background-color: #f0858e;
     --error-toast-font-color: white;
 
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #808080; /* Changed to Fred SPCA Navy */
+    --main-color: rgb(184, 184, 184); /* Changed to Fred SPCA Navy */
 
-    --accent-color: #c52e81;
+    --accent-color: rgb(201, 171, 129);
  
-    --secondary-accent-color: #a3e0f7;
+    --secondary-accent-color: rgb(201, 171, 129);
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
 
-    --button-font-color: #3abbab;
+    --button-font-color: rgb(31,31,33);
     --button-padding: 0.5rem 1.5rem;
     --button-border-radius: 0.25rem;
 
@@ -79,7 +79,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --light-border: 1px solid var(--shadow-and-border-color);
     --text-field-border: 2px solid #e8e8e8;
 
-    --cancel-button-background-color: #000;
+    --cancel-button-background-color: #dd3737;
 
     --error-color: red;
 
@@ -256,21 +256,20 @@ input[type=text]:focus, input[type=password]:active, input[type=email]:focus, in
     outline: var(--text-field-border);
 }
 
-input[type=submit], button, .button {
+input[type=submit], button, .button, a.button-signup {
     color: var(--button-font-color);
     background-color: var(--main-color);
     padding: var(--button-padding);
     border: none;
     border-radius: var(--button-border-radius);
     font-weight: 500;
-    width: 100%;
-
+    width: 94%;
     transition: background-color .3s;
     cursor: pointer;
     text-align: center;
 }
 
-input[type=submit]:hover, button:hover, .button:hover {
+input[type=submit]:hover, button:hover, .button:hover, a.button-signup:hover {
     background-color: var(--accent-color);
 }
 
@@ -279,7 +278,7 @@ input[type=submit]:hover, button:hover, .button:hover {
 } */
 
 label {
-    color: #0066cc;
+    color: var(--accent-color);
     font-weight: 600;
     width: 100%;
     text-align: left;
@@ -400,9 +399,11 @@ h3:not(:first-of-type) {
 /* Calendar */
 table#calendar {
     border-spacing: 0;
-    width: calc(100% - 1rem);
-    border-collapse: collapse;
-    margin: 0rem 0.5rem 0.5rem 0.5rem;
+    border-width: 0px 1px 1px 1px; /* top | right | bottom | left */
+    border-style: none;
+    width: calc(90% - 1rem);
+    border-collapse: separate;
+    margin: 0rem auto 0.5rem auto;
 }
 
 #calendar-footer {
@@ -425,7 +426,8 @@ main.calendar-view th {
 .calendar-day {
     height: 20vh;
     width: 14.25%;
-    border: var(--light-border);
+    border-radius:10px;
+    border: none var(--light-border);
     cursor: pointer;
 }
 
@@ -441,6 +443,12 @@ main.calendar-view th {
 }
 
 .calendar-day:hover:not(.other-month) {
+    outline: 2px solid var(--accent-color);
+    background-color: rgba(255,255,255,0.25);
+}
+
+.calendar-day:hover:is(.other-month) {
+    background-color: rgba(255,255,255,0.10);
     outline: 2px solid var(--accent-color);
 }
 
@@ -481,19 +489,145 @@ main.calendar-view th {
 
 .today {
     border: var(--calendar-today-border);
+    border-width: 2px;
 }
 
 h1.calendar-header {
+    background-color: var(--accent-color);
+    color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1rem;
+    z-index: 20;
 }
 
 h1.calendar-header a {
     color: white;
     text-decoration: none;
     word-wrap: none;
+    z-index: 20;
+}
+
+/* filtering for the calendar */
+
+.filter-menu-wrapper {
+    position:absolute;
+    height:50px;
+    width:182px;
+    left: 3rem;
+}
+
+.filter-wrapper input {
+    border-radius: 80px;
+    opacity: 0;
+    height: 43px;
+    width: 54px;
+    margin-left:6%;
+    position:absolute;
+    top:0.4rem;
+    z-index:20;
+    cursor: pointer;
+}
+
+.filter-wrapper input:checked ~ .filter-menu {
+    transform: rotate(-90deg);
+    transition: all .3s ease-in-out;
+}
+
+.filter-menu {
+    position:absolute;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--accent-color);
+    border-radius: 100%;
+    box-shadow: 0px 5px 20px rgba(74, 2, 2, 0.269);
+    cursor: pointer;
+    color: var(--page-font-color);
+    margin-left: 6%;
+    display: flex;
+    z-index:9;
+}
+
+.filter-menu-icon {
+    margin: auto;
+}
+
+.calendar-filter {
+    width: 153%;
+    position: absolute;
+    top: 0.0rem;
+    left: -1.54rem;
+    /* top right bottom left */
+    margin: auto auto auto 20%;
+    gap: 0.5rem;
+    padding: 6px;
+    border-radius: 60px;
+    background-color: var(--accent-color);
+    box-shadow: 0px 5px 20px black;
+    z-index:5;
+    transform:scaleX(0);
+    transition: all 0.2s ease-in-out;
+}
+
+.filter-wrapper input:checked ~ .calendar-filter {
+    transform:scaleX(1);
+}
+
+/* currently unused ~Blue
+.time-filter {
+    width: 25%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+} */
+
+img.filter-button {
+    filter: invert(1);
+    position: absolute;
+    cursor: pointer;
+    top:0.1rem;
+    width:48px;
+    margin-left:32px;
+    margin-top: auto;
+    transition: all 0.2s ease-in-out;
+}
+
+#list-view-button {
+    left: 1.5rem;
+}
+
+#calendar-view-button {
+    left: 4.5rem;
+}
+
+#calendar-weekly-view-button {
+    left: 7.4rem;
+}
+
+#calendar-day-view-button {
+    left: 10.5rem;
+}
+
+/* animations */
+.filter-wrapper input:checked ~ .calendar-filter #list-view-button {
+    opacity: 1;
+    transition-delay: .45s;
+}
+.filter-wrapper input:checked ~ .calendar-filter #calendar-view-button {
+    opacity: 1;
+    transition-delay: .45s;
+}
+.filter-wrapper input:checked ~ .calendar-filter #calendar-weekly-view-button {
+    opacity: 1;
+    transition-delay: .45s;
+}
+.filter-wrapper input:checked ~ .calendar-filter #calendar-day-view-button {
+    opacity: 1;
+    transition-delay: .45s;
 }
 
 #previous-month-button, #next-month-button {
@@ -545,7 +679,7 @@ button.cancel:hover, a.cancel:hover {
 
 /* Dashboard */
 main.dashboard {
-    padding: 0 8rem 4rem 8rem;
+    padding: 0 2rem;
 }
 
 main.dashboard > p {
@@ -629,9 +763,8 @@ form.signup-form .section-box {
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #fafafa;
+    background-color: #e0f7fa;
 }
-/**/
 
 form.signup-form > fieldset {
     padding: 1.5rem;
@@ -743,7 +876,7 @@ main.date p.none-scheduled {
         text-align: left;
     }
 }
-
+/*
 table.event td:first-of-type {
     width: 1px;
     white-space: nowrap;
@@ -771,7 +904,7 @@ table.event {
     border-bottom: 3px solid var(--shadow-and-border-color);
     padding-bottom: 1rem;
     background-color: var(--standout-background);
-}
+} */
 
 /* Event Search Page */
 main.search-form {
@@ -844,12 +977,28 @@ main.general fieldset > label:not(:first-of-type) {
     margin-top: 0.5rem;
 }
 
-table.general {
+table.general { /* used by View All Events! */
     width: 100%;
+    border-collapse: collapse;
     padding-bottom: 1rem;
 }
 
-table.general th:first-of-type {
+table.general th,
+table.general td {
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+    background-color: var(--page-background-color);
+    border-bottom: 1px solid var(--shadow-and-border-color);
+    color: var(--page-font-color);
+}
+
+table.general td {
+    text-align:left;
+    vertical-align: middle;
+    color: var(--page-font-color);
+}
+
+/*table.general th:first-of-type {
     border-top-left-radius: .25rem;
 }
 
@@ -866,7 +1015,7 @@ table.general th {
 table.general th, table.general td {
     padding: 1rem;
     white-space: nowrap;
-}
+} */
 
 .standout {
     border-bottom: 3px solid var(--shadow-and-border-color);
@@ -932,4 +1081,23 @@ img.profile-pic {
 .dashboard-item i {
     font-size: 55px; /* Set the desired size */
     color: #ffffff; /* Optional: set color */
+}
+
+a.event-link {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+a.event-link:hover {
+    color: hsl(from var(--accent-color) h s calc(l+3))
+}
+
+.full-capacity {
+    color: var(--error-color) !important; 
+    font-weight: bold;
+}
+
+.full-capacity::after {
+    color: var(--error-color);
+    content: ' Full! ';
 }
