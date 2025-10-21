@@ -336,9 +336,12 @@
             <?php endif*/ ?>
 
             <form action="eventSignUp.php" method="get">
-                <input type="hidden" name="event_name" value="<?php echo htmlspecialchars_decode($event_info['name']); ?>">
-                <button type="submit">Sign Up!</button>
+                <input type="hidden" name="event_name" value="<?php echo htmlspecialchars($event_info['name']); ?>">
+                <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event_info['id']); ?>">
+                <button type="submit" class="button primary">Sign Up!</button>
             </form>
+
+
 
 
 
