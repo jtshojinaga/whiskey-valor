@@ -279,7 +279,7 @@
             ?>
             <!--<center>
             <p></p>
-            <i class="fa-solid fa-circle" style="color: #294877"> </i>
+            <i class="fa-solid fa-circle" style="color: #C9AB81"> </i>
                 <span style="font-size: 25px;">
                     Open Event
                 </span>

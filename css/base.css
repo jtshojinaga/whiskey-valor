@@ -315,7 +315,8 @@ h1 {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
-    background-color: var(#ffcc00);
+
+    background-color: var(#C9AB81);
     color: var(--page-background-color);
     width: 100%;
     text-align: center;
