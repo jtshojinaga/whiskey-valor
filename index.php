@@ -494,25 +494,23 @@
     <div style="margin-top: 50px; padding: 0px 80px;">
         <h2><b>Admin Dashboard</b></h2>
     </div>
-    <div class="full-width-bar-sub">
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="content-box-test" onclick="window.location.href='calendar.php'">
+    <div class="full-width-bar-sub" style="background-color: #1F1F21; padding: 30px; border-radius: 12px;">
+        <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
             <div class="large-text-sub">Calendar</div>
-            <div class="graph-text">See upcoming events/trainings.</div>
+            <div class="graph-text" style="color: black;">See upcoming events/trainings.</div>
             <button class="arrow-button">→</button>
         </div>
 
 
-        <div class="content-box-test" onclick="window.location.href='resources.php'">
+        <div class="content-box-test" onclick="window.location.href='resources.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Manage Documents</div>
-            <div class="graph-text">Resources for volunteers.</div>
+            <div class="graph-text" style="color: black;">Resources for volunteers.</div>
             <button class="arrow-button">→</button>
         </div>
                 <?php
@@ -523,7 +521,7 @@
                         $inboxIcon = 'inbox-unread.svg';
                     }
                 ?>
-        <div class="content-box-test" onclick="window.location.href='inbox.php'">
+        <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
             </div>
@@ -533,7 +531,7 @@
                             echo ' (' . $unreadMessageCount . ')';
                         }
                     ?></div>
-            <div class="graph-text">Stay up to date.</div>
+            <div class="graph-text" style="color: black;">Stay up to date.</div>
             <button class="arrow-button">→</button>
         </div>
 
