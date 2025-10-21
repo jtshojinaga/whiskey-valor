@@ -344,6 +344,18 @@
                 <?php endif ?>
             <?php endif*/ ?>
 
+            <form action="eventSignUp.php" method="get">
+                <input type="hidden" name="event_name" value="<?php echo htmlspecialchars($event_info['name']); ?>">
+                <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event_info['id']); ?>">
+                <button type="submit" class="button primary">Sign Up!</button>
+            </form>
+
+            <form action="eventSignUp.php" method="get">
+                <input type="hidden" name="event_name" value="<?php echo htmlspecialchars($event_info['name']); ?>">
+                <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event_info['id']); ?>">
+                <button type="submit" class="button primary">Sign Up!</button>
+            </form>
+
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
 
                 <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
