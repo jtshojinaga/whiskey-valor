@@ -64,13 +64,13 @@ if (date("H:i:s") > "18:19:59") {
             border-bottom-right-radius: 50px;
         }
          .content-box-test:hover {
-            border: 4px solid #007BFF;
+            border: 4px solid #fdd05eff;
         }
 /*END STYLE TEST*/
 
         .full-width-bar {
             width: 100%;
-            background: #C9AB81;
+            background: rgb(31,31,33);
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -133,7 +133,7 @@ if (date("H:i:s") > "18:19:59") {
             left: 30px;
             font-size: 14px;
             font-weight: 700;
-            color: #C9AB81;
+            color: #297760ff;
         }
 
         .large-text {
@@ -163,7 +163,7 @@ if (date("H:i:s") > "18:19:59") {
             left: 10%;
             font-size: 14px;
             font-weight: 700;
-            color: #C9AB81;
+            color: #712977ff;
             max-width: 90%;
         }
 
@@ -171,11 +171,11 @@ if (date("H:i:s") > "18:19:59") {
         .navbar {
 	    gap: 10px;
             width: 100%;
-            height: 95px;
+            height: 100px;
             position: fixed;
             top: 0;
             left: 0;
-            background: white;
+            background: rgb(31,31,33);
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -192,15 +192,15 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: #C9AB81;
+            background: rgb(31,31,33);
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
         }
 
         .logo-container img {
-            width: 128px;
-            height: 52px;
+            width: 52px;
+            height: 60px;
             display: block;
         }
 
@@ -213,7 +213,7 @@ if (date("H:i:s") > "18:19:59") {
         .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: black;
+            color: white;
             cursor: pointer;
         }
 
@@ -239,12 +239,13 @@ if (date("H:i:s") > "18:19:59") {
             position: absolute;
             top: 150%;
             left: -10%;
-            background-color: white;
-            border: 1px solid #ccc;
+            background-color: rgb(31,31,33);
+            border: 1px solid rgb(31,31,33);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             min-width: 150px;
             padding: 10px;
+            color: white;
         }
         .dropdown div {
             padding: 8px;
@@ -256,8 +257,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .nav-item:hover, .nav-item.active {
-            color: #7aacf5;
-            outline: 1px solid #7aacf5;
+            color: #f5ce7aff;
+            outline: 1px solid #f5d07aff;
             outline-offset: 7px;
         }
 
@@ -292,7 +293,7 @@ if (date("H:i:s") > "18:19:59") {
 
 /* Button Styling */
 .nav-button {
-    background: #2B2B2E;
+    background: rgb(201, 171, 129);
     border: none;
     color: white;
     font-size: 20px;
@@ -391,7 +392,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .social-icons a:hover {
-            color: #dcdcdc;
+            color: rgb(31,31,33);
         }
 
         /* Right Section */
@@ -440,7 +441,7 @@ if (date("H:i:s") > "18:19:59") {
             top: 40px; /* Adjust as needed */
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8); /* Optional background for better visibility */
+            background: rgb(31,31,33); /* Optional background for better visibility */
             padding: 10px;
             border-radius: 50%;
             display: flex;
@@ -452,6 +453,7 @@ if (date("H:i:s") > "18:19:59") {
             width: 40px; /* Adjust size as needed */
             height: 40px;
             opacity: 0.9;
+            filter: invert(1);
         }
 
         .nav-item img {
@@ -461,7 +463,7 @@ if (date("H:i:s") > "18:19:59") {
 
         .nav-item:hover img, .nav-item.active img {
             filter: none;
-            background-color: #cbe0ff;
+            background-color: rgb(31,31,33);
         }
        
         .icon .dropdown{
@@ -483,6 +485,7 @@ if (date("H:i:s") > "18:19:59") {
             height: 40px;
             border-radius: 5px;
             border-bottom-right-radius: 20px;
+            filter: invert(1);
         }
 
 /* for calendar */
@@ -499,6 +502,7 @@ if (date("H:i:s") > "18:19:59") {
     .font-change {
 	font-size: 30px;
 	font-family: Quicksand;
+    color: white;
     }
 
 
@@ -534,7 +538,9 @@ if (date("H:i:s") > "18:19:59") {
                     document.querySelectorAll(".nav-item").forEach(nav => {
                         if (nav !== item) {
                             nav.classList.remove("active");
-                            nav.querySelector(".dropdown").style.display = "none";
+                            if(nav.querySelector(".dropdown") !== null) {
+                                nav.querySelector(".dropdown").style.display = "none";
+                            }
                         }
                     });
                     this.classList.toggle("active");
@@ -547,7 +553,9 @@ if (date("H:i:s") > "18:19:59") {
             document.addEventListener("click", function() {
                 document.querySelectorAll(".nav-item").forEach(nav => {
                     nav.classList.remove("active");
-                    nav.querySelector(".dropdown").style.display = "none";
+                    if(nav.querySelector(".dropdown") !== null) {
+                        nav.querySelector(".dropdown").style.display = "none";
+                    }
                 });
             });
         });
@@ -565,17 +573,31 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
             </div>
             <div class="nav-links">
-		<div class="nav-item"><span class="font-change">Volunteer Management System</span>
-		</div>
-           </div>
+                <div class="nav-item" style="outline: none;">
+                    <a href="index.php" style="color:white; text-decoration: none;">Home</a>
+                </div>
+                <div class="nav-item" style="outline: none;">
+                    <a href="calendar.php" style="color:white; text-decoration: none;">Events Calendar</a>
+                </div>
+            </div>
         </div>
 
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
-            <div class="date-box">'); echo date('l, F j, Y'); echo('</div>           
+            <div class="nav-links">
+                <div class="nav-item" style="outline:none;">
+                    <div class="icon">
+                        <img src="images/usaicon.png" alt="User Icon" style="filter: invert(1) brightness(100%) saturate(0%);">
+                        <div class="dropdown">
+                            <a href="signup.php" style="text-decoration: none;"><div>Create Account</div></a>
+                            <a href="login.php" style="text-decoration: none;"><div>Log in</div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>');
 
@@ -591,50 +613,54 @@ if (date("H:i:s") > "18:19:59") {
          */
         //pages guests are allowed to view
         // LOWERCASE
-        $permission_array['index.php'] = 0;
-        $permission_array['about.php'] = 0;
-        $permission_array['apply.php'] = 0;
-        $permission_array['logout.php'] = 0;
-        $permission_array['volunteerregister.php'] = 0;
-	$permission_array['leaderboard.php'] = 0;
+        /*
+        *  For A guest can log in, go to WVF's home page,  
+        * -Evan
+        */
+        $permission_array['index.php'] = 0; // WVF Home page
+        $permission_array['about.php'] = 0; //WVF - Not able to directly access - Likely just need to re-route to 
+        $permission_array['apply.php'] = 0; //WVF - Not able to directly access
+        $permission_array['logout.php'] = 0; //WVF - Logout page ain
+        $permission_array['volunteerregister.php'] = 0; //WVF - Alter to registering for account
+	    $permission_array['leaderboard.php'] = 0; //WVF - Probably get rid of this guy
         // $permission_array['findanimal.php'] = 0; //TODO DELETE
         //pages volunteers can view
         $permission_array['help.php'] = 1;
-        $permission_array['dashboard.php'] = 1;
-        $permission_array['calendar.php'] = 1;
-        $permission_array['eventsearch.php'] = 1;
+        $permission_array['dashboard.php'] = 1; //WVF - Might be good to alter this for registered users to be able to see registered events and where they can edit user info 
+        $permission_array['calendar.php'] = 0; //WVF - Everyone can see this
+        $permission_array['eventsearch.php'] = 1; 
         $permission_array['changepassword.php'] = 1;
-        $permission_array['editprofile.php'] = 1;
-        $permission_array['inbox.php'] = 1;
-        $permission_array['date.php'] = 1;
-        $permission_array['event.php'] = 1;
+        $permission_array['editprofile.php'] = 1; //WVF - Repurpose for SCRUM-5
+        $permission_array['inbox.php'] = 1; //WVF - Not for registered users, since they want emails. But would be good for 'suggestions' for ADMINS to see 
+        $permission_array['date.php'] = 1; 
+        $permission_array['event.php'] = 0; 
         $permission_array['viewprofile.php'] = 1;
         $permission_array['viewnotification.php'] = 1;
-        $permission_array['volunteerreport.php'] = 1;
+        $permission_array['volunteerreport.php'] = 1; //WVF - Attendance Report?
         $permission_array['viewmyupcomingevents.php'] = 1;
-        $permission_array['volunteerviewgroup.php'] = 1;
+        $permission_array['volunteerviewgroup.php'] = 1; 
 	    $permission_array['viewcheckinout.php'] = 1;
         $permission_array['viewresources.php'] = 1;
         $permission_array['discussionmain.php'] = 1;
-        $permission_array['viewdiscussions.php'] = 1;
-        $permission_array['discussioncontent.php'] = 1;
+        $permission_array['viewdiscussions.php'] = 1; //WVF - Edit discussions for suggestions?
+        $permission_array['discussioncontent.php'] = 1; //WVF - Edit discussions for suggestions?
         $permission_array['milestonepoints.php'] = 1;
         $permission_array['selectvotm.php'] = 1;
         $permission_array['volunteerviewgroupmembers.php'] = 1;
         //pages only managers can view
-        $permission_array['viewallevents.php'] = 0;
+        $permission_array['viewallevents.php'] = 0; //WVF - For admins to do view 
         $permission_array['personsearch.php'] = 2;
         $permission_array['personedit.php'] = 0; // changed to 0 so that applicants can apply
         $permission_array['viewschedule.php'] = 2;
         $permission_array['addweek.php'] = 2;
         $permission_array['log.php'] = 2;
         $permission_array['reports.php'] = 2;
-        $permission_array['eventedit.php'] = 2;
+        $permission_array['eventedit.php'] = 2; //WVF - TODO: Evaluated differenced between eventedit and editevent.
         $permission_array['modifyuserrole.php'] = 2;
-        $permission_array['addevent.php'] = 2;
-        $permission_array['editevent.php'] = 2;
+        $permission_array['addevent.php'] = 2; //WVF - Admin Event work!
+        $permission_array['editevent.php'] = 2; //WVF - Admin Event work!
         // $permission_array['roster.php'] = 2; //TODO DELETE
-        $permission_array['report.php'] = 2;
+        $permission_array['report.php'] = 2; // WVF TODO: Look to see how these reports can be reworked to do attendance report
         $permission_array['reportspage.php'] = 2;
         $permission_array['resetpassword.php'] = 2;
         // $permission_array['addappointment.php'] = 2; //TODO DELETE
@@ -669,7 +695,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['clockoutbulk.php'] = 2;
         $permission_array['clockOut.php'] = 2;
         $permission_array['edithours.php'] = 2;
-        $permission_array['eventlist.php'] = 1;
+        $permission_array['eventlist.php'] = 1;   
         $permission_array['eventsignup.php'] = 1;
         $permission_array['eventfailure.php'] = 1;
         $permission_array['signupsuccess.php'] = 1;
@@ -698,7 +724,7 @@ if (date("H:i:s") > "18:19:59") {
         }
         //This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
         $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
-		$venues = array("portland"=>"RMH Portland");
+		$venues = array("portland"=>"RMH Portland"); // Is this used anywhere? Do we need it? -Blue
         
         //they're logged in and session variables are set.
 	//
@@ -708,35 +734,10 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
             </div>
-                <a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>
+                <!--<a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>-->
             <div class="nav-links">
-                <div class="nav-item">Volunteers
-                    <div class="dropdown">
-            
-<a href="VolunteerRegister.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/add-person.svg">
-    <span style="font-size:24px;">Register Volunteer</span>
-  </div>
-</a>
-
-<a href="personSearch.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/person-search.svg">
-    <span>Search Volunteers</span>
-  </div>
-</a>
-<a href="checkedInVolunteers.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clipboard-regular.svg">
-    <span>View Check-Ins</span>
-  </div>
-</a>
-			
-                    </div>
-                </div>
                 <div class="nav-item">Events
                     <div class="dropdown">
 
@@ -746,7 +747,7 @@ if (date("H:i:s") > "18:19:59") {
     <span>Create Event</span>
   </div>
 </a>
-<a href="viewAllEvents.php" style="text-decoration: none;">
+<a href="calendar.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/list-solid.svg">
     <span>View Events</span>
@@ -798,18 +799,17 @@ if (date("H:i:s") > "18:19:59") {
 
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
-<a href="calendar.php">
+<!--<a href="calendar.php">
 <div class="icon-butt">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="#C9AB81" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 4C3 3.44772 3.44772 3 4 3H6V2C6 1.44772 6.44772 1 7 1C7.55228 1 8 1.44772 8 2V3H16V2C16 1.44772 16.4477 1 17 1C17.5523 1 18 1.44772 18 2V3H20C20.5523 3 21 3.44772 21 4V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V4ZM5 5V20H19V5H5ZM7 10H9V12H7V10ZM11 10H13V12H11V10ZM15 10H17V12H15V10ZM7 14H9V16H7V14ZM11 14H13V16H11V14ZM15 14H17V16H15V14Z"/>
         </svg>
 </div>
-</a>
-            <div class="date-box"></div>
+</a>-->
             <div class="nav-links">
                 <div class="nav-item" style="outline:none;">
                     <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon">
+                        <img src="images/usaicon.png" alt="User Icon" style="filter: invert(1);">
                         <div class="dropdown">
                             <a href="changePassword.php" style="text-decoration: none;"><div>Change Password</div></a>
                             <a href="logout.php" style="text-decoration: none;"><div>Log Out</div></a>
@@ -838,7 +838,7 @@ if (date("H:i:s") > "18:19:59") {
     <span>My Upcoming</span>
   </div>
 </a>
-<a href="viewAllEvents.php" style="text-decoration: none;">
+<a href="calendar.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/new-event.svg">
     <span>Sign-Up</span>
