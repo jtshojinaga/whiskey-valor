@@ -38,7 +38,7 @@
     }
     // guests should still see the calendar page
     if($args['user_id'] == 'guest') {
-        echo("Displaying page for guest user");
+        
     } else {
         $user = retrieve_person($_SESSION['_id']);
         $active = $user->get_status() == 'Active';
@@ -182,8 +182,8 @@
     <?php 
         require_once('universal.inc');
     ?>
-    <title>Fredericksburg SPCA | View Event: <?php echo $event_info['name'] ?></title>
-    <link rel="stylesheet" href="css/event.css" type="text/css" />
+    <title>Whiskey Valor Foundation | <?php echo $event_info['name'] ?></title>
+    <link rel="stylesheet" href="event.css" type="text/css" />
     <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
         <script src="js/event.js"></script>
     <?php endif ?>
@@ -253,7 +253,7 @@
         ?>
 
         <!-- Event Information Table -->
-        <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
+        <h2 class="event-head">
             <?php echo htmlspecialchars_decode($event_name); ?>
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
@@ -345,6 +345,11 @@
                 <?php endif ?>
             <?php endif*/ ?>
 
+            <form action="eventSignUp.php" method="get">
+                <input type="hidden" name="event_name" value="<?php echo htmlspecialchars($event_info['name']); ?>">
+                <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event_info['id']); ?>">
+                <button type="submit" class="button primary">Sign Up!</button>
+            </form>
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
 
                 <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
@@ -378,7 +383,6 @@
             <?php endif ?>
 
             <a href="calendar.php?month=<?= substr($event_info['date'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
-            <a href="viewAllEvents.php" class="button cancel">Return to All Events</a>
 
         </div>
 
