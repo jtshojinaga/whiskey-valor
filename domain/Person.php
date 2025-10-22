@@ -17,7 +17,7 @@
 // ONLY REQUIRED FIELDS HAVE BEEN ADDED SO FAR.
 class Person {
 
-	private $access_level; // normal user = 1, admin = 2, superadmin = 3
+	private $access_level; // normal user = 1, admin = 2, guest = 0
 	
 	// REQUIRED FIELDS
    	// REQUIRED FIELDS
