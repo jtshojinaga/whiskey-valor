@@ -192,7 +192,7 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: #C9AB81;
+            background: rgb(31,31,33);
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -213,7 +213,7 @@ if (date("H:i:s") > "18:19:59") {
         .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: #C9AB81;
+            color: white;
             cursor: pointer;
         }
 
@@ -257,8 +257,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .nav-item:hover, .nav-item.active {
-            color: #C9AB81;
-            outline: 1px solid #C9AB81;
+            color: #f5ce7aff;
+            outline: 1px solid #f5d07aff;
             outline-offset: 7px;
         }
 
@@ -276,7 +276,7 @@ if (date("H:i:s") > "18:19:59") {
         .icon {
             width: 47px;
             height: 47px;
-            background: #C9AB81;
+            /*background: #292D32;*/
             border-radius: 50%;
 
         }

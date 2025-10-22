@@ -36,7 +36,7 @@
     if(isset($_SESSION['access_level'])) {
         $access_level = $_SESSION['access_level'];
     }
-    // guests should still see the calendar page
+
     if($args['user_id'] == 'guest') {
         
     } else {
@@ -241,14 +241,13 @@
         <?php
             require_once('include/output.php');
             $event_name = $event_info['name'];
-            $event_startDate = date('l, F j, Y', strtotime($event_info['startDate']));
+            $event_date = date('l, F j, Y', strtotime($event_info['date']));
             $event_startTime = time24hto12h($event_info['startTime']);
             $event_endTime = time24hto12h($event_info['endTime']);
-            $event_endDate = date('l, F j, Y', strtotime($event_info['endDate']));
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            
+            $event_training_level = $event_info['training_level_required'];
             require_once('include/time.php');
         ?>
 
