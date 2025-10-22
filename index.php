@@ -32,6 +32,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
     <title>Frederickburg SPCA Volunteer Management | Dashboard</title>
     <style>
         * {
@@ -157,7 +158,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: #1F1F21;
+            background: #C9AB81;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -261,7 +262,8 @@
     .circle {
         width: 30px;
         height: 30px;
-        background-color: #C9AB81; /* Blue color */
+        /*background-color:; /* Blue color */
+        background-color: #C9AB81;
         color: white;
         border-radius: 50%;
         display: flex;
@@ -336,7 +338,7 @@
             flex-direction: column;
             justify-content: center;
             gap: 10px;
-            color: white;
+            color: #C9AB81;
             font-family: Inter, sans-serif;
             font-size: 16px;
             font-weight: 500;

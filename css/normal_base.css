@@ -63,7 +63,7 @@
 
 @layer components {
 	.hero-header {
-		@apply bg-[#294877] h-52 w-full bg-center relative z-0;
+		@apply bg-[#C9AB81] h-52 w-full bg-center relative z-0;
 	}
 	.center-header {
 		@apply absolute inset-0 flex items-center justify-center; /* bg-opacity-30 removed */
