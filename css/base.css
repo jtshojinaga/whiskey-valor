@@ -242,7 +242,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-    color: var(--main-color);
+    color: white;
 
 }
 
@@ -763,11 +763,11 @@ form.signup-form {
 
 /* thomas added this */
 form.signup-form .section-box {
-    border: 1px solid #ddd;
+    border: 1px solid var(--accent-color);
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #e0f7fa;
+    background-color: var(--page-background-color);
 }
 
 form.signup-form > fieldset {
