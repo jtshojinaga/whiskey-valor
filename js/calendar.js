@@ -27,11 +27,15 @@ $(function() {
         $('#month-jumper-wrapper').removeClass('hidden');
     });
 
-    $('#month-jumper').submit(function() {
+    $('#month-jumper').submit(function(e) {
+        e.preventDefault();
         let month = $('#jumper-month').val();
         let year = $('#jumper-year').val();
         let day = $('#jumper-day').val();
-        $('#jumper-value').val(year + '-' + month + '-' + day);
+        let newDate = year + '-' + month + '-' + day;
+        
+        // Manually navigate to the correct URL
+        document.location = 'calendar.php?month=' + newDate;
 
     });
 
