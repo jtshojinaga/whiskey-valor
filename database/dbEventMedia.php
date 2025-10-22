@@ -7,26 +7,28 @@ date_default_timezone_set("America/New_York");
 
 
 function add_eventmedia($eventmedia) {
-    $con=connect();
+    $con = connect();
     $query = "SELECT * FROM dbeventmedia WHERE id = '" . $eventmedia->getID() . "'";
-    $result = mysqli_query($con,$query);
+    $result = mysqli_query($con, $query);
+
     //if there's no entry for this id, add it
-    if ($result == null || mysqli_num_rows($result) == 0) {
-        mysqli_query($con,'INSERT INTO dbeventmedia VALUES("' .
+    if ($result === false || mysqli_num_rows($result) == 0) {
+        mysqli_query($con, 'INSERT INTO dbeventmedia VALUES("' .
+            $eventmedia->getID() . '","' .
             $eventmedia->getEventID() . '","' .
-            $eventmedia->$getFileName(). '","' .
-            $eventmedia->$getType(). '","' .
-            $eventmedia->$getFileFormat(). '","' .
-            $eventmedia->$getDescription(). '","' .
-            $eventmedia->$getTimeCreated(). '","' .
-            //$eventmedia->$id . '","' .     
-                '");');							
+            $eventmedia->getFileName() . '","' .
+            $eventmedia->getType() . '","' .
+            $eventmedia->getFileFormat() . '","' .
+            $eventmedia->getDescription() . '","' .
+            $eventmedia->getTimeCreated() . '");');
         mysqli_close($con);
         return true;
     }
+
     mysqli_close($con);
     return false;
 }
+
 
 function get_eventmedia($eventID) {
     $query = "select * from dbeventmedia

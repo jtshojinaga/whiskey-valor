@@ -242,6 +242,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    color: var(--main-color);
 
 }
 
@@ -314,7 +315,8 @@ h1 {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
-    background-color: var(#ffcc00);
+
+    background-color: var(#C9AB81);
     color: var(--page-background-color);
     width: 100%;
     text-align: center;
@@ -570,7 +572,7 @@ h1.calendar-header a {
     transform:scaleX(0);
     transition: all 0.2s ease-in-out;
 }
-
+/* Expands the filter menu out */
 .filter-wrapper input:checked ~ .calendar-filter {
     transform:scaleX(1);
 }
@@ -585,6 +587,7 @@ h1.calendar-header a {
     flex-direction: row;
 } */
 
+/* TODO: need to include responsive design for mobile */
 img.filter-button {
     filter: invert(1);
     position: absolute;
@@ -596,6 +599,7 @@ img.filter-button {
     transition: all 0.2s ease-in-out;
 }
 
+/* TODO: needs to include responsive design for mobile */
 #list-view-button {
     left: 1.5rem;
 }
