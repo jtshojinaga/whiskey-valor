@@ -86,7 +86,7 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
                         $dayEvents = $events[$e];
                         foreach ($dayEvents as $info) {
 
-                            $backgroundCol = '#294877'; // default color
+                            $backgroundCol = '#996d49ff'; // default color
 
                            if(isset($_SESSION['access_level'])) { 
     

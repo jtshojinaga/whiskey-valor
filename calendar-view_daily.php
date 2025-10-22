@@ -63,7 +63,7 @@
         { // Check if fetch_events_on_date returned anything
             foreach ($dayEvents as $info) 
                 {
-                    $backgroundCol = '#294877'; // default color
+                    $backgroundCol = '#996d49ff'; // default color
 
                     if (isset($_SESSION['access_level'])) {
 
