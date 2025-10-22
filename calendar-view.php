@@ -2,35 +2,40 @@
 
 date_default_timezone_set("America/New_York");
 
-// Accept a ?month=YYYY-MM query param fallback to current month
-if (isset($_GET['month']) && preg_match('/^\d{4}-\d{2}$/', $_GET['month'])) {
-    $monthStr = $_GET['month'];           // string like "2025-10"
-} else {
-    $monthStr = date('Y-m');
+// Set a default date string (today)
+$dateStr = date("Y-m-d");
+
+// If a month/date is passed in the URL, use that instead
+if (isset($_GET['month'])) {
+    $dateStr = $_GET['month']; // e.g., "2025-10-22"
 }
 
-// Extract pieces from the string
-$year = substr($monthStr, 0, 4);
-$month2digit = substr($monthStr, 5, 2);  // "01", "02" ... used when comparing date('m', ...)
+// Convert the input string (e.g., "2025-10-22" or "2025-10") to a timestamp
+$inputEpoch = strtotime($dateStr);
 
-// canonical epoch/timestamps for the month and first day
+// Validate; if the input is invalid, default to today's date
+if (!$inputEpoch) {
+    $inputEpoch = strtotime(date("Y-m-d"));
+}
+
+// We now have a valid timestamp. Get all the parts we need.
+$year = date('Y', $inputEpoch);
+$month2digit = date('m', $inputEpoch);
+
 $today = strtotime(date("Y-m-d"));
-$firstOfMonthStr = $monthStr . '-01';
-$firstOfMonthEpoch = strtotime($firstOfMonthStr);
-$monthEpoch = strtotime($monthStr . '-01'); // same as firstOfMonthEpoch; kept for clarity
 
-// Defensive: if invalid month param redirect to calendar.php with current month
-if (!$monthEpoch) {
-    header('Location: calendar.php?month=' . date("Y-m"));
-    exit;
-}
+// Define the *month* we are displaying (always the 1st day)
+$firstOfMonthStr = $year . '-' . $month2digit . '-01';
 
-// compute previous and next month (epochs)
-$previousMonth = strtotime(date('Y-m', $monthEpoch) . ' -1 month');
-$nextMonth = strtotime(date('Y-m', $monthEpoch) . ' +1 month');
+// $monthEpoch is the epoch for the *first day* of the selected month
+$monthEpoch = strtotime($firstOfMonthStr); 
+
+// Find previous and next month
+$previousMonth = strtotime(date('Y-m-d', $monthEpoch) . ' -1 month');
+$nextMonth = strtotime(date('Y-m-d', $monthEpoch) . ' +1 month');
 
 // Set calendar start to first of month, then back up to the Sunday that should be the first cell
-$calendarStart = $firstOfMonthEpoch;
+$calendarStart = $monthEpoch;
 while (date('w', $calendarStart) > 0) { // date('w') returns 0 for Sunday
     $calendarStart = strtotime(date('Y-m-d', $calendarStart) . ' -1 day');
 }
