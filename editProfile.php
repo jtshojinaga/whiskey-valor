@@ -170,7 +170,7 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>Fredericksburg SPCA | Manage Profile</title>
+    <title>Whiskey Valor | Edit Profile</title>
 </head>
 <body>
     <?php

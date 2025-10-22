@@ -3,6 +3,7 @@
     require_once('database/dbPersons.php');
     require_once('include/output.php');
 
+    // Required imports for Cleave JS to work
     echo('<script src="https://nosir.github.io/cleave.js/dist/cleave.min.js"></script>');
     echo('<script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>');
     $args = sanitize($_GET);
@@ -92,7 +93,8 @@
             <p><?php echo $person->get_id() ?></p>
 
             <!--<label>Password</label>-->
-                <p><a href='changePassword.php'>Change Password</a></p>
+            <!-- change to button later -->
+                <p><a href='changePassword.php' style="color: var(--accent-color); font-weight: bold;">Change Password</a></p>
         </fieldset>
 
         <fieldset class="section-box">
@@ -164,24 +166,24 @@
             <legend>Emergency Contact</legend>
 
             <p>Please provide us with someone to contact on your behalf in case of an emergency.</p>
-            <label for="emergency_contact_first_name" required><em>* </em>First Name</label>
-            <input type="text" id="emergency_contact_first_name" name="emergency_contact_first_name" value="<?php echo hsc($person->get_emergency_contact_first_name()); ?>" required placeholder="Enter emergency contact name">
+            <label for="emergency_contact_first_name" required>First Name</label>
+            <input type="text" id="emergency_contact_first_name" name="emergency_contact_first_name" value="<?php echo hsc($person->get_emergency_contact_first_name()); ?>" placeholder="Enter emergency contact name">
 
-            <label for="emergency_contact_last_name" required><em>* </em>Last Name</label>
-            <input type="text" id="emergency_contact_last_name" name="emergency_contact_last_name" value="<?php echo hsc($person->get_emergency_contact_last_name()); ?>" required placeholder="Enter emergency contact name">
+            <label for="emergency_contact_last_name" required>Last Name</label>
+            <input type="text" id="emergency_contact_last_name" name="emergency_contact_last_name" value="<?php echo hsc($person->get_emergency_contact_last_name()); ?>" placeholder="Enter emergency contact name">
 
-            <label for="emergency_contact_relation"><em>* </em>Contact Relation to You</label>
-            <input type="text" id="emergency_contact_relation" name="emergency_contact_relation" value="<?php echo hsc($person->get_emergency_contact_relation()); ?>" required placeholder="Ex. Spouse, Mother, Father, Sister, Brother, Friend">
+            <label for="emergency_contact_relation">Contact Relation to You</label>
+            <input type="text" id="emergency_contact_relation" name="emergency_contact_relation" value="<?php echo hsc($person->get_emergency_contact_relation()); ?>" placeholder="Ex. Spouse, Mother, Father, Sister, Brother, Friend">
 
-            <label for="emergency_contact_phone"><em>* </em>Phone Number</label>
-            <input type="tel" id="emergency_contact_phone" class="phone" name="emergency_contact_phone" value="<?php echo formatPhoneNumber($person->get_emergency_contact_phone()); ?>" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
+            <label for="emergency_contact_phone">Phone Number</label>
+            <input type="tel" id="emergency_contact_phone" class="phone" name="emergency_contact_phone" value="<?php echo formatPhoneNumber($person->get_emergency_contact_phone()); ?>" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
 
-            <label><em>* </em>Phone Type</label>
+            <label>Phone Type</label>
             <div class="radio-group">
                 <?php $type = $person->get_emergency_contact_phone_type(); ?>
-                <input type="radio" id="phone-type-cellphone" name="emergency_contact_phone_type" value="cellphone" <?php if ($type == 'cellphone') echo 'checked'; ?> required><label for="phone-type-cellphone">Cell</label>
-                <input type="radio" id="phone-type-home" name="emergency_contact_phone_type" value="home" <?php if ($type == 'home') echo 'checked'; ?> required><label for="phone-type-home">Home</label>
-                <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" <?php if ($type == 'work') echo 'checked'; ?> required><label for="phone-type-work">Work</label>
+                <input type="radio" id="phone-type-cellphone" name="emergency_contact_phone_type" value="cellphone" <?php if ($type == 'cellphone') echo 'checked'; ?> ><label for="phone-type-cellphone">Cell</label>
+                <input type="radio" id="phone-type-home" name="emergency_contact_phone_type" value="home" <?php if ($type == 'home') echo 'checked'; ?> ><label for="phone-type-home">Home</label>
+                <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" <?php if ($type == 'work') echo 'checked'; ?> ><label for="phone-type-work">Work</label>
             </div>
         
         </fieldset>
@@ -189,6 +191,7 @@
         <fieldset class="section-box">
     <legend>Volunteer Information</legend>
 
+    <!-- Probably repurpose for military aff. -->
     <label>Account Type</label>
     <p>
         <?php 
@@ -199,18 +202,9 @@
     </p>
 </fieldset>
 
-
-            
-
-        
-            
-            
-
-
+        <!-- may be entirely useless? change to notifications? -->
         <fieldset class="section-box">
             <legend>Optional Information</legend>
-
-          
 
             <label>Are there any specific skills you have that you believe could be useful for volunteering at FredSPCA?</label>
             <input type="text" id="skills" name="skills" value="<?php echo hsc($person->get_skills()); ?>" placeholder="">
