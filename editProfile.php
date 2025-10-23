@@ -171,6 +171,7 @@
 <head>
     <?php require_once('universal.inc'); ?>
     <title>Whiskey Valor | Edit Profile</title>
+    <link src="css/base.css" rel="stylesheet">
 </head>
 <body>
     <?php

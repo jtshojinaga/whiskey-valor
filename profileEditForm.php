@@ -65,9 +65,7 @@
         return $select;
     }
 ?>
-<h1>Edit Profile</h1>
 <main class="signup-form">
-    <h2>Modify Volunteer Profile</h2>
     <?php if (isset($updateSuccess)): ?>
         <?php if ($updateSuccess): ?>
             <div class="happy-toast">Profile updated successfully!</div>
@@ -83,12 +81,18 @@
             <!-- <a class="button" href="modifyUserRole.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">Modify User Access</a> -->
         <?php endif ?>
     <?php endif ?>
+    <div class="main-content-box">
+
     <form class="signup-form" method="post">
-        <br>
-	<p>An asterisk (<em>*</em>) indicates a required field.</p>
-    
+	<div class="text-center">
+          <h2 class="mb-8">Edit Profile</h2>
+            <div class="info-box">
+              <p>An asterisk ( <em>*</em> ) indicates a required field.</p>
+            </div>
+	</div>
         <fieldset class="section-box">
-            <legend>Login Credentials</legend>
+            <h3 class="mt-2">Login Credentials</h3>
+            <div class="blue-div"></div>
             <label>Username</label>
             <p><?php echo $person->get_id() ?></p>
 
@@ -98,9 +102,8 @@
         </fieldset>
 
         <fieldset class="section-box">
-            <legend>Personal Information</legend>
-
-            <p>The following information helps us identify you within our system.</p>
+            <h3 class="mt-2">Personal Information</h3>
+            <div class="blue-div"></div>
             <label for="first_name"><em>* </em>First Name</label>
             <input type="text" id="first_name" name="first_name" value="<?php echo hsc($person->get_first_name()); ?>" required placeholder="Enter your first name">
 
@@ -143,9 +146,8 @@
         </fieldset>
 
         <fieldset class="section-box">
-            <legend>Contact Information</legend>
-
-            <p>The following information helps us determine the best way to contact you regarding event coordination.</p>
+            <h3 class="mt-2">Contact Information</h3>
+            <div class="blue-div"></div>
             <label for="email"><em>* </em>E-mail</label>
             <input type="email" id="email" name="email" value="<?php echo hsc($person->get_email()); ?>" required placeholder="Enter your e-mail address">
 
@@ -163,7 +165,8 @@
         </fieldset>
 
         <fieldset class="section-box">
-            <legend>Emergency Contact</legend>
+            <h3 class="mt-2">Emergency Contact</h3>
+            <div class="blue-div"></div>
 
             <p>Please provide us with someone to contact on your behalf in case of an emergency.</p>
             <label for="emergency_contact_first_name" required>First Name</label>
@@ -189,7 +192,8 @@
         </fieldset>
 
         <fieldset class="section-box">
-    <legend>Volunteer Information</legend>
+            <h3 class="mt-2">Volunteer Information</h3>
+            <div class="blue-div"></div>
 
     <!-- Probably repurpose for military aff. -->
     <label>Account Type</label>
@@ -204,7 +208,8 @@
 
         <!-- may be entirely useless? change to notifications? -->
         <fieldset class="section-box">
-            <legend>Optional Information</legend>
+            <h3 class="mt-2">Optional Information</h3>
+            <div class="blue-div"></div>
 
             <label>Are there any specific skills you have that you believe could be useful for volunteering at FredSPCA?</label>
             <input type="text" id="skills" name="skills" value="<?php echo hsc($person->get_skills()); ?>" placeholder="">
@@ -224,6 +229,7 @@
             <a class="button cancel" href="viewProfile.php?id=<?php echo htmlspecialchars($_GET['id']) ?>" style="margin-top: -.5rem">Cancel</a>
         <?php endif ?>
     </form>
+    </div>
     <script>
         // Initialize Cleave.js for primary phone number
         new Cleave('#phone1', {
