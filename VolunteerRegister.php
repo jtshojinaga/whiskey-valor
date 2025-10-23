@@ -6,8 +6,8 @@
 <html>
 <head>
     <?php require_once('database/dbMessages.php'); ?>
-    <title>Fredericksburg SPCA | Register</title>
-    <link href="css/normal_tw.css" rel="stylesheet">
+    <title>Whiskey Valor Foundation | Register</title>
+    <link href="css/base.css" rel="stylesheet">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
 $tailwind_mode = true;
