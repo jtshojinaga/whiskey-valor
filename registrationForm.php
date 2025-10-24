@@ -123,7 +123,7 @@
                 <option value="civ">Civilian</option>
             </select>
 
-            <label for="branch"><em>* </em>Military Branch</label>
+            <label for="branch"><em>* </em>Branch of Service</label>
             <select id="branch" name="branch" required>
                 <option value="" disabled selected></option>
                 <option value="air_force">Air Force</option>

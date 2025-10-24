@@ -866,6 +866,58 @@ form.signup-form a:hover {
 }
 /* end normal_tw conversion ~Blue*/
 
+.sidebar-wrapper {
+    position:sticky;
+    float: left;
+    top: 8rem;
+    height:300px;
+    width: 250px;
+    border-radius: var(--button-border-radius);
+}
+
+.sidebar {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: calc(var(--button-border-radius) + 5px);
+    background: var(--info-toast-background-color);
+    position: sticky;
+    width: 100%;
+    padding: 5px;
+}
+
+.sidebar-item {
+    display: flex;
+    color: var(--inactive-font-color);
+    align-items: flex-start;
+    justify-content: left;
+    border-radius: var(--button-border-radius);
+    background-color: transparent;
+    border: 1px solid var(--light-border);
+    padding: 5px;
+    width: 100%;
+}
+
+.sidebar-item a {
+    color: var(--accent-color);
+}
+
+.sidebar-item:hover {
+    background-color: rgba(255,255,255,0.10);
+    color: hsl(from var(--accent-color) h s calc(l+3));
+}
+
+.sidebar-item img {
+    margin-right: 5px;
+    filter: invert(1);
+    min-height: 20px;
+    max-height: 25px;
+    height: 20px;
+}
+
 .availability-container {
     display: flex;
     flex-direction: row;

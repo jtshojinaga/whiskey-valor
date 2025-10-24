@@ -81,6 +81,33 @@
             <!-- <a class="button" href="modifyUserRole.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">Modify User Access</a> -->
         <?php endif ?>
     <?php endif ?>
+    <div class="sidebar-wrapper">
+        <div class="sidebar">
+            <div class="sidebar-item">
+                <img src="images/settings.png"><h3> Edit Profile</h3>
+            </div>
+            <div class="sidebar-item">
+                <a href="#login">
+                    <img src="images/change-password.png"> Login Credentials
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="#personal-info">
+                    <img src="images/view-profile.svg"> Personal Information
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="#contact-info">
+                    <img src="images/phone.png"> Contact Information
+                </a>
+            </div>
+            <div class="sidebar-item">
+                <a href="#notifs">
+                    <img src="images/inbox.svg"> Notification Preferences
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="main-content-box">
 
     <form class="signup-form" method="post">
@@ -91,18 +118,17 @@
             </div>
 	</div>
         <fieldset class="section-box">
-            <h3 class="mt-2">Login Credentials</h3>
+            <h3 class="mt-2" id="login">Login Credentials</h3>
             <div class="blue-div"></div>
             <label>Username</label>
             <p><?php echo $person->get_id() ?></p>
 
-            <!--<label>Password</label>-->
-            <!-- change to button later -->
-                <p><a href='changePassword.php' style="color: var(--accent-color); font-weight: bold;">Change Password</a></p>
+            <label>Password</label>
+                <a class="button-signup" href='changePassword.php' style="color: var(--button-font-color); font-weight: bold; width: 28%;">Change Password</a>
         </fieldset>
 
         <fieldset class="section-box">
-            <h3 class="mt-2">Personal Information</h3>
+            <h3 class="mt-2" id="personal-info">Personal Information</h3>
             <div class="blue-div"></div>
             <label for="first_name"><em>* </em>First Name</label>
             <input type="text" id="first_name" name="first_name" value="<?php echo hsc($person->get_first_name()); ?>" required placeholder="Enter your first name">
@@ -110,12 +136,12 @@
             <label for="last_name"><em>* </em>Last Name</label>
             <input type="text" id="last_name" name="last_name" value="<?php echo hsc($person->get_last_name()); ?>" required placeholder="Enter your last name">
 
-            <label for="birthday"><em>* </em>Date of Birth</label>
+            <!--<label for="birthday"><em>* </em>Date of Birth</label>
             <input type="date" id="birthday" name="birthday" value="<?php echo hsc($person->get_birthday()); ?>" required placeholder="Choose your birthday" max="<?php echo date('Y-m-d'); ?>">
 
 
             <label for="street_address"><em>* </em>Street Address</label>
-            <input type="text" id="street_address" name="street_address" value="<?php echo hsc($person->get_street_address()); ?>" required placeholder="Enter your street address">
+            <input type="text" id="street_address" name="street_address" value="<?php echo hsc($person->get_street_address()); ?>" required placeholder="Enter your street address"> -->
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" value="<?php echo hsc($person->get_city()); ?>" required placeholder="Enter your city">
@@ -141,30 +167,37 @@
                 ?>
             </select>
 
-            <label for="zip_code"><em>* </em>Zip Code</label>
-            <input type="text" id="zip_code" name="zip_code" value="<?php echo hsc($person->get_zip_code()); ?>" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
+            <!--<label for="zip_code"><em>* </em>Zip Code</label>
+            <input type="text" id="zip_code" name="zip_code" value="<?php echo hsc($person->get_zip_code()); ?>" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">-->
+            <div class="median-div"></div>
+            <label for="affiliation"><em>* </em>Military Affiliation</label>
+            <option value="example">Example Affiliation</option>
+            </select>
+
+            <label for="branch"><em>* </em>Branch of Service</label>
+            <option value="test">Test Branch</option>
         </fieldset>
 
         <fieldset class="section-box">
-            <h3 class="mt-2">Contact Information</h3>
+            <h3 class="mt-2" id="contact-info">Contact Information</h3>
             <div class="blue-div"></div>
             <label for="email"><em>* </em>E-mail</label>
             <input type="email" id="email" name="email" value="<?php echo hsc($person->get_email()); ?>" required placeholder="Enter your e-mail address">
 
-            <label for="phone1"><em>* </em>Phone Number</label>
-            <input type="tel" id="phone1" class="phone" name="phone1" value="<?php echo formatPhoneNumber($person->get_phone1()); ?>" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
+            <label for="phone1">Phone Number</label>
+            <input type="tel" id="phone1" class="phone" name="phone1" value="<?php echo formatPhoneNumber($person->get_phone1()); ?>" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
 
-            <label><em>* </em>Phone Type</label>
+            <!--<label><em>* </em>Phone Type</label>
             <div class="radio-group">
                 <?php $type = $person->get_phone1type(); ?>
                 <input type="radio" id="phone-type-cellphone" name="phone1type" value="cellphone" <?php if ($type == 'cellphone') echo 'checked'; ?> required><label for="phone-type-cellphone">Cell</label>
                 <input type="radio" id="phone-type-home" name="phone1type" value="home" <?php if ($type == 'home') echo 'checked'; ?> required><label for="phone-type-home">Home</label>
                 <input type="radio" id="phone-type-work" name="phone1type" value="work" <?php if ($type == 'work') echo 'checked'; ?> required><label for="phone-type-work">Work</label>
-            </div>
+            </div>-->
 
         </fieldset>
 
-        <fieldset class="section-box">
+        <!--<fieldset class="section-box">
             <h3 class="mt-2">Emergency Contact</h3>
             <div class="blue-div"></div>
 
@@ -189,13 +222,13 @@
                 <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" <?php if ($type == 'work') echo 'checked'; ?> ><label for="phone-type-work">Work</label>
             </div>
         
-        </fieldset>
+        </fieldset>-->
 
-        <fieldset class="section-box">
+        <!--<fieldset class="section-box">
             <h3 class="mt-2">Volunteer Information</h3>
             <div class="blue-div"></div>
 
-    <!-- Probably repurpose for military aff. -->
+ 
     <label>Account Type</label>
     <p>
         <?php 
@@ -204,18 +237,36 @@
                 : 'Standard Volunteer'; 
         ?>
     </p>
-</fieldset>
+</fieldset>-->
 
         <!-- may be entirely useless? change to notifications? -->
         <fieldset class="section-box">
-            <h3 class="mt-2">Optional Information</h3>
+            <h3 class="mt-2" id="notifs">Notification Preferences</h3>
             <div class="blue-div"></div>
 
-            <label>Are there any specific skills you have that you believe could be useful for volunteering at FredSPCA?</label>
+            <label>Email Preferences</label>
+            <p>Select what type of emails you'd like to recieve from the Whiskey Valor Foundation.</p>
+            <div class="radio-group">
+                <div class="radio-element">
+                    <input type="checkbox" id="reminders" name="email_prefs" value="reminders">
+                    <label for="reminders">Event reminders</label>
+                </div>
+
+                <div class="radio-element">
+                    <input type="checkbox" id="invites" name="email_prefs" value="invites">
+                    <label for="invites">Event invitations</label>
+                </div>
+                <div class="radio-element">
+                    <input type="checkbox" id="mktg" name="email_prefs" value="mktg">
+                    <label for="mktg">Marketing emails</label>
+                </div>
+            </div>
+
+            <!--<label>Are there any specific skills you have that you believe could be useful for volunteering at FredSPCA?</label>
             <input type="text" id="skills" name="skills" value="<?php echo hsc($person->get_skills()); ?>" placeholder="">
 
             <label>Do you have any interests?</label>
-            <input type="text" id="interests" name="interests" value="<?php echo hsc($person->get_interests()); ?>" placeholder="">
+            <input type="text" id="interests" name="interests" value="<?php echo hsc($person->get_interests()); ?>" placeholder="">-->
 
             
         </fieldset>
@@ -240,11 +291,11 @@
         });
 
         // Initialize Cleave.js for emergency contact phone number
-        new Cleave('#emergency_contact_phone', {
+        /*new Cleave('#emergency_contact_phone', {
             phone: true,
             phoneRegionCode: 'US',
             delimiter: '-',
             numericOnly: true,
-        });
+        });*/
     </script>
 </main>
