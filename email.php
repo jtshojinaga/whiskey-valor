@@ -120,4 +120,61 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     return $results;
 }
 
+
+    /**
+     * emailHandler takes in an event_id and a $user_id and builds an email to that user
+    *This logic is ugly, maybe make it so that it takes in an array of id's to bulk make emails and lessen the strain for SQL calls?
+    *
+    * @param int $event_id The ID of the event which this email may pertain to.
+    * @param int $user_id The ID of the user which this email is being sent to.
+    * @param int $emailType A numeric representation of the type of email that we are handling. 1: Removed from event. NOTE: Please add to this list as you edit this section!
+    * @param string $actionJustification The justification for the action being done. E.g. Why the user was removed from an event.
+    * @return bool If the emailHandler returns false then there was an error which occured. 
+    */
+    function emailHandler($event_id, $user_id, int $emailType, string $actionJustification): bool
+    {
+        //Build Queries
+        $eventNameQuery = "SELECT name FROM dbevents WHERE id LIKE '$event_id'";
+        $userEmailQuery = "SELECT email FROM dbpersons WHERE id LIKE '$user_id'";
+        $userNameQuery = "SELECT first_name, last_name FROM dbpersons WHERE id like '$user_id'";
+        $connection = connect();
+        //Commit Queries
+        $eventName = mysqli_query($connection, $eventNameQuery);
+        $userEmail = mysqli_query($connection, $userEmailQuery);
+        $userName = mysqli_query($connection, $userNameQuery);
+        //Create the type of email.
+        $emailContents = ""; 
+        $emailSubject = "";
+        if  ($emailType == 1)
+        {
+            $emailContents = removalEmailBuilder($eventName, $userName, $actionJustification);
+            $emailSubject = "Removed from " . $eventName . ".";
+        }
+
+        //Make sure that $emailContents has content:
+        if ($emailContents == "")
+        {
+            return(false);
+        }
+
+        //Send the email
+        sendEmails([$userEmail], "WhiskeyValorAdmin", $emailSubject, $emailContents);
+        return(true);
+       
+    }
+
+    //Email Builders below here!
+
+    /** 
+     * removalEmailBuilder generates a email to send to users who were removed from an event. 
+     * 
+     * @param string $eventName The name of the event the user was removed from.
+     * @param string $userName The name of the user which was removed from said event.
+     * @param string $actionJustification The justifcation for the user's removal.
+     * 
+     */
+    function removalEmailBuilder(string $eventName, string $userName, string $actionJustification) :string
+    {
+         return "Hello, '$userName'\n You've been removed from the event: '$eventName' for the reason of: '$actionJustification'.\n If you have any questions about this removal, please reach out to an administrator.";
+    }
 ?>

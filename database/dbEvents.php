@@ -267,7 +267,10 @@ function remove_user_from_event($event_id, $user_id) {
     mysqli_close($connection);
     //If true email user 
     if ($result == TRUE)
-    {}
+    {
+        //Get event name,
+        
+    }
     return $result;
 }
 
