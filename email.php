@@ -133,15 +133,8 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     */
     function emailHandler($event_id, $user_id, int $emailType, string $actionJustification): bool
     {
-        //Build Queries
-        $eventNameQuery = "SELECT name FROM dbevents WHERE id LIKE '$event_id'";
-        $userEmailQuery = "SELECT email FROM dbpersons WHERE id LIKE '$user_id'";
-        $userNameQuery = "SELECT first_name, last_name FROM dbpersons WHERE id like '$user_id'";
-        $connection = connect();
-        //Commit Queries
-        $eventName = mysqli_query($connection, $eventNameQuery);
-        $userEmail = mysqli_query($connection, $userEmailQuery);
-        $userName = mysqli_query($connection, $userNameQuery);
+
+        list($eventName, $userName, $userEmail) = retrieveInformation($user_id, $event_id);
         //Create the type of email.
         $emailContents = ""; 
         $emailSubject = "";
@@ -163,8 +156,50 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
        
     }
 
-    //Email Builders below here!
+   
+    //Email Handler tools below here
+    function retrieveInformation($user_id, $event_id): array   
+    {
+        //event name Queries
+        $connection = connect();
 
+        $sql1 = "SELECT name FROM dbevents WHERE id = ?";
+        $stmt1 = mysqli_prepare($connection, $sql1);
+
+        // Bind the $event_id variable to the placeholder
+        mysqli_stmt_bind_param($stmt1, "i", $event_id);
+
+        // Execute the statement
+        mysqli_stmt_execute($stmt1);
+        $result1 = mysqli_stmt_get_result($stmt1);
+
+        // Fetch the data
+        $eventRow = mysqli_fetch_assoc($result1);
+        $eventName = $eventRow['name']; //Holds event name
+
+
+        //user info queries
+
+        // Prepare a single query for all user data
+        $sql2 = "SELECT email, first_name, last_name FROM dbpersons WHERE id = ?";
+        $stmt2 = mysqli_prepare($connection, $sql2);
+
+        mysqli_stmt_bind_param($stmt2, "s", $user_id);
+
+        mysqli_stmt_execute($stmt2);
+        $result2 = mysqli_stmt_get_result($stmt2);
+        $userRow = mysqli_fetch_assoc($result2);
+
+        $userEmail = $userRow['email'];
+        $firstName = $userRow['first_name'];
+        $lastName = $userRow['last_name'];
+        $userName = $firstName . " " . $lastName;
+        return [$eventName, $userName, $userEmail];
+
+    }
+     
+    
+    //Email Builders below here!
     /** 
      * removalEmailBuilder generates a email to send to users who were removed from an event. 
      * 

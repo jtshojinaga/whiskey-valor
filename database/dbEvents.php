@@ -23,7 +23,7 @@
 include_once('dbinfo.php');
 include_once(dirname(__FILE__).'/../domain/Event.php');
 //Added to send emails to users when they are removed or signed up to an event.
-include_once('../email.php');
+include_once(dirname(__FILE__).'/../email.php');
 
 /*
  * add an event to dbEvents table: if already there, return false
@@ -268,7 +268,7 @@ function remove_user_from_event($event_id, $user_id) {
     //If true email user 
     if ($result == TRUE)
     {
-        //Get event name,
+        emailHandler($event_id, $user_id, 1, "Removed from event because TEST");
         
     }
     return $result;
