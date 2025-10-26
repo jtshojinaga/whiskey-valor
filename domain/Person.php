@@ -26,26 +26,30 @@ class Person {
 	private $start_date; // (dete of account creation)
 	private $first_name;
 	private $last_name;
-	private $birthday;
-	private $street_address;
+	//private $birthday;
+	private $age; // if they're over or under 21
+	//private $street_address;
 	private $city;
 	private $state;
-	private $zip_code;
+	//private $zip_code;
 	private $phone1;
-	private $phone1type;
+	//private $phone1type;
 	private $email;
-	private $emergency_contact_first_name;
-	private $emergency_contact_last_name;
-	private $emergency_contact_phone;
-	private $emergency_contact_phone_type;
-	private $emergency_contact_relation;
+	private $email_consent; // if they want to recieve emails from WVF
+	private $affiliation;
+	private $branch;
+	//private $emergency_contact_first_name;
+	//private $emergency_contact_last_name;
+	//private $emergency_contact_phone;
+	//private $emergency_contact_phone_type;
+	//private $emergency_contact_relation;
 	//private $tshirt_size;
 	//private $school_affiliation;
 	//private $photo_release;
 	//private $photo_release_notes;
-	private $type; // admin or volunteer or participant...
-	private $status;
-	private $archived;
+	//private $type; // admin or volunteer or participant...
+	//private $status;
+	//private $archived;
         // TRAINING REQS
 	//private $training_complete;
 	//private $training_date;
@@ -55,59 +59,63 @@ class Person {
 	//private $background_date;
 
 	
-    private $skills;
-    private $interests;
+    //private $skills;
+    //private $interests;
     //private $disability_accomodation_needs;
    // ADDED NEW ONES -YALDA
-    private $is_new_volunteer;
-    private $is_community_service_volunteer;
+    //private $is_new_volunteer;
+    //private $is_community_service_volunteer;
 	//private $race;
 	//private $gender;
 	//YALDA AGAIN
-      private $total_hours_volunteered;
-	  private $training_level;
+      //private $total_hours_volunteered;
+	  //private $training_level;
 	/*
 	 * This is a temporary mini constructor for testing purposes. It will be expanded later.
 	 */
 	function __construct(
-        $id, $password, $start_date, $first_name, $last_name, $birthday, $street_address, $city,
-    	$state, $zip_code, $phone1, $phone1type, $email, $emergency_contact_first_name,
+        $id, $password, $start_date, $first_name, $last_name, $age, $city,
+    	$state, $phone1, $email, $branch, $affiliation, $email_consent/*, $emergency_contact_first_name,
     	$emergency_contact_last_name, $emergency_contact_phone, $emergency_contact_phone_type,
     	$emergency_contact_relation, $type, $status, $archived, 
     	$skills, $interests, $training_level,  
    	 	$is_community_service_volunteer,           // required param FIRST
     	$is_new_volunteer = 1,                     // optional
-    	$total_hours_volunteered = 0.00    		     // optional
+    	$total_hours_volunteered = 0.00    		     // optional */
     ) {
         $this->id = $id;
         $this->password = $password;
         $this->start_date = $start_date;
         $this->first_name = $first_name;
         $this->last_name = $last_name;
-        $this->birthday = $birthday;
-        $this->street_address = $street_address;
+		$this->age = $age;
+        //$this->birthday = $birthday;
+        //$this->street_address = $street_address;
         $this->city = $city;
         $this->state = $state;
-        $this->zip_code = $zip_code;
+        //$this->zip_code = $zip_code;
         $this->phone1 = $phone1;
-        $this->phone1type = $phone1type;
+        //$this->phone1type = $phone1type;
         $this->email = $email;
-        $this->emergency_contact_first_name = $emergency_contact_first_name;
-        $this->emergency_contact_last_name = $emergency_contact_last_name;
-        $this->emergency_contact_phone = $emergency_contact_phone;
-        $this->emergency_contact_phone_type = $emergency_contact_phone_type;
-        $this->emergency_contact_relation = $emergency_contact_relation;
+		$this->email_consent = $email_consent;
+		$this->branch = $branch;
+		$this->affiliation = $affiliation;
+        //$this->emergency_contact_first_name = $emergency_contact_first_name;
+        //$this->emergency_contact_last_name = $emergency_contact_last_name;
+        //$this->emergency_contact_phone = $emergency_contact_phone;
+        //$this->emergency_contact_phone_type = $emergency_contact_phone_type;
+        //$this->emergency_contact_relation = $emergency_contact_relation;
         //$this->tshirt_size = $tshirt_size;
         //$this->school_affiliation = $school_affiliation;
         //$this->photo_release = $photo_release;
         //$this->photo_release_notes = $photo_release_notes;
-        $this->type = $type;
-        $this->status = $status;
-        $this->archived = $archived;
+        //$this->type = $type;
+        //$this->status = $status;
+        //$this->archived = $archived;
         //$this->how_you_heard_of_stepva = $how_you_heard_of_stepva;
         //$this->preferred_feedback_method = $preferred_feedback_method;
-        $this->skills = $skills;
-        $this->interests = $interests;
+        //$this->skills = $skills;
+        //$this->interests = $interests;
         //$this->disability_accomodation_needs = $disability_accomodation_needs;
         //$this->training_complete = $training_complete;
         //$this->training_date = $training_date;
@@ -115,16 +123,16 @@ class Person {
         //$this->orientation_date = $orientation_date;
         //$this->background_complete = $background_complete;
         //$this->background_date = $background_date;
-        $this->is_community_service_volunteer = $is_community_service_volunteer;
-		$this->is_new_volunteer = $is_new_volunteer;
-        $this->total_hours_volunteered = $total_hours_volunteered;
-		$this->training_level = $training_level;
+        //$this->is_community_service_volunteer = $is_community_service_volunteer;
+		//$this->is_new_volunteer = $is_new_volunteer;
+        //$this->total_hours_volunteered = $total_hours_volunteered;
+		//$this->training_level = $training_level;
         // Access level
         $this->access_level = ($id == 'vmsroot') ? 3 : 1;
 
     }
 
-    function get_is_new_volunteer() {
+    /*function get_is_new_volunteer() {
         return $this->is_new_volunteer;
     }
 
@@ -135,9 +143,7 @@ class Person {
     //YALDA DID THIS.
     function get_total_hours_volunteered() {
     	return $this->total_hours_volunteered;
-   }
-
-
+   }*/
 
 	function get_id() {
 		return $this->id;
@@ -159,13 +165,17 @@ class Person {
 		return $this->last_name;
 	}
 
-	function get_birthday() {
+	function get_over_21() {
+		return $this->age;
+	}
+
+	/*function get_birthday() {
 		return $this->birthday;
 	}
 
 	function get_street_address() {
 		return $this->street_address;
-	}
+	}*/
 
 	function get_city() {
 		return $this->city;
@@ -175,23 +185,35 @@ class Person {
 		return $this->state;
 	}
 
-	function get_zip_code() {
+	/*function get_zip_code() {
 		return $this->zip_code;
-	}
+	}*/
 
 	function get_phone1() {
 		return $this->phone1;
 	}
 
-	function get_phone1type() {
+	/*function get_phone1type() {
 		return $this->phone1type;
-	}
+	}*/
 
 	function get_email() {
 		return $this->email;
 	}
 
-	function get_emergency_contact_first_name() {
+	function get_email_prefs() {
+		return $this->email_consent;
+	}
+
+	function get_affiliation() {
+		return $this->affiliation;
+	}
+
+	function get_branch() {
+		return $this->branch;
+	}
+
+	/* function get_emergency_contact_first_name() {
 		return $this->emergency_contact_first_name;
 	}
 
@@ -209,7 +231,7 @@ class Person {
 
 	function get_emergency_contact_relation() {
 		return $this->emergency_contact_relation;
-	}
+	} */
 
 	//function get_tshirt_size() {
 	//	return $this->tshirt_size;
@@ -227,7 +249,7 @@ class Person {
 	//	return $this->photo_release_notes;
 	//}
 
-	function get_type() {
+	/* function get_type() {
 		return $this->type;
 	}
 
@@ -237,11 +259,11 @@ class Person {
 
 	function get_archived() {
 		return $this->archived;
-	}
+	}*/
 
 	function get_access_level() {
 		return $this->access_level;
-	}
+	} 
 
 	//function get_how_you_heard_of_stepva() {
 	//	return $this->how_you_heard_of_stepva;
@@ -251,7 +273,7 @@ class Person {
 	//	return $this->preferred_feedback_method;
 	//}
 
-	function get_skills() {
+	/*function get_skills() {
 		return $this->skills;
 	}
 
@@ -261,7 +283,7 @@ class Person {
 
 	function get_training_level() {
 		return $this->training_level;
-	}
+	} */
 
 	//function get_disability_accomodation_needs() {
 	//	return $this->disability_accomodation_needs;

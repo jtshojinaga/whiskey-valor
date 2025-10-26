@@ -41,7 +41,8 @@ require_once('header.php');
         $ignoreList = array('password', 'password-reenter');
         $args = sanitize($_POST, $ignoreList);
 
-        $required = array(
+        // Original array. Changed to fit WVF needs
+        /*$required = array(
             'first_name', 'last_name', 'birthdate',
             'street_address', 'city', 'state', 'zip', 
             'email', 'phone', 'phone_type',
@@ -52,6 +53,18 @@ require_once('header.php');
             'is_community_service_volunteer',
             'is_new_volunteer', 
             'total_hours_volunteered'
+        );*/
+
+        $required = array(
+            'first_name', 'last_name', 'age',
+            'city', 'state', 
+            'affiliation', 'branch',
+            'email', 'username', 'password',
+            'privacy_consent'
+        );
+
+        $optional = array(
+            'phone', 'email_prefs'
         );
 
         $errors = false;
@@ -62,13 +75,14 @@ require_once('header.php');
 
         $first_name = $args['first_name'];
         $last_name = $args['last_name'];
-        $birthday = validateDate($args['birthdate']);
+        $age = $args['age']; // Passes either "true" or "false" 
+        /*$birthday = validateDate($args['birthdate']);
         if (!$birthday) {
             echo "<p>Invalid birthdate.</p>";
             $errors = true;
-        }
+        } */
 
-        $street_address = $args['street_address'];
+        //$street_address = $args['street_address'];
         $city = $args['city'];
         $state = $args['state'];
         if (!valueConstrainedTo($state, array(
@@ -79,11 +93,11 @@ require_once('header.php');
             $errors = true;
         }
 
-        $zip_code = $args['zip'];
+        /*$zip_code = $args['zip'];
         if (!validateZipcode($zip_code)) {
             echo "<p>Invalid ZIP code.</p>";
             $errors = true;
-        }
+        }*/
 
         $email = strtolower($args['email']);
         if (!validateEmail($email)) {
@@ -91,19 +105,37 @@ require_once('header.php');
             $errors = true;
         }
 
-        $phone1 = validateAndFilterPhoneNumber($args['phone']);
-        if (!$phone1) {
-            echo "<p>Invalid phone number.</p>";
+        if(isset($args['phone1'])) { // Make phone number optional 
+            $phone1 = validateAndFilterPhoneNumber($args['phone1']);
+            if (!$phone1) {
+                echo "<p>Invalid phone number.</p>";
+                $errors = true;
+            }
+        } else {
+            $phone1 = null;
+        }
+
+        if(isset($args['email_prefs'])) {
+            $email_consent = $args['email_prefs'];
+        } else {
+            $email_consent = 'false';
+        }
+
+        if(!isset($args['privacy_consent']) || $args['privacy_consent'] == 'no') {
+            echo "<p>You must agree to the privacy policy to create an account.</p>";
             $errors = true;
         }
 
-        $phone1type = $args['phone_type'];
+        $affiliation = $args['affiliation'];
+        $branch = $args['branch'];
+
+        /*$phone1type = $args['phone_type'];
         if (!valueConstrainedTo($phone1type, array('cellphone', 'home', 'work'))) {
             echo "<p>Invalid phone type.</p>";
             $errors = true;
-        }
+        }*/
 
-        $emergency_contact_first_name = $args['emergency_contact_first_name'];
+        /*$emergency_contact_first_name = $args['emergency_contact_first_name'];
         $emergency_contact_last_name = $args['emergency_contact_last_name'];
         $emergency_contact_relation = $args['emergency_contact_relation'];
 
@@ -111,15 +143,15 @@ require_once('header.php');
         if (!$emergency_contact_phone) {
             echo "<p>Invalid emergency contact phone.</p>";
             $errors = true;
-        }
+        } */
 
-        $emergency_contact_phone_type = $args['emergency_contact_phone_type'];
+        /*$emergency_contact_phone_type = $args['emergency_contact_phone_type'];
         if (!valueConstrainedTo($emergency_contact_phone_type, array('cellphone', 'home', 'work'))) {
             echo "<p>Invalid emergency phone type.</p>";
             $errors = true;
-        }
+        }*/
 
-        $skills = isset($args['skills']) ? $args['skills'] : '';
+        /*$skills = isset($args['skills']) ? $args['skills'] : '';
         $interests = isset($args['interests']) ? $args['interests'] : '';
 
         $is_community_service_volunteer = $args['is_community_service_volunteer'] === 'yes' ? 1 : 0;
@@ -129,7 +161,7 @@ require_once('header.php');
         $type = ($is_community_service_volunteer === 1) ? 'volunteer' : 'participant';
         $archived = 0;
         $status = "Inactive";
-        $training_level = "None";
+        $training_level = "None";*/
 
         $id = $args['username'];
 
@@ -146,7 +178,7 @@ require_once('header.php');
             die();
         }
 
-        $newperson = new Person(
+        /*$newperson = new Person(
             $id, $password, date("Y-m-d"),
             $first_name, $last_name, $birthday,
             $street_address, $city, $state, $zip_code,
@@ -157,6 +189,14 @@ require_once('header.php');
             $skills, $interests, $training_level,
             $is_community_service_volunteer, $is_new_volunteer,
             $total_hours_volunteered
+        ); */
+
+        $newperson = new Person(
+            $id, $password, date("Y-m-d"),
+            $first_name, $last_name, $age,
+            $city, $state, $phone1, 
+            $email, $branch,
+            $affiliation, $email_consent
         );
 
         $result = add_person($newperson);

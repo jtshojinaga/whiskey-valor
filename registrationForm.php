@@ -34,11 +34,11 @@
             <label><em>* </em>Are you 21 or older?</label>
             <div class="radio-group">
                 <div class="radio-element">
-                    <input type="radio" id="yes" name="age" value="yes" required>
+                    <input type="radio" id="yes" name="age" value="true" required>
                     <label for="yes">Yes</label>
                 </div>
                 <div class="radio-element">
-                    <input type="radio" id="no" name="age" value="no">
+                    <input type="radio" id="no" name="age" value="false">
                     <label for="no">No</label>
                 </div>
             </div>
@@ -144,14 +144,14 @@
             <label for="email"><em>* </em>E-mail</label>
             <input type="email" id="email" name="email" required placeholder="Enter your e-mail address">
 
-            <label for="email_prefs">E-mail Notifications</label>
+            <label for="email_consent">E-mail Notifications</label>
             <p>By checking the box below, you consent to recieve emails from the Whiskey Valor Foundation. You may change this at any time.</p>
-            <label><input type="checkbox" id="email_prefs" name="email_prefs" value="email_consent"> I consent.</label>
+            <label><input type="checkbox" id="email_prefs" name="email_prefs" value="true"> I consent.</label>
 
             <div class="median-div"></div>
 
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
+            <label for="phone1">Phone Number</label>
+            <input type="tel" id="phone1" name="phone1" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
 
             <!--<label><em>* </em>Phone Type</label>
             <div class="radio-group">
@@ -251,7 +251,7 @@
         </script>
         <script>
         // Initialize Cleave.js for primary phone number
-        new Cleave('#phone', {
+        new Cleave('#phone1', {
             phone: true,
             phoneRegionCode: 'US',
             delimiter: '-',
@@ -278,8 +278,8 @@
             <p id="password-match-error" class="error hidden">Passwords do not match.</p>
             
               <!-- Required by backend -->
-        <input type="hidden" name="is_new_volunteer" value="1">
-        <input type="hidden" name="total_hours_volunteered" value="0">
+        <!--<input type="hidden" name="is_new_volunteer" value="1">
+        <input type="hidden" name="total_hours_volunteered" value="0"> -->
         </fieldset>
         
         <fieldset class="section-box mb-4">
@@ -290,11 +290,11 @@
             <p>I confirm that I have read the <a href="https://whiskeyvalor.org/policies/privacy-policy">Privacy Policy</a> and consent to the Whiskey Valor Foundation collecting and storing my information for the purposes outlined therein.</p>
             <div class="radio-group">
                 <div class="radio-element">
-                    <input type="radio" id="agree" name="consent" value="yes" required>
+                    <input type="radio" id="agree" name="privacy_consent" value="yes" required>
                     <label for="agree">I agree.</label>
                 </div>
                 <div class="radio-element">
-                    <input type="radio" id="disagree" name="consent" value="no">
+                    <input type="radio" id="disagree" name="privacy_consent" value="no">
                     <label for="disagree">I do not agree.</label>
                 </div>
             </div>

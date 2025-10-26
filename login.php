@@ -33,10 +33,10 @@
             $user = retrieve_person($username);
             if (!$user) {
                 $badLogin = true;
-            } else if ($user->get_status() === "Inactive") {
+            } /*else if ($user->get_status() === "Inactive") {
                 // If the user is archived, block login
                 $archivedAccount = true;
-            } else if (password_verify($password, $user->get_password())) {
+            }*/ else if (password_verify($password, $user->get_password())) {
                 $_SESSION['logged_in'] = true;
 
                 $_SESSION['access_level'] = $user->get_access_level();
