@@ -127,7 +127,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     *
     * @param int $event_id The ID of the event which this email may pertain to.
     * @param int $user_id The ID of the user which this email is being sent to.
-    * @param int $emailType A numeric representation of the type of email that we are handling. 1: Removed from event. NOTE: Please add to this list as you edit this section!
+    * @param int $emailType A numeric representation of the type of email that we are handling. 1: Removed from event. 2: Approved to attend an event. NOTE: Please add to this list as you edit this section!
     * @param string $actionJustification The justification for the action being done. E.g. Why the user was removed from an event.
     * @return bool If the emailHandler returns false then there was an error which occured. 
     */
@@ -138,11 +138,16 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
         //Create the type of email.
         $emailContents = ""; 
         $emailSubject = "";
-        if  ($emailType == 1)
+        if  ($emailType == 1) //Removed from an event
         {
             $emailContents = removalEmailBuilder($eventName, $userName, $actionJustification);
             $emailSubject = "Removed from " . $eventName . ".";
+        } if ($emailType == 2) //Approved for an event
+        {
+            $emailContents = approvalEmailBuilder($eventName, $userName, $actionJustification);
+            $emailSubject = "Approved for " . $eventName . ".";
         }
+
 
         //Make sure that $emailContents has content:
         if ($emailContents == "")
@@ -206,10 +211,22 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
      * @param string $eventName The name of the event the user was removed from.
      * @param string $userName The name of the user which was removed from said event.
      * @param string $actionJustification The justifcation for the user's removal.
-     * 
+     * @return string The removal email body of content.
      */
     function removalEmailBuilder(string $eventName, string $userName, string $actionJustification) :string
     {
          return "Hello, '$userName'\n You've been removed from the event: '$eventName' for the reason of: '$actionJustification'.\n If you have any questions about this removal, please reach out to an administrator.";
+    }
+    /** 
+     * removalEmailBuilder generates a email to send to users who were removed from an event. 
+     * 
+     * @param string $eventName The name of the event the user was approved for.
+     * @param string $userName The name of the user which was approved for said event.
+     * @param string $actionJustification The justifcation for the user's approval.
+     * @return string The approval email body of content.
+     */
+    function approvalEmailBuilder(string $eventName, string $userName, string $actionJustification):string
+    {
+        return "Hello, '$userName'\n You've been approved for the event: '$eventName' for the reason of: '$actionJustification'.\n If you have any questions about this approval, please reach out to an administrator.";
     }
 ?>
