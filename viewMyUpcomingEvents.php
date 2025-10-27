@@ -64,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Fetch events the user is signed up for
 function fetch_user_events($user_id) {
     $connection = connect();
-    $query = "SELECT e.id, e.name, e.date 
+    $query = "SELECT e.id, e.name, e.startDate 
               FROM dbevents e
               INNER JOIN dbeventpersons ep ON e.id = ep.eventID
               WHERE ep.userID = '$user_id'
-              ORDER BY e.date ASC";
+              ORDER BY e.startDate ASC";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -102,7 +102,7 @@ function fetch_event_name($event_id) {
 
 function fetch_my_pending($userid) {
     $connection = connect();
-    $query = "SELECT e.id, e.name, e.date 
+    $query = "SELECT e.id, e.name, e.startDate 
               FROM dbevents e
               INNER JOIN dbpendingsignups ep ON e.id = ep.eventname
               WHERE ep.username = '$userid'";
@@ -162,7 +162,7 @@ $pending_events = fetch_my_pending($user_id);
                                         <?php echo htmlspecialchars($event['name']); ?>
                                     </a>
                                 </td>
-                                <td><?php echo htmlspecialchars($event['date']); ?></td>
+                                <td><?php echo htmlspecialchars($event['startDate']); ?></td>
                                 <td>
                                     <form method="POST" style="display:inline;">
                                         <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event['id']); ?>">
@@ -201,7 +201,7 @@ $pending_events = fetch_my_pending($user_id);
                                         <?php echo htmlspecialchars($event['name']); ?>
                                     </a>
                                 </td>
-                                <td><?php echo htmlspecialchars($event['date']); ?></td>
+                                <td><?php echo htmlspecialchars($event['startDate']); ?></td>
                                 <td>
                                     <form method="POST" style="display:inline;">
                                         <input type="hidden" name="pending_event_id" value="<?php echo htmlspecialchars($event['id']); ?>">

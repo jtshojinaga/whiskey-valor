@@ -637,6 +637,7 @@ function make_a_person($result_row) {
         $result_row['branch'],
         $result_row['archived'], 
         $result_row['emergency_contact_last_name']
+        #$result_row['access_level']
     );
 
     return $thePerson;

@@ -198,24 +198,11 @@
                 <!-- to be replaced -Blue -->
 
             <div class="table-wrapper" id="event-viewer">
-                <!-- <table id="calendar">
 
-                <!-- to be replaced -Blue -->
+
 
             <div class="table-wrapper" id="event-viewer">
-                <!-- <table id="calendar">
-                    <thead>
-                        <tr>
-                            <th>Sunday</th>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thursday</th>
-                            <th>Friday</th>
-                            <th>Saturday</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+
                     <?php
                         $date = $calendarStart;
                         $start = date('Y-m-d', $calendarStart);
@@ -361,28 +348,7 @@
             
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">            
             
-            <?php
-            //archive = grey
-            //restricted = red
-            //signed up for = green
-            //blue = unrestricted
-            ?>
-            <!--<center>
-            <p></p>
-            <i class="fa-solid fa-circle" style="color: #C9AB81"> </i>
-                <span style="font-size: 25px;">
-                    Open Event
-                </span>
-            <i class="fa-solid fa-circle" style="color: #4CAF50"> </i>
-                <span style="font-size: 25px;">
-                    Signed-Up
-                </span>
-            <i class="fa-solid fa-circle" style="color: #aaaaaa"> </i>
-                <span style="font-size: 25px;">
-                    Archived Event
-                </span>
-            </center>
-                            <p></p>-->
+
         
 <div style="display: flex; justify-content: center; align-items: center;">
 <div style="margin-top: 1.5rem;">

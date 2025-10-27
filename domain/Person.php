@@ -45,6 +45,7 @@ class Person {
 	private $branch;
 	private $archived;
 	private $emergency_contact_last_name;
+	private $access_level;
 
 	function __construct(
         $id, $start_date, $first_name, $last_name, $street_address, $city, $state,
@@ -211,6 +212,11 @@ class Person {
 
 	function get_emergency_contact_last_name() {
 		return $this->emergency_contact_last_name;
+	}
+
+	function get_access_level() {
+		$access = ($this->id == 'vmsroot') ? 3 : 1;
+		return $access;
 	}
 
 }

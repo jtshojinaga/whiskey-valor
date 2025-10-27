@@ -47,6 +47,7 @@
 
 // // Fetch eventIDs attended by the user
 // $event_ids = get_attended_event_ids($username);
+
 ?>
 
 <!-- <!DOCTYPE html>
