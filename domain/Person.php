@@ -120,13 +120,10 @@ class Person {
 		return $this->age;
 	}
 
-	/*function get_birthday() {
-		return $this->birthday;
-	}
 
 	function get_street_address() {
 		return $this->street_address;
-	}*/
+	}
 
 	function get_city() {
 		return $this->city;

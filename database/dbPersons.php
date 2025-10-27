@@ -38,8 +38,11 @@ function add_person($person) {
         $insert_query = 'INSERT INTO dbpersons (
             id, start_date, first_name, last_name, city, state,  
             phone1, 
-            over21, email, email_prefs, 
-            password, affiliation, branch
+            over21, phone1type, 
+            emergency_contact_phone, emergency_contact_phone_type, birthday, 
+            email, email_prefs, emergency_contact_first_name, contact_num,
+            emergency_contact_relation, contact_method, type, status, notes, 
+            password, affiliation, branch, emergency_contact_last_name
         ) VALUES ("' .
             $person->get_id() . '","' .
             $person->get_start_date() . '","' .
@@ -67,7 +70,7 @@ function add_person($person) {
             $person->get_password() . '","' .
             $person->get_affiliation() . '","' .
             $person->get_branch() . '","' .
-            $person->get_archived() . '","' .                
+            //$person->get_archived() . '","' .                
             $person->get_emergency_contact_last_name() . '");';  
     
         // Check if the query is properly built
