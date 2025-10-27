@@ -859,7 +859,14 @@ function cancel_event($event_id, $account_name) {
     mysqli_close($connection);
     return $result;
 }
-
+/**
+ * Approve a signup given a single event and a username
+ * @param mixed $event_id The ID for the associated event
+ * @param mixed $account_name The username for the associated account
+ * @param mixed $position The position that the user applied for(DEPRECIATED)
+ * @param mixed $notes Any notes for why the application was approved.
+ * @return bool|mysqli_result
+ */
 function approve_signup($event_id, $account_name, $position, $notes) {
     $query = "DELETE from dbpendingsignups where username = '$account_name' AND eventname = $event_id";
     $connection = connect();
@@ -874,6 +881,10 @@ function approve_signup($event_id, $account_name, $position, $notes) {
     //$result2 = boolval($result2);
     //mysqli_close($connection);
     mysqli_commit($connection);
+    if ($result2 == true)
+    {
+         emailHandler($event_id, $account_name, 2, "Sign-up Approved TEST TEST.");
+    }
     return $result2;
 }
 
@@ -890,10 +901,10 @@ function reject_signup($event_id, $account_name, $position, $notes) {
     $connection = connect();
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
-    if ($result == true)
+    /*if ($result == true) Wrong number for email
     {
         emailHandler($event_id, $account_name, 2, "Sign-up DENIED.");
-    }
+    }*/
     return $result;
 }
 
