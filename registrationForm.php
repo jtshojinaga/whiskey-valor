@@ -116,22 +116,22 @@
             <label for="affiliation"><em>* </em>Military Affiliation</label>
             <select id="affiliation" name="affiliation" required>
                 <option value="" disabled selected></option>
-                <option value="active">Active duty</option>
-                <option value="family">Family member (spouse, child, or parent)</option>
-                <option value="reserve">Reservist</option>
-                <option value="vet">Veteran</option>
-                <option value="civ">Civilian</option>
+                <option value="Active duty">Active duty</option>
+                <option value="Family">Family member (spouse, child, or parent)</option>
+                <option value="Reserve">Reservist</option>
+                <option value="Veteran">Veteran</option>
+                <option value="Civilian">Civilian</option>
             </select>
 
             <label for="branch"><em>* </em>Branch of Service</label>
             <select id="branch" name="branch" required>
                 <option value="" disabled selected></option>
-                <option value="air_force">Air Force</option>
-                <option value="army">Army</option>
-                <option value="coast_guard">Coast Guard</option>
-                <option value="marine_corp">Marine Corp</option>
-                <option value="navy">Navy</option>
-                <option value="space_force">Space Force</option>
+                <option value="Air Force">Air Force</option>
+                <option value="Army">Army</option>
+                <option value="Coast Guard">Coast Guard</option>
+                <option value="Marine Corp">Marine Corp</option>
+                <option value="Navy">Navy</option>
+                <option value="Space Force">Space Force</option>
             </select>
 
         </fieldset>
