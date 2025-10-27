@@ -79,11 +79,12 @@ function add_event($event) {
 
 function request_event_signup($eventID, $account_name, $role, $notes) {
     $connection = connect();
-    $query1 = "SELECT id FROM dbevents WHERE name LIKE '$eventID'";
+    //Getting access to facilitate the ability for Admin's to approve or dissaprove using dbpendingsignups.
+    $query1 = "SELECT id, access FROM dbevents WHERE name LIKE '$eventID'";
     $result1 = mysqli_query($connection, $query1);
     $row = mysqli_fetch_assoc($result1);
     $value = $row['id'];
-   
+    $accessControl =$row['access'];   
     $query2 = "SELECT userID FROM dbeventpersons WHERE eventID LIKE '$value' AND userID LIKE '$account_name'";
     $result2 = mysqli_query($connection, $query2);
 
@@ -280,6 +281,7 @@ function remove_user_from_pending_event($event_id, $user_id) {
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
     mysqli_close($connection);
+
     return $result;
 }
 
@@ -875,12 +877,23 @@ function approve_signup($event_id, $account_name, $position, $notes) {
     return $result2;
 }
 
+/**
+ * Reject a single sign up
+ * @param mixed $event_id The Event ID
+ * @param mixed $account_name The Account ID/Username
+ * @param mixed $position The position or 'account type' of the user who applied.
+ * @param mixed $notes Any notes on the rejection.
+ * @return bool True if successfull, false if the rejection failed
+ */
 function reject_signup($event_id, $account_name, $position, $notes) {
     $query = "DELETE from dbpendingsignups where username = '$account_name' AND eventname = '$event_id'";
     $connection = connect();
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
-    
+    if ($result == true)
+    {
+        emailHandler($event_id, $account_name, 2, "Sign-up DENIED.");
+    }
     return $result;
 }
 
@@ -1003,3 +1016,22 @@ function update_animal2($animal) {
 }
 
 //There was a question mark followed by a > here
+
+/** 
+ * Gets the access level for each event to see if sign-up needs approval or not.
+ * @param $event_id The id what we're querying. 
+ * @return bool if true then the event requires approval for sign-up. if false then it does not.
+ */
+    function fetch_signup_status(int $event_id): bool
+{
+    $connection = connect();
+    
+    $query = "SELECT access FROM dbevents WHERE id = $event_id";
+    $result = mysqli_query($connection, $query);
+    
+    // Fetch the row
+    $eventStatusRow = mysqli_fetch_assoc($result);
+    
+    // Return true/false based on the comparison
+    return ($eventStatusRow['access'] == "Approval_Needed");
+}
