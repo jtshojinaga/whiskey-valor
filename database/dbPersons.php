@@ -36,39 +36,42 @@ function add_person($person) {
     if (mysqli_num_rows($result) == 0) {
         // Prepare the insert query
         $insert_query = 'INSERT INTO dbpersons (
-            id, start_date, first_name, last_name, street_address, city, state, zip_code, 
-            phone1, phone1type, emergency_contact_phone, emergency_contact_phone_type, 
-            birthday, email, emergency_contact_first_name, emergency_contact_last_name, 
-            emergency_contact_relation, type, status, password, skills, interests, 
-            archived, is_new_volunteer, is_community_service_volunteer, total_hours_volunteered, training_level
+            id, start_date, first_name, last_name, city, state,  
+            phone1, 
+            over21, email, email_prefs, 
+            password, affiliation, branch
         ) VALUES ("' .
             $person->get_id() . '","' .
             $person->get_start_date() . '","' .
             $person->get_first_name() . '","' .
             $person->get_last_name() . '","' .
-            $person->get_street_address() . '","' .
+            //$person->get_street_address() . '","' .
             $person->get_city() . '","' .
             $person->get_state() . '","' .
-            $person->get_zip_code() . '","' .
+            //$person->get_zip_code() . '","' .
             $person->get_phone1() . '","' .
-            $person->get_phone1type() . '","' .
-            $person->get_emergency_contact_phone() . '","' .
-            $person->get_emergency_contact_phone_type() . '","' .
-            $person->get_birthday() . '","' .
+            $person->get_over_21() . '","' .
+            //$person->get_phone1type() . '","' .
+            //$person->get_emergency_contact_phone() . '","' .
+            //$person->get_emergency_contact_phone_type() . '","' .
+            //$person->get_birthday() . '","' .
             $person->get_email() . '","' .
-            $person->get_emergency_contact_first_name() . '","' .
-            $person->get_emergency_contact_last_name() . '","' .
-            $person->get_emergency_contact_relation() . '","' .
-            $person->get_type() . '","' .
-            $person->get_status() . '","' .
+            $person->get_email_prefs() . '","' .
+            //$person->get_emergency_contact_first_name() . '","' .
+            //$person->get_emergency_contact_last_name() . '","' .
+            //$person->get_emergency_contact_relation() . '","' .
+            //$person->get_type() . '","' .
+            //$person->get_status() . '","' .
             $person->get_password() . '","' .
-            $person->get_skills() . '","' .
-            $person->get_interests() . '","' .     
-            $person->get_archived() . '","' .                
-            $person->get_is_new_volunteer() . '","' .
-            $person->get_is_community_service_volunteer() . '","' .
-            $person->get_total_hours_volunteered() . '","' .
-            $person->get_training_level() . '");';
+            $person->get_affiliation() . '","' .
+            $person->get_branch() . '");';
+            //$person->get_skills() . '","' .
+            //$person->get_interests() . '","' .     
+            //$person->get_archived() . '","' .                
+            //$person->get_is_new_volunteer() . '","' .
+            //$person->get_is_community_service_volunteer() . '","' .
+            //$person->get_total_hours_volunteered() . '","' .
+            //$person->get_training_level() . '");';
     
         // Check if the query is properly built
         if (empty($insert_query)) {
@@ -855,24 +858,16 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
 */
     // updates the required fields of a person's account
     function update_person_required(
-        $id, $first_name, $last_name, $birthday, $street_address, $city, $state,
-        $zip_code, $email, $phone1, $phone1type, $emergency_contact_first_name,
-        $emergency_contact_last_name, $emergency_contact_phone,
-        $emergency_contact_phone_type, $emergency_contact_relation, $type,
-        $skills, $interests
+        $id, $first_name, $last_name, $city, $state,
+        $email, $phone1, $email_consent, $affiliation,
+        $branch
     ) {
         $query = "update dbpersons set 
-            first_name='$first_name', last_name='$last_name', birthday='$birthday',
-            street_address='$street_address', city='$city', state='$state',
-            zip_code='$zip_code', email='$email', phone1='$phone1', phone1type='$phone1type', 
-            emergency_contact_first_name='$emergency_contact_first_name', 
-            emergency_contact_last_name='$emergency_contact_last_name', 
-            emergency_contact_phone='$emergency_contact_phone', 
-            emergency_contact_phone_type='$emergency_contact_phone_type', 
-            emergency_contact_relation='$emergency_contact_relation', type='$type',
-            
-           
-            skills='$skills', interests='$interests'
+            first_name='$first_name', last_name='$last_name', 
+            city='$city', state='$state',
+            email='$email', phone1='$phone1',
+            affiliation='$affiliation', branch='$branch',
+            email_prefs='$email_consent'
         
             where id='$id'";
         $connection = connect();

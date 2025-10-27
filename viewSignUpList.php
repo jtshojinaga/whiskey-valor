@@ -77,6 +77,7 @@ $access_level = $_SESSION['access_level'];
         <?php endif; ?>
 
         <?php if (count($signups) > 0): ?>
+        <!--TODO: Identify reason this double-rendered a single entry of a registered user.(VMSROOT) -->
             <div class="table-wrapper">
                 <table class="general">
                     <thead>
@@ -102,6 +103,7 @@ $access_level = $_SESSION['access_level'];
                                 <td><?php echo htmlspecialchars($position_label); ?></td>
                                 <?php if ($access_level >= 2): ?>
                                     <td>
+                                <!--This code removes a person from the sign-up-list.-->
                                         <form method="POST" style="display:inline;">
                                             <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($id); ?>">
                                             <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($signup['userID']); ?>">

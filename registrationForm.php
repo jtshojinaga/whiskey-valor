@@ -1,18 +1,21 @@
+<!-- imports -->
+<script src="https://nosir.github.io/cleave.js/dist/cleave.min.js"></script>
+<script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>
 <!-- Hero Section with Title -->
 <header class="hero-header"> 
     <div class="center-header">
-        <h1>New Volunteer Registration</h1>
+        <h1>Account Registration</h1>
     </div>
 </header>
 
 <main>
-  <div class="main-content-box w-full max-w-3xl p-8 mb-8">
+  <div class="main-content-box">
     <form class="signup-form" method="post">
-	<div class="text-center mb-8">
+	<div class="text-center spacing-bottom">
           <h2 class="mb-8">Registration Form</h2>
-            <div class="main-content-box border-2 mb-0 shadow-xs w-full p-4">
-              <p class="sub-text">Please fill out each section of the following form if you would like to volunteer for the organization.</p>
-              <p>An asterisk (<em>*</em>) indicates a required field.</p>
+            <div class="info-box">
+              <p class="sub-text">Please fill out each section of the following form to create your account.</p>
+              <p>An asterisk ( <em>*</em> ) indicates a required field.</p>
             </div>
 	</div>
         
@@ -28,11 +31,24 @@
             <label for="last_name"><em>* </em>Last Name</label>
             <input type="text" id="last_name" name="last_name" required placeholder="Enter your last name">
 
-            <label for="birthdate"><em>* </em>Date of Birth</label>
-            <input type="date" id="birthdate" name="birthdate" required placeholder="Choose your birthday" max="<?php echo date('Y-m-d'); ?>">
+            <label><em>* </em>Are you 21 or older?</label>
+            <div class="radio-group">
+                <div class="radio-element">
+                    <input type="radio" id="yes" name="age" value="true" required>
+                    <label for="yes">Yes</label>
+                </div>
+                <div class="radio-element">
+                    <input type="radio" id="no" name="age" value="false">
+                    <label for="no">No</label>
+                </div>
+            </div>
+            <div class="median-div"></div>
+
+            <!--<label for="birthdate"><em>* </em>Date of Birth</label>
+            <input type="date" id="birthdate" name="birthdate" required placeholder="Choose your birthday" max="<?php echo date('Y-m-d'); ?>">-->
             
-            <label for="street_address"><em>* </em>Street Address</label>
-            <input type="text" id="street_address" name="street_address" required placeholder="Enter your street address">
+            <!-- <label for="street_address"><em>* </em>Street Address</label>
+            <input type="text" id="street_address" name="street_address" required placeholder="Enter your street address"> -->
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" required placeholder="Enter your city">
@@ -93,8 +109,31 @@
                 <option value="WY">Wyoming</option>
             </select>
 
-            <label for="zip"><em>* </em>Zip Code</label>
+            <!--<label for="zip"><em>* </em>Zip Code</label>
             <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
+-->
+            <div class="median-div"></div>
+            <label for="affiliation"><em>* </em>Military Affiliation</label>
+            <select id="affiliation" name="affiliation" required>
+                <option value="" disabled selected></option>
+                <option value="active">Active duty</option>
+                <option value="family">Family member (spouse, child, or parent)</option>
+                <option value="reserve">Reservist</option>
+                <option value="vet">Veteran</option>
+                <option value="civ">Civilian</option>
+            </select>
+
+            <label for="branch"><em>* </em>Branch of Service</label>
+            <select id="branch" name="branch" required>
+                <option value="" disabled selected></option>
+                <option value="air_force">Air Force</option>
+                <option value="army">Army</option>
+                <option value="coast_guard">Coast Guard</option>
+                <option value="marine_corp">Marine Corp</option>
+                <option value="navy">Navy</option>
+                <option value="space_force">Space Force</option>
+            </select>
+
         </fieldset>
 
         <fieldset class="section-box mb-4">
@@ -105,10 +144,16 @@
             <label for="email"><em>* </em>E-mail</label>
             <input type="email" id="email" name="email" required placeholder="Enter your e-mail address">
 
-            <label for="phone"><em>* </em>Phone Number</label>
-            <input type="tel" id="phone" name="phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required placeholder="Ex. (555) 555-5555">
+            <label for="email_consent">E-mail Notifications</label>
+            <p>By checking the box below, you consent to recieve emails from the Whiskey Valor Foundation. You may change this at any time.</p>
+            <label><input type="checkbox" id="email_prefs" name="email_prefs" value="true"> I consent.</label>
 
-            <label><em>* </em>Phone Type</label>
+            <div class="median-div"></div>
+
+            <label for="phone1">Phone Number</label>
+            <input type="tel" id="phone1" name="phone1" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
+
+            <!--<label><em>* </em>Phone Type</label>
             <div class="radio-group">
 	      <div class="radio-element">
                 <input type="radio" id="phone-type-cellphone" name="phone_type" value="cellphone" required><label for="phone-type-cellphone">Cell</label>
@@ -119,11 +164,11 @@
 	      <div class="radio-element">
                 <input type="radio" id="phone-type-work" name="phone_type" value="work" required><label for="phone-type-work">Work</label>
 	      </div>
-            </div>
+            </div>-->
 
         </fieldset>
 
-        <fieldset class="section-box mb-4">
+        <!--<fieldset class="section-box mb-4">
             <h3>Emergency Contact</h3>
             <p class="mb-2">Please provide us with someone to contact on your behalf in case of an emergency.</p>
 	    <div class="blue-div"></div>
@@ -152,14 +197,12 @@
                 <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" required><label for="phone-type-work">Work</label>
 	      </div>
             </div>
-        </fieldset>
+        </fieldset>-->
 
-        <fieldset class="section-box mb-4">
+        <!-- <fieldset class="section-box mb-4">
             <h3 class="mb-2">Other Required Information</h3>
 	    <div class="blue-div"></div>
-            
-           <!-- fix this area is buggy -->
-            
+
            <label><em>* </em>Are you volunteering for court-ordered community service?</label>
             <div class="radio-group">
 	      <div class="radio-element">
@@ -173,9 +216,6 @@
 	      </div>
             </div>
          
-        
-            
-
             <label>Are there any specific skills you have that you believe could be useful for volunteering at the FredSPCA</label>
             <input type="text" id="skills" name="skills" placeholder="">
 
@@ -183,7 +223,7 @@
             <input type="text" id="interests" name="interests" placeholder="">
 
 
-        </fieldset>
+        </fieldset> -->
 
         
                
@@ -209,6 +249,15 @@
             // Initial check on page load
             
         </script>
+        <script>
+        // Initialize Cleave.js for primary phone number
+        new Cleave('#phone1', {
+            phone: true,
+            phoneRegionCode: 'US',
+            delimiter: '-',
+            numericOnly: true,
+        });
+        </script>
 
 
         <fieldset class="section-box mb-4">
@@ -220,20 +269,38 @@
             <input type="text" id="username" name="username" required placeholder="Enter a username">
 
             <label for="password"><em>* </em>Password</label>
+            <p>Your password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter.</p>
             <input type="password" id="password" name="password" placeholder="Enter a strong password" required>
-            <p id="password-error" class="error hidden">Password needs to be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter!</p>
+            <p id="password-error" class="error hidden">Password does not meet requirements.</p>
 
             <label for="password-reenter"><em>* </em>Re-enter Password</label>
             <input type="password" id="password-reenter" name="password-reenter" placeholder="Re-enter password" required>
-            <p id="password-match-error" class="error hidden">Passwords do not match!</p>
+            <p id="password-match-error" class="error hidden">Passwords do not match.</p>
             
               <!-- Required by backend -->
-        <input type="hidden" name="is_new_volunteer" value="1">
-        <input type="hidden" name="total_hours_volunteered" value="0">
+        <!--<input type="hidden" name="is_new_volunteer" value="1">
+        <input type="hidden" name="total_hours_volunteered" value="0"> -->
         </fieldset>
-            
-        <p class="error-block">By pressing Submit below, you are agreeing to volunteer for the organization.</p>
-        <input type="submit" name="registration-form" value="Submit" class="blue-button">
+        
+        <fieldset class="section-box mb-4">
+            <h3>Consent Notice</h3>
+            <p class="mb-2">Please review the following before creating your account.</p>
+        <div class="blue-div"></div>
+            <label><em>* </em> Privacy Policy</label>
+            <p>I confirm that I have read the <a href="https://whiskeyvalor.org/policies/privacy-policy">Privacy Policy</a> and consent to the Whiskey Valor Foundation collecting and storing my information for the purposes outlined therein.</p>
+            <div class="radio-group">
+                <div class="radio-element">
+                    <input type="radio" id="agree" name="privacy_consent" value="yes" required>
+                    <label for="agree">I agree.</label>
+                </div>
+                <div class="radio-element">
+                    <input type="radio" id="disagree" name="privacy_consent" value="no">
+                    <label for="disagree">I do not agree.</label>
+                </div>
+            </div>
+        </fieldset>
+        <p class="text-center notice"></p>
+        <input type="submit" name="registration-form" value="Submit" style="width: 50%; margin: auto;">
     </form>
    </div> 
 </main>
