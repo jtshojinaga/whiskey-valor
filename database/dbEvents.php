@@ -510,12 +510,22 @@ function fetch_events_in_date_range($start_date, $end_date) {
     return $events;
 }
 
-function fetch_events_on_date($date) {
-    echo "<script> console.log('fetch_events_on_date IN:', '\" . $date . \"');</script>";
+function fetch_events_on_date($startDate, $loggedIn) {
+    echo "<script> console.log('fetch_events_on_date IN:', '\" . $startDate . \"');</script>";
     $connection = connect();
-    $date = mysqli_real_escape_string($connection, $date);
-    $query = "select * from dbevents
-              where date = '$date' order by startTime asc";
+    $date = mysqli_real_escape_string($connection, $startDate);
+    if ($loggedIn) {
+        $query = "select * from dbevents
+              where startDate = '$startDate' order by startTime asc";
+
+    }
+    else {
+        $query = "select * from dbevents
+              where startDate = '$startDate'
+              and access = 'Public'
+              order by startTime asc";
+    }
+
     $results = mysqli_query($connection, $query);
     if (!$results) {
         mysqli_close($connection);
