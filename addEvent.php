@@ -108,8 +108,11 @@
                 <input type="date" id="end-date" name="end-date" <?php if ($endDate) echo 'value="' . $endDate . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
-                <label for="name">Event Type </label>
-                <input type="text" id="type" name="type" required placeholder="Enter Event Type">
+                <label for="name">* Event Type </label>
+                <select id="type" name="type">
+                    <option value="Normal">Normal</option>
+                    <option value="Retreat">Retreat</option>
+                </select>
                 <label for="name">Location </label>
                 <input type="text" id="location" name="location" required placeholder="Enter location">
                 <label for="name">Capacity </label>
@@ -119,6 +122,7 @@
                     <option value="Public">Public</option>
                     <option value="Private">Private</option>
                 </select>
+                
                 <input type="submit" value="Create Event">
                 
             </form>

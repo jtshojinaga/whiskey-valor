@@ -142,7 +142,7 @@
 	<div class="flex justify-between items-center">
 	<?php if ($viewingOwnProfile): ?>
           <h2 class="text-xl font-semibold mb-4">My Profile</h2>
-	  <h2 class="mb-4">Edit Icon Placeholder</h2>
+
 	<?php else: ?>
 	  <h2 class="text-xl font-semibold mb-4">Viewing <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?></h2>
 	<?php endif ?>
