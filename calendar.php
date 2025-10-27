@@ -4,76 +4,50 @@
 
     date_default_timezone_set("America/New_York");
 
-    $loggedIn = false;
-    $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        echo "Logged in";
-        $userID = $_SESSION['_id'];
-    }  
-    if (!$loggedIn) {
-        echo "Not Logged in";
+    // Ensure user is logged in
+    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
+        //header('Location: login.php');
+        //die();
     }
 
     // Redirect to current month
-    $dateStr = date("Y-m-d");
+    if (!isset($_GET['month'])) {
+        $month = date("Y-m-d");
+    } else {
+        $month = $_GET['month'];
+    }
+    
+    $year = substr($month, 0, 4);
+    $month2digit = substr($month, 5, 2);
 
-    // If a month/date is passed in the URL, use that instead
-    if (isset($_GET['month'])) {
-        $dateStr = $_GET['month']; // e.g., "2025-10-22"
-    }
-    
-    // Convert the input string (e.g., "2025-10-22" or "2025-10") to a timestamp
-    $inputEpoch = strtotime($dateStr);
-    
-    // Validate; if the input is invalid, redirect to a URL with today's date
-    if (!$inputEpoch) {
-        header('Location: calendar.php?month=' . date("Y-m-d"));
-        die();
-    }
-    
-    // We now have a valid timestamp. Get all the parts we need.
-    $year = date('Y', $inputEpoch);
-    $month2digit = date('m', $inputEpoch);
-    $dayInput = date('d', $inputEpoch); // The day the user selected (for the form)
-    
     $today = strtotime(date("Y-m-d"));
-    
-    // Define the *month* we are displaying (always the 1st day)
-    $firstOfMonthStr = $year . '-' . $month2digit . '-01';
-    
-    // $month is the epoch for the *first day* of the selected month
-    $month = strtotime($firstOfMonthStr); 
-    // $first is an alias for the calendar logic
-    $first = $month; 
-    
+
+    $first = $month . '-01';
+    // Convert to date
+    $month = strtotime($month);
+    // Find first day of the month
+    $first = strtotime($first);
     // Find previous and next month
     $previousMonth = strtotime(date('Y-m-d', $month) . ' -1 month');
     $nextMonth = strtotime(date('Y-m-d', $month) . ' +1 month');
-    
-    // --- END PHP FIX ---
-
-    // The rest of the original file's logic (from line 31) continues...
+    // Validate; redirect if bad arg given
+    if (!$month) {
+        header('Location: calendar.php?month=' . date("Y-m-d"));
+        die();
+    }
     $calendarStart = $first;
     // Back up until we find the first Sunday that should appear on the calendar
     while (date('w', $calendarStart) > 0) {
         $calendarStart = strtotime(date('Y-m-d', $calendarStart) . ' -1 day');
     }
-
-    elseif ($view === 'day') {
-        $day = strtotime($day);
-        $year = substr($date, 0, 4);
-        $month = substr($date, 0, 7);
-        $month = strtotime($month);
-        $previousMonth = strtotime(date('Y-m', $month) . ' -1 month');
-        $nextMonth = strtotime(date('Y-m', $month) . ' +1 month');
-        
-        $timestamp = strtotime($date);
-        $today = strtotime(date("Y-m-d"));
-        $calendarStart = $day;
-        $calendarEnd = date('Y-m-d', $calendarStart);
+    $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +34 day'));
+    $calendarEndEpoch = strtotime($calendarEnd);
+    $weeks = 5;
+    // Add another row if it's needed to display all days in the month
+    if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
+        $calendarEnd = date('Y-m-d', strtotime($calendarEnd . ' +7 day'));
         $calendarEndEpoch = strtotime($calendarEnd);
-
+        $weeks = 6;
     }
 ?>
 <!DOCTYPE html>
@@ -117,9 +91,9 @@
                     
                     <?Php
                     //Logic for getting the last day of the month for input protection.
-                    $finalDayofMonth = date("t", $month);;
+                    $finalDayofMonth = date("t", strtotime($year. "-". $month . 01));
                     ?>
-                    <input id="jumper-day" type="number" value="<?php echo $dayInput; ?>" required min="1" max="<?php echo $finalDayofMonth; ?>" >
+                    <input id="jumper-day" type="number" value="<?php echo $day?>" required min="1" required max="<?php echo $finalDayofMonth?>" >
                 </div>
                 <input type="hidden" id="jumper-value" name="month" value="<?php echo 'test' ?>">
                 <input type="submit" value="View">
@@ -198,17 +172,30 @@
                 <!-- to be replaced -Blue -->
 
             <div class="table-wrapper" id="event-viewer">
+                <!-- <table id="calendar">
 
-
+                <!-- to be replaced -Blue -->
 
             <div class="table-wrapper" id="event-viewer">
-
+                <!-- <table id="calendar">
+                    <thead>
+                        <tr>
+                            <th>Sunday</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <?php
                         $date = $calendarStart;
                         $start = date('Y-m-d', $calendarStart);
                         $end = date('Y-m-d', $calendarEndEpoch);
                         require_once('database/dbEvents.php');
-                        $events = fetch_events_in_date_range($start, $end);
+                        $events = fetch_events_in_date_range($start, $end, $loggedIn);
                         for ($week = 0; $week < $weeks; $week++) {
                             echo '
                                 <tr class="calendar-week">
@@ -282,73 +269,30 @@
                 </table>-->
                 
             </div>
-                <?php elseif ($view === 'day') : ?>
-                    <table>
-                        <tbody>
-                        <?php
-                            $date = $calendarStart;
-                            $start = date('Y-m-d', $calendarStart);
-                            $end = date('Y-m-d', $calendarEndEpoch);
-                            require_once('database/dbEvents.php');
-                            // HERE we want to fetch ALL EVENTS for logged in users
-                            // but users who are not logged in should only be fetching public events
-                            $events = fetch_events_in_date_range($start, $end, $loggedIn);
-
-                            $extraAttributes = '';
-                            $extraClasses = '';
-                            if ($date == $today) {
-                                $extraClasses = ' today';
-                            }
-                            if (date('m', $date) != date('m', $month)) {
-                                $extraClasses .= ' other-month';
-                                $extraAttributes .= ' data-month="' . date('Y-m', $date) . '"';
-                            }
-                            $eventsStr = '';
-                            $e = date('Y-m-d', $date);
-
-                            if (isset($events[$e])) {
-                                $dayEvents = $events[$e];
-                                foreach ($dayEvents as $info) {
-
-                                    $backgroundCol = '#996d49ff'; // default color
-
-                                    if(isset($_SESSION['access_level'])) {
-                                        if (is_archived($info['id'])) { // archived event
-                                            if ($_SESSION['access_level'] < 2) {
-                                                continue; // users cannot see archived events
-                                            }
-                                            $backgroundCol = '#aaaaaa'; //TODO
-
-                                        } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
-                                            $backgroundCol = '#4CAF50';
-
-                                        }
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
-
-                                    } else {
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=guest' . '">' . htmlspecialchars_decode($info['name']) . '</a>';
-                                    }
-                                    
-                                }
-                            }
-                            echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">
-                                <div class="calendar-day-wrapper">
-                                    <p class="calendar-day-number">' . date('j', $date) . '</p>
-                                    ' . $eventsStr . '
-                                </div>
-                            </td>';
-                            $date = strtotime(date('Y-m-d', $date) . ' +1 day');
-
-                            echo '
-                                </tr>';
-                        ?>
-                        </tbody>
-                    </table>
-                <?php endif ?>
-            
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">            
             
-
+            <?php
+            //archive = grey
+            //restricted = red
+            //signed up for = green
+            //blue = unrestricted
+            ?>
+            <!--<center>
+            <p></p>
+            <i class="fa-solid fa-circle" style="color: #C9AB81"> </i>
+                <span style="font-size: 25px;">
+                    Open Event
+                </span>
+            <i class="fa-solid fa-circle" style="color: #4CAF50"> </i>
+                <span style="font-size: 25px;">
+                    Signed-Up
+                </span>
+            <i class="fa-solid fa-circle" style="color: #aaaaaa"> </i>
+                <span style="font-size: 25px;">
+                    Archived Event
+                </span>
+            </center>
+                            <p></p>-->
         
 <div style="display: flex; justify-content: center; align-items: center;">
 <div style="margin-top: 1.5rem;">
