@@ -24,7 +24,7 @@ class Person {
 	private $street_address;
 	private $city;
 	private $state;
-	//private $zip_code;
+	private $zip_code;
 	private $phone1;
 	private $age; // if they're over or under 21
 	private $phone1type;
@@ -136,9 +136,9 @@ class Person {
 		return $this->state;
 	}
 
-	/*function get_zip_code() {
+	function get_zip_code() {
 		return $this->zip_code;
-	}*/
+	}
 
 	function get_phone1() {
 		return $this->phone1;
@@ -146,14 +146,14 @@ class Person {
 
 	function get_phone1type() {
 		return $this->phone1type;
-	}*/
+	}
 
 	function get_email() {
 		return $this->email;
 	}
 
 	function get_email_prefs() {
-		return $this->email_consent;
+		return $this->email_prefs;
 	}
 
 	function get_affiliation() {
@@ -164,7 +164,7 @@ class Person {
 		return $this->branch;
 	}
 
-	/* function get_emergency_contact_first_name() {
+	function get_emergency_contact_first_name() {
 		return $this->emergency_contact_first_name;
 	}
 
@@ -184,19 +184,6 @@ class Person {
 		return $this->birthday;
 	}
 
-	function get_email() {
-		return $this->email;
-	}
-
-	function get_email_prefs() {
-		return $this->email_consent;
-	}
-
-
-	function get_emergency_contact_first_name() {
-		return $this->emergency_contact_first_name;
-	}
-
 
 	function get_contact_num() {
 		return $this->contact_num;
@@ -204,7 +191,7 @@ class Person {
 
 	function get_emergency_contact_relation() {
 		return $this->emergency_contact_relation;
-	} */
+	}
 
 	function get_contact_method() {
 		return $this->contact_method;
@@ -230,20 +217,8 @@ class Person {
 		return $this->password;
 	}
 
-	function get_affiliation() {
-		return $this->affiliation;
-	}
-
-	function get_branch() {
-		return $this->branch;
-	}
-
 	function get_archived() {
 		return $this->archived;
-	}
-
-	function get_emergency_contact_last_name() {
-		return $this->emergency_contact_last_name;
 	}
 
 	function get_access_level() {

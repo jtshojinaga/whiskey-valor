@@ -193,10 +193,12 @@ require_once('header.php');
 
         $newperson = new Person(
             $id, $password, date("Y-m-d"),
-            $first_name, $last_name, $age,
-            $city, $state, $phone1, 
-            $email, $branch,
-            $affiliation, $email_consent
+            $first_name, $last_name, null,
+            $city, $state, null, $phone1, $age, 
+            null, null, null, 
+            $email, $email_consent, 
+            null, null, null, null, null, null, null, 
+            $password, $affiliation, $branch, null, null
         );
 
         $result = add_person($newperson);
