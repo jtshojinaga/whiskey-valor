@@ -241,13 +241,13 @@
         <?php
             require_once('include/output.php');
             $event_name = $event_info['name'];
-            $event_date = date('l, F j, Y', strtotime($event_info['date']));
+            $event_date = date('l, F j, Y', strtotime($event_info['startDate']));
             $event_startTime = time24hto12h($event_info['startTime']);
             $event_endTime = time24hto12h($event_info['endTime']);
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            $event_training_level = $event_info['training_level_required'];
+            $event_training_level = $event_info['affiliation'];
             require_once('include/time.php');
         ?>
 
@@ -301,7 +301,7 @@
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
                 </tr>
                 <tr>
-                    <td class="label">Training Required</td>
+                    <td class="label">Affiliation</td>
                     <td><?php if($event_training_level == null) {
                         $event_training_level = "N/A";
                     }
@@ -381,7 +381,7 @@
 
             <?php endif ?>
 
-            <a href="calendar.php?month=<?= substr($event_info['date'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
+            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
 
         </div>
 

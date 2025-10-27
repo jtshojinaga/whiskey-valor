@@ -94,8 +94,11 @@
                 <input type="text" id="end-time" name="end-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 1:00 PM">
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
-                <label for="name">Event Type </label>
-                <input type="text" id="type" name="type" required placeholder="Enter Event Type">
+                <label for="name">* Event Type </label>
+                <select id="type" name="type">
+                    <option value="Normal">Normal</option>
+                    <option value="Retreat">Retreat</option>
+                </select>
                 <label for="name">Location </label>
                 <input type="text" id="location" name="location" required placeholder="Enter location">
                 <label for="name">Capacity </label>
@@ -107,6 +110,7 @@
                     <option value="Orange">Orange</option>
                     <option value="Pink">Pink</option>
                 </select>
+                
                 <input type="submit" value="Create Event">
                 
             </form>
