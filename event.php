@@ -5,9 +5,10 @@
 
     // Ensure user is logged in
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        header('Location: login.php');
-        die();
+        //header('Location: login.php');
+        //die();
     }
+
     require_once('include/input-validation.php');
     $args = sanitize($_GET);
     if (isset($args["id"])) {
@@ -32,9 +33,17 @@
     }
 
     include_once('database/dbPersons.php');
-    $access_level = $_SESSION['access_level'];
-    $user = retrieve_person($_SESSION['_id']);
-    $active = $user->get_status() == 'Active';
+    if(isset($_SESSION['access_level'])) {
+        $access_level = $_SESSION['access_level'];
+    }
+    // guests should still see the calendar page
+    if($args['user_id'] == 'guest') {
+        
+    } else {
+        $user = retrieve_person($_SESSION['_id']);
+        $active = $user->get_status() == 'Active';
+    }
+
 
     ini_set("display_errors",1);
     error_reporting(E_ALL);
@@ -173,9 +182,9 @@
     <?php 
         require_once('universal.inc');
     ?>
-    <title>Fredericksburg SPCA | View Event: <?php echo $event_info['name'] ?></title>
-    <link rel="stylesheet" href="css/event.css" type="text/css" />
-    <?php if ($access_level >= 2) : ?>
+    <title>Whiskey Valor Foundation | <?php echo $event_info['name'] ?></title>
+    <link rel="stylesheet" href="event.css" type="text/css" />
+    <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
         <script src="js/event.js"></script>
     <?php endif ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -232,20 +241,21 @@
         <?php
             require_once('include/output.php');
             $event_name = $event_info['name'];
-            $event_date = date('l, F j, Y', strtotime($event_info['date']));
+            $event_startDate = date('l, F j, Y', strtotime($event_info['startDate']));
             $event_startTime = time24hto12h($event_info['startTime']);
             $event_endTime = time24hto12h($event_info['endTime']);
+            $event_endDate = date('l, F j, Y', strtotime($event_info['endDate']));
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            $event_training_level = $event_info['training_level_required'];
+            
             require_once('include/time.php');
         ?>
 
         <!-- Event Information Table -->
-        <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
+        <h2 class="event-head">
             <?php echo htmlspecialchars_decode($event_name); ?>
-            <?php if ($access_level >= 2): ?>
+            <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
                 <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
@@ -305,7 +315,7 @@
         <div class="action-buttons">
 
             <!--@@@ Check-In and Check-Out Buttons by Thomas -->
-            <?php if (can_check_in($user->get_id(), $event_info))  : ?>
+            <?php if (isset($user) && can_check_in($user->get_id(), $event_info))  : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_in" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -316,7 +326,7 @@
                 </form>
             <?php endif ?>
 
-            <?php if (can_check_out($user->get_id(), $event_info))  : ?>
+            <?php if (isset($user) && can_check_out($user->get_id(), $event_info))  : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_out" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -335,7 +345,12 @@
                 <?php endif ?>
             <?php endif*/ ?>
 
-            <?php if ($access_level >= 2) : ?>
+            <form action="eventSignUp.php" method="get">
+                <input type="hidden" name="event_name" value="<?php echo htmlspecialchars($event_info['name']); ?>">
+                <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event_info['id']); ?>">
+                <button type="submit" class="button primary">Sign Up!</button>
+            </form>
+            <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
 
                 <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
 
@@ -368,7 +383,6 @@
             <?php endif ?>
 
             <a href="calendar.php?month=<?= substr($event_info['date'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
-            <a href="viewAllEvents.php" class="button cancel">Return to All Events</a>
 
         </div>
 
@@ -383,7 +397,7 @@
             </div>
 
         <!-- Confirmation Modals -->
-        <?php if ($access_level >= 2) : ?>
+        <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
             <div id="delete-confirmation-wrapper" class="modal hidden">
                 <div class="modal-content">
                     <p>Are you sure you want to delete this event?</p>
@@ -411,7 +425,7 @@
             <?php endif ?>
 
 
-            <?php if ($access_level < 2) : ?>
+            <?php if (isset($_SESSION['access_level']) && $access_level < 2) : ?>
                 <div id="cancel-confirmation-wrapper" class="modal hidden">
                 <div class="modal-content">
                     <p>Are you sure you want to cancel your sign-up for this event?</p>

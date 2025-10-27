@@ -2,8 +2,8 @@
     
 class Message{
     private $id;
-    private $senderID;
-    private $recipentID;
+    private $senderID; //This is the senders email
+    private $recipentID; //This is the recipients email
     private $title;
     private $body;
     private $time;

@@ -152,42 +152,15 @@
             <span class="font-medium">Joined</span><span>Jan 2022</span>
           </div>
           <div class="flex justify-between py-2">
-            <span class="font-medium">Role</span><span>Volunteer</span>
+            <span class="font-medium">Branch</span><span><?php echo ucfirst($user->get_branch()) ?></span>
           </div>
           <div class="flex justify-between py-2">
-            <span class="font-medium">Status</span><span><?php
-                 if ($user->get_archived()) {
-                     echo 'Archived';
-                 } else {
-                     echo 'Active';
-                 }
-                     ?></span>
+            <span class="font-medium">Affiliation</span><span><?php echo ucfirst($user->get_affiliation()) ?></span>
           </div>
         </div>
       </div>
       <div class="mt-6 space-y-2">
         <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">Edit Profile</button>
-
-<!-- -->
-            <?php if ($id != $userID): ?>
-                <?php if (($accessLevel == 2 && $user->get_access_level() == 1) || $accessLevel >= 3): ?>
-        <button onclick="window.location.href='resetPassword.php?id=<?php echo htmlspecialchars($_GET['id']) ?>';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">Change Password</button>
-                <?php endif ?>
-        <button onclick="window.location.href='volunteerReport.php?id=<?php echo htmlspecialchars($_GET['id']) ?>';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">View Volunteer Hours</button>
-        <button onclick="window.location.href='personSearch.php';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-blue-700 cursor-pointer">Return to User Search</button>
-            <?php else: ?>
-        <button onclick="window.location.href='changePassword.php';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">Change Password</button>
-        <button onclick="window.location.href='volunteerReport.php';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">View Volunteer Hours</button>
-        <button onclick="window.location.href='milestonePoints.php';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">View Milestones &amp Points</button>
-            <?php endif ?>
-<!-- -->
-
-
-<?php if ($accessLevel < 2) : ?>
-        <button onclick="window.location.href='volunteerReport.php?id=<?php echo $user->get_id() ?>';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-blue-700 cursor-pointer">My Volunteering Report</button>
-<?php else : ?>
-        <button onclick="window.location.href='volunteerReport.php?id=<?php echo $user->get_id() ?>';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-blue-700 cursor-pointer"><?php echo $user->get_first_name() ?> <?php echo $user->get_last_name() ?>'s Volunteering Report</button>
-<?php endif ?>
         <button onclick="window.location.href='index.php';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-blue-700 cursor-pointer">Return to Dashboard</button>
       </div>
     </div>
@@ -198,7 +171,7 @@
       <div class="flex border-b border-gray-300 mb-4">
         <button class="tab-button px-4 py-2 text-lg font-medium text-gray-700 border-b-4 border-blue-900" data-tab="personal" onclick="showSection('personal')">Personal Information</button>
         <button class="tab-button px-4 py-2 text-lg font-medium text-gray-700" data-tab="contact" onclick="showSection('contact')">Contact Information</button>
-        <button class="tab-button px-4 py-2 text-lg font-medium text-gray-700" data-tab="volunteer" onclick="showSection('volunteer')">Volunteer Information</button>
+        <button class="tab-button px-4 py-2 text-lg font-medium text-gray-700" data-tab="volunteer" onclick="showSection('volunteer')">Email Preferences</button>
       </div>
 
       <!-- Personal Section -->
@@ -233,57 +206,46 @@
         </div>
         <div>
           <span class="block text-sm font-medium text-blue-900">Emergency Contact Name</span>
-          <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_emergency_contact_first_name() . ' ' . $user->get_emergency_contact_last_name() ?></p>
+          <?php if ($user->get_emergency_contact_first_name()):?>
+            <p class="text-gray-900 font-medium text-xl"><?php $user->get_emergency_contact_first_name . $user->get_emergency_contact_last_name?></p>
+          <?php else: ?>
+            <p class="text-gray-900 font-medium text-xl">N/A</p>
+          <?php endif ?>
         </div>
         <div>
           <span class="block text-sm font-medium text-blue-900">Emergency Contact Relation</span>
-          <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_emergency_contact_relation() ?></p>
+          <?php if ($user->get_emergency_contact_relation()):?>
+            <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_emergency_contact_relation()?></p>
+          <?php else: ?>
+            <p class="text-gray-900 font-medium text-xl">N/A</p>
+          <?php endif ?>
         </div>
         <div>
           <span class="block text-sm font-medium text-blue-900">Emergency Contact Phone Number</span>
-          <p class="text-gray-900 font-medium text-xl"><a href="tel:<?php echo $user->get_emergency_contact_phone() ?>"><?php echo formatPhoneNumber($user->get_emergency_contact_phone()) ?></a> (<?php echo ucfirst($user->get_emergency_contact_phone_type()) ?>)</p>
+          <?php if ($user->get_emergency_contact_phone()): ?>
+            <p class="text-gray-900 font-medium text-xl"><a href="tel:<?php echo $user->get_emergency_contact_phone() ?>"><?php echo formatPhoneNumber($user->get_emergency_contact_phone()) ?></a> (<?php echo ucfirst($user->get_emergency_contact_phone_type()) ?>)</p>
+          <?php else: ?>
+            <p class="text-gray-900 font-medium text-xl">N/A</p>
+          <?php endif ?>
         </div>
  
       </div>
 
-      <!-- Volunteer Section -->
+      <!-- Email Prefs Section -->
       <div id="volunteer" class="profile-section space-y-4 hidden">
         <div>
-          <span class="block text-sm font-medium text-blue-900">Account Type</span>
-          <p class="text-gray-900 font-medium text-xl"><?php
-                if ($user->get_is_community_service_volunteer()) {
-                    echo 'Community Service Volunteer';
-                } else {
-                    echo 'Standard Volunteer';
-                }
-                    ?></p>
+          <span class="block text-sm font-medium text-blue-900">Email</span>
+          <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_email() ?></p>
         </div>
         <div>
-          <span class="block text-sm font-medium text-blue-900">Skills</span>
-          <p class="text-gray-900 font-medium text-xl"><?php echo ucfirst($user->get_skills() ?: "Not specified") ?></p>
-        </div>
-        <div>
-          <span class="block text-sm font-medium text-blue-900">Interests</span>
-          <p class="text-gray-900 font-medium text-xl"><?php echo ucfirst($user->get_interests() ?: "Not specified") ?></p>
-        </div>
-	      <div>
-          <span class="block text-sm font-medium text-blue-900">Total Hours Volunteered</span>
-          <?php if ($isAdmin && !$viewingOwnProfile): ?>
-            <form method="POST" class="mt-2 flex items-center gap-4">
-              <input type="number" step="0.01" name="new_hours" min="0" value="<?= htmlspecialchars($user->get_total_hours_volunteered()) ?>" required
-                    class="border border-gray-300 px-3 py-1 rounded-md w-32 shadow-sm">
-            
-
-              <button type="submit" class="bg-blue-900 text-white px-4 py-1 rounded-md hover:bg-blue-700">
-                Update
-              </button>
-            </form>
+          <span class="block text-sm font-medium text-blue-900">Receive Emails?</span>
+          <?php if ($user->get_email_prefs()):?>
+            <p class="text-gray-900 font-medium text-xl"> Yes </p>
           <?php else: ?>
-            <p class="text-gray-900 font-medium text-xl">
-              <?= number_format($user->get_total_hours_volunteered(), 2) ?> hours
-            </p>
-          <?php endif; ?>
+            <p class="text-gray-900 font-medium text-xl"> No </p>
+          <?php endif ?>
         </div>
+
 
 	      
       </div>

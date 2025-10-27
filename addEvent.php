@@ -26,7 +26,7 @@
         require_once('database/dbEvents.php');
         $args = sanitize($_POST, null);
         $required = array(
-            "name", "date", "start-time", "end-time", "description", "type"
+            "name", "start-date", "start-time", "end-time", "description", "type"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';
@@ -40,8 +40,9 @@
 
             $startTime = $args['start-time'] = $validated[0];
             $endTime = $args['end-time'] = $validated[1];
-            $date = $args['date'] = validateDate($args["date"]);
-            $args["training_level_required"] = $_POST['training_level_required'];
+            $startDate = $args['start-date'] = validateDate($args["start-date"]);
+            $endDate = $args['end-date'] = validateDate($args["end-date"]);
+            $args["access"] = $_POST['access'];
     
             if (!$startTime || !$endTime || !$date > 11){
                 echo 'bad args';
@@ -58,12 +59,23 @@
             
         }
     }
-    $date = null;
-    if (isset($_GET['date'])) {
-        $date = $_GET['date'];
-        $datePattern = '/[0-9]{4}-[0-9]{2}-[0-9]{2}/';
-        $timeStamp = strtotime($date);
-        if (!preg_match($datePattern, $date) || !$timeStamp) {
+    $startDate = null;
+    if (isset($_GET['start-date'])) {
+        $startDate = $_GET['start-date'];
+        $startDatePattern = '/[0-9]{4}-[0-9]{2}-[0-9]{2}/';
+        $timeStamp = strtotime($startDate);
+        if (!preg_match($startDatePattern, $startDate) || !$timeStamp) {
+            header('Location: calendar.php');
+            die();
+        }
+    }
+
+    $endDate = null;
+    if (isset($_GET['end-date'])) {
+        $endDate = $_GET['end-date'];
+        $endDatePattern = '/[0-9]{4}-[0-9]{2}-[0-9]{2}/';
+        $timeStamp = strtotime($endDate);
+        if (!preg_match($endDatePattern, $endDate) || !$timeStamp) {
             header('Location: calendar.php');
             die();
         }
@@ -86,12 +98,14 @@
             <form id="new-event-form" method="POST">
                 <label for="name">* Event Name </label>
                 <input type="text" id="name" name="name" required placeholder="Enter name"> 
-                <label for="name">* Date </label>
-                <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
+                <label for="name">* Start Date </label>
+                <input type="date" id="start-date" name="start-date" <?php if ($startDate) echo 'value="' . $startDate . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
                 <label for="name">* Start Time </label>
                 <input type="text" id="start-time" name="start-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
                 <label for="name">* End Time </label>
                 <input type="text" id="end-time" name="end-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 1:00 PM">
+                <label for="name">* End Date </label>
+                <input type="date" id="end-date" name="end-date" <?php if ($endDate) echo 'value="' . $endDate . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
                 <label for="name">Event Type </label>
@@ -100,17 +114,15 @@
                 <input type="text" id="location" name="location" required placeholder="Enter location">
                 <label for="name">Capacity </label>
                 <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
-                <label for="training">* Training Type:</label>
-                <select id="training_level_required" name="training_level_required">
-                    <option value="None">None</option>
-                    <option value="Green">Green</option>
-                    <option value="Orange">Orange</option>
-                    <option value="Pink">Pink</option>
+                <label for="level">Access Level:</label>
+                <select id="access" name="access">
+                    <option value="Public">Public</option>
+                    <option value="Private">Private</option>
                 </select>
                 <input type="submit" value="Create Event">
                 
             </form>
-                <?php if ($date): ?>
+                <?php if ($startDate && $endDate): ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
                 <?php else: ?>
                     <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
