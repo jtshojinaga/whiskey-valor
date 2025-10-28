@@ -412,7 +412,7 @@ function make_an_event($result_row) {
     $theEvent = new Event(
                     $result_row['id'],
                     $result_row['name'],                   
-                    date: $result_row['date'],
+                    date: $result_row['startDate'],
                     startTime: $result_row['startTime'],
                     endTime: $result_row['endTime'],
                     description: $result_row['description'],
@@ -443,7 +443,7 @@ function get_all_events() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
             " WHERE completed = 'no'" .
-            " ORDER BY date ASC";
+            " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
