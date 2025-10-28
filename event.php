@@ -37,12 +37,13 @@
         $access_level = $_SESSION['access_level'];
     }
 
-    if($args['user_id'] == 'guest') {
-        
-    } else {
+    //if($args['user_id'] == 'guest') {
+    /*if($args['user_id'] == 'guest') {
+
+    } else {*/
         $user = retrieve_person($_SESSION['_id']);
         $active = $user->get_status() == 'Active';
-    }
+    //}
 
 
     ini_set("display_errors",1);
@@ -277,7 +278,7 @@
             <table>
                 <tr>  
                     <td class="label">Date</td>
-                    <td><?php echo $event_startDate; ?></td>
+                    <td><?php echo $event_date; ?></td>
                 </tr>
                 <tr>
                     <td class="label">Time</td>

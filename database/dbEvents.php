@@ -458,7 +458,7 @@ function get_all_events() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
             " WHERE completed = 'yes'" .
-            " ORDER BY date ASC";
+            " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -586,17 +586,17 @@ function create_event($event) {
         $restricted = 0;
     }
         */
-    $restricted = 0;
+    $access = 0;
     $description = $event["description"];
-    $training_level_required = $event["training_level_required"];
+    //$branch = $event["branch"];
     //$location = $event["location"];
     //$services = $event["service"];
 
     //$animal = $event["animal"];
     $completed = "no";
     $query = "
-        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, training_level_required, type)
-        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$training_level_required', '$type')
+        insert into dbevents (name, startDate, startTime, endTime, access, description, capacity, completed, location, type)
+        values ('$name', '$date', '$startTime', '$endTime', $access, '$description', $capacity, '$completed', '$location', '$type')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
