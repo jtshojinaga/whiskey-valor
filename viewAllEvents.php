@@ -105,12 +105,12 @@
 
                                     //TODO: remove training_level_required and add other necessary fields -Blue
                                     echo "
-                                    <tr data-event-id='$eventID'>   
+                                    <tr data-event-id='$eventID'>
                                         <td><a href='event.php?id=$eventID' class='event-link'>$title</a></td>
                                         <td>$type</td>
                                         <td>$startDate</td>
                                         <td>$endDate</td>";
-
+                                 
                                     if($numSignups >= $capacity) {
                                         echo "<td class='full-capacity'>Full</td>";
                                     } else {
