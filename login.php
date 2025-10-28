@@ -106,8 +106,7 @@
 <div class="h-screen flex">
 
   <!-- Left: Image Section (Hidden on small screens) -->
-  <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px]"
-       style="background-image: url(images/login_background.jpg);">
+  <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px] bg-[#1F1F21]">
   </div>
 
   <!-- Right: Form Section -->
@@ -149,10 +148,10 @@
           <input class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400" type="password" name="password" placeholder="Enter your password" required>
         </div>
         <div class="flex justify-between items-center mb-4">
-          <a href="#" class="text-blue-500 text-sm hover:underline">Forgot password?</a>
-          <a href="https://fredspca.org/" class="text-blue-500 text-sm hover:underline">Fredericksburg SPCA Website</a>
+          <a href="#" class="text-[#22654D] text-sm hover:underline">Forgot password?</a>
+          <a href="https://fredspca.org/" class="text-[#22654D] text-sm hover:underline">Fredericksburg SPCA Website</a>
         </div>
-        <button class="cursor-pointer w-full bg-[#345284] hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300">Login</button>
+        <button class="cursor-pointer w-full bg-[#C9AB81] hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300">Login</button>
       </form>
 
       <!-- Divider -->
@@ -165,7 +164,7 @@
       <!-- Sign Up Section -->
       <p class="text-center text-gray-700">
         Don’t have an account?
-        <a href="VolunteerRegister.php" class="text-blue-500 font-semibold hover:underline">Sign Up Now</a>
+        <a href="VolunteerRegister.php" class="text-[#22654D] font-semibold hover:underline">Sign Up Now</a>
       </p>
 
     </div>

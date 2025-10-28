@@ -184,18 +184,7 @@
         
         </fieldset>
 
-        <fieldset class="section-box">
-    <legend>Volunteer Information</legend>
 
-    <label>Account Type</label>
-    <p>
-        <?php 
-            echo $person->get_is_community_service_volunteer() 
-                ? 'Community Service Volunteer' 
-                : 'Standard Volunteer'; 
-        ?>
-    </p>
-</fieldset>
 
 
             
@@ -205,19 +194,7 @@
             
 
 
-        <fieldset class="section-box">
-            <legend>Optional Information</legend>
 
-          
-
-            <label>Are there any specific skills you have that you believe could be useful for volunteering at FredSPCA?</label>
-            <input type="text" id="skills" name="skills" value="<?php echo hsc($person->get_skills()); ?>" placeholder="">
-
-            <label>Do you have any interests?</label>
-            <input type="text" id="interests" name="interests" value="<?php echo hsc($person->get_interests()); ?>" placeholder="">
-
-            
-        </fieldset>
 
 
         <input type="hidden" name="id" value="<?php echo $id; ?>">
