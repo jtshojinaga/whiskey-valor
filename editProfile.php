@@ -38,10 +38,9 @@
         // }
 
         $required = array(
-            'first_name', 'last_name', 'birthday', 'street_address', 'city', 'state',
-            'zip_code', 'email', 'phone1', 'phone1type', 'emergency_contact_first_name',
-            'emergency_contact_last_name', 'emergency_contact_phone',
-            'emergency_contact_phone_type', 'emergency_contact_relation'
+            'first_name', 'last_name', 'city', 'state',
+            'email', 'phone1', 'email_consent', 
+            'affiliation', 'branch'
         );
         $errors = false;
         if (!wereRequiredFieldsSubmitted($args, $required)) {
@@ -52,13 +51,13 @@
         
         $last_name = $args['last_name'];
         
-        $birthday = validateDate($args['birthday']);
+        /*$birthday = validateDate($args['birthday']);
         if (!$birthday) {
             $errors = true;
             // echo 'bad dob';
-        }
+        }*/
         
-        $street_address = $args['street_address'];
+        //$street_address = $args['street_address'];
 
         $city = $args['city'];
 
@@ -71,11 +70,11 @@
             $errors = true;
         }
 
-        $zip_code = $args['zip_code'];
+        /*$zip_code = $args['zip_code'];
         if (!validateZipcode($zip_code)) {
             $errors = true;
             // echo 'bad zip';
-        }
+        }*/
 
         $email = validateEmail($args['email']);
         if (!$email) {
@@ -89,11 +88,11 @@
             // echo 'bad phone';
         }
 
-        $phone1type = $args['phone1type'];
+        /*$phone1type = $args['phone1type'];
         if (!valueConstrainedTo($phone1type, array('cellphone', 'home', 'work'))) {
             $errors = true;
             // echo 'bad phone type';
-        }
+        }*/
         
         /*@
         $contactWhen = $args['contact-when'];
@@ -104,23 +103,23 @@
         }
         @*/
 
-        $emergency_contact_first_name = $args['emergency_contact_first_name'];
+        //$emergency_contact_first_name = $args['emergency_contact_first_name'];
         
-        $emergency_contact_last_name = $args['emergency_contact_last_name'];
+        //$emergency_contact_last_name = $args['emergency_contact_last_name'];
         
-        $emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_contact_phone']);
+        /*$emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_contact_phone']);
         if (!$emergency_contact_phone) {
             $errors = true;
             // echo 'bad e-contact phone';
-        }
+        }*/
 
-        $emergency_contact_phone_type = $args['emergency_contact_phone_type'];
+        /*$emergency_contact_phone_type = $args['emergency_contact_phone_type'];
         if (!valueConstrainedTo($emergency_contact_phone_type, array('cellphone', 'home', 'work'))) {
             $errors = true;
             // echo 'bad phone type';
-        }
+        } */
 
-        $emergency_contact_relation = $args['emergency_contact_relation'];
+        //$emergency_contact_relation = $args['emergency_contact_relation'];
 
         /*@
         $gender = $args['gender'];
@@ -130,7 +129,7 @@
         }
         @*/
 
-       $type = 'v';
+       /*$type = 'v';
 
 
        
@@ -138,7 +137,24 @@
 
         
         $skills = $args['skills'];
-        $interests = $args['interests'];
+        $interests = $args['interests'];*/
+        if(isset($args['email_prefs'])) {
+            $email_consent = $args['email_prefs']; 
+        } else {
+            $email_consent = 'false';
+        }
+
+        if(isset($args['branch'])) {
+            $branch = $args['branch'];
+        } else {
+            $branch = 'N/A';
+        }
+
+        if(isset($args['affiliation'])) {
+            $affiliation = $args['affiliation'];
+        } else {
+            $affiliation = 'civilian';
+        }
         
        
         // For the new fields, default to 0 if not set
@@ -149,11 +165,8 @@
         }
         
         $result = update_person_required(
-            $id, $first_name, $last_name, $birthday, $street_address, $city, $state,
-            $zip_code, $email, $phone1, $phone1type, $emergency_contact_first_name,
-            $emergency_contact_last_name, $emergency_contact_phone,
-            $emergency_contact_phone_type, $emergency_contact_relation, $type,
-             $skills, $interests
+            $id, $first_name, $last_name, $city, $state,
+            $email, $phone1, $email_consent, $affiliation, $branch
         );
         if ($result) {
             if ($editingSelf) {
@@ -170,7 +183,8 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>Fredericksburg SPCA | Manage Profile</title>
+    <title>Whiskey Valor | Edit Profile</title>
+    <link src="css/base.css" rel="stylesheet">
 </head>
 <body>
     <?php

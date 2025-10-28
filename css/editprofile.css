@@ -43,8 +43,8 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: #1F1F21);
-    --page-font-color: #333333;
+    --page-background-color: #1F1F21;
+    --page-font-color: #C9AB81; 
     --inactive-font-color: #d0d0d0;
     --inactive-background-color: #f0f0f0;
     --standout-background: #fafafa;
@@ -74,7 +74,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --standard-border: 1px solid #333333;
     --light-border: 1px solid var(--shadow-and-border-color);
-    --text-field-border: 2px solid #e8e8e8;
+    --text-field-border: 2px solid #3a3a3a;
 
     --error-color: red;
 
@@ -832,11 +832,12 @@ table.general th, table.general td {
 }
 
 .section-box {
-    border: 1px solid #ddd;
+    border: 1px solid #3a3a3a !important;   
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #fafafa;
+    background-color: #1F1F21;
+    color: #C9AB81;    
 }
 
 .section-box legend {
@@ -876,7 +877,7 @@ table.general th, table.general td {
     max-width: 960px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #1F1F21;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

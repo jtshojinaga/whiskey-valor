@@ -64,7 +64,7 @@
                 margin: 20px 0;
             }
             .volunteer-stat h3 {
-                color: #294877;
+                color: #C9AB81;
                 margin-bottom: 5px;
                 font-size: 20px;
             }

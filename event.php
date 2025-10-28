@@ -36,7 +36,7 @@
     if(isset($_SESSION['access_level'])) {
         $access_level = $_SESSION['access_level'];
     }
-
+    // guests should still see the calendar page
     if($args['user_id'] == 'guest') {
         
     } else {
@@ -241,13 +241,14 @@
         <?php
             require_once('include/output.php');
             $event_name = $event_info['name'];
-            $event_date = date('l, F j, Y', strtotime($event_info['date']));
+            $event_startDate = date('l, F j, Y', strtotime($event_info['startDate']));
             $event_startTime = time24hto12h($event_info['startTime']);
             $event_endTime = time24hto12h($event_info['endTime']);
+            $event_endDate = date('l, F j, Y', strtotime($event_info['endDate']));
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            $event_training_level = $event_info['training_level_required'];
+            
             require_once('include/time.php');
         ?>
 
@@ -277,7 +278,7 @@
             <table>
                 <tr>  
                     <td class="label">Date</td>
-                    <td><?php echo $event_date; ?></td>
+                    <td><?php echo $event_startDate; ?></td>
                 </tr>
                 <tr>
                     <td class="label">Time</td>
@@ -300,13 +301,7 @@
                     <td class="label">Capacity</td>
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
                 </tr>
-                <tr>
-                    <td class="label">Training Required</td>
-                    <td><?php if($event_training_level == null) {
-                        $event_training_level = "N/A";
-                    }
-                    echo $event_training_level; ?></td>
-                </tr>
+
             </table>
         </div>
 
@@ -381,7 +376,7 @@
 
             <?php endif ?>
 
-            <a href="calendar.php?month=<?= substr($event_info['date'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
+            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
 
         </div>
 
