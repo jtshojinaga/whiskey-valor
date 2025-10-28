@@ -32,6 +32,9 @@
         die();
     }
 
+    // Get number of attendees to display on event page
+    $event_num_attendees = fetch_num_attendees($id);
+
     include_once('database/dbPersons.php');
     if(isset($_SESSION['access_level'])) {
         $access_level = $_SESSION['access_level'];
@@ -41,8 +44,8 @@
     /*if($args['user_id'] == 'guest') {
 
     } else {*/
-        $user = retrieve_person($_SESSION['_id']);
-        $active = $user->get_status() == 'Active';
+    $user = retrieve_person($_SESSION['_id']);
+    $active = $user->get_status() == 'Active';
     //}
 
 
@@ -249,6 +252,7 @@
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
             $event_training_level = $event_info['affiliation'];
+            $num_attendees = $event_num_attendees['RowCount'];
             require_once('include/time.php');
         ?>
 
@@ -300,6 +304,10 @@
                 <tr>
                     <td class="label">Capacity</td>
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Attendees</td>
+                    <td id="description-cell"><?php echo $num_attendees; ?></td>
                 </tr>
             </table>
         </div>
