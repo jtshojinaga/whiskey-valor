@@ -277,7 +277,7 @@
             <table>
                 <tr>  
                     <td class="label">Date</td>
-                    <td><?php echo $event_date; ?></td>
+                    <td><?php echo $event_startDate; ?></td>
                 </tr>
                 <tr>
                     <td class="label">Time</td>
@@ -300,13 +300,7 @@
                     <td class="label">Capacity</td>
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
                 </tr>
-                <tr>
-                    <td class="label">Training Required</td>
-                    <td><?php if($event_training_level == null) {
-                        $event_training_level = "N/A";
-                    }
-                    echo $event_training_level; ?></td>
-                </tr>
+
             </table>
         </div>
 
@@ -381,7 +375,7 @@
 
             <?php endif ?>
 
-            <a href="calendar.php?month=<?= substr($event_info['date'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
+            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
 
         </div>
 
