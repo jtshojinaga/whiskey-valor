@@ -86,6 +86,11 @@
     $event_name = isset($_GET['event_name']) ? htmlspecialchars($_GET['event_name']) : '';
     $restricted = isset($_GET['restricted']) ? htmlspecialchars($_GET['restricted']) : '';
 
+    if ($event_id === 0){
+        header('Location: requestFailed.php');
+                die();
+    }
+
     // Retrieve user info from session
     $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
     $account_name = isset($_SESSION['_id']) ? $_SESSION['_id'] : '';

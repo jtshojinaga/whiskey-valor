@@ -1045,8 +1045,9 @@
     border-radius: var(--radius-xl);
     border-style: var(--tw-border-style);
     border-width: 2px;
-    border-color: var(--color-gray-300);
-    background-color: var(--color-white);
+    border-color:#C9AB81 !important;  
+    background-color:#C9AB81 !important;
+    color: #1F1F21 !important;
     --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
@@ -1058,7 +1059,7 @@
     padding-block: calc(var(--spacing) * 2);
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-white);
+    color: #1F1F21;         
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-red-700);
@@ -1068,7 +1069,7 @@
   .blue-button {
     cursor: pointer;
     border-radius: var(--radius-lg);
-    background-color: var(--color-blue-900);
+    background-color:#C9AB81; 
     padding-inline: calc(var(--spacing) * 6);
     padding-block: calc(var(--spacing) * 2);
     color: var(--color-white);

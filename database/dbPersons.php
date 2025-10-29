@@ -38,17 +38,20 @@ function add_person($person) {
         $insert_query = 'INSERT INTO dbpersons (
             id, start_date, first_name, last_name, city, state,  
             phone1, 
-            over21, email, email_prefs, 
-            password, affiliation, branch
+            over21, phone1type, 
+            emergency_contact_phone, emergency_contact_phone_type, birthday, 
+            email, email_prefs, emergency_contact_first_name, contact_num,
+            emergency_contact_relation, contact_method, type, status, notes, 
+            password, affiliation, branch, emergency_contact_last_name
         ) VALUES ("' .
             $person->get_id() . '","' .
             $person->get_start_date() . '","' .
             $person->get_first_name() . '","' .
             $person->get_last_name() . '","' .
-            $person->get_street_address() . '","' .
+            //$person->get_street_address() . '","' .
             $person->get_city() . '","' .
             $person->get_state() . '","' .
-            $person->get_zip_code() . '","' .
+            //$person->get_zip_code() . '","' .
             $person->get_phone1() . '","' .
             $person->get_over_21() . '","' .
             $person->get_phone1type() . '","' .
@@ -67,7 +70,7 @@ function add_person($person) {
             $person->get_password() . '","' .
             $person->get_affiliation() . '","' .
             $person->get_branch() . '","' .
-            $person->get_archived() . '","' .                
+            //$person->get_archived() . '","' .                
             $person->get_emergency_contact_last_name() . '");';  
     
         // Check if the query is properly built
@@ -220,7 +223,7 @@ function check_out($personID, $eventID, $end_time) {
 /* Return true if a given user is currently able to check-in to a given event */
 function can_check_in($personID, $event_info) {
 
-    if (!(time() > strtotime($event_info['date']) && time() < strtotime($event_info['date']) + 86400)) {
+    if (!(time() > strtotime($event_info['startDate']) && time() < strtotime($event_info['endDate']) + 86400)) {
         // event is not ongoing
         return False;
     }
