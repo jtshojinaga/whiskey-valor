@@ -412,7 +412,7 @@ function make_an_event($result_row) {
     $theEvent = new Event(
                     $result_row['id'],
                     $result_row['name'],                   
-                    date: $result_row['date'],
+                    date: $result_row['startDate'],
                     startTime: $result_row['startTime'],
                     endTime: $result_row['endTime'],
                     description: $result_row['description'],
@@ -443,7 +443,7 @@ function get_all_events() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
             " WHERE completed = 'no'" .
-            " ORDER BY date ASC";
+            " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -458,7 +458,7 @@ function get_all_events() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
             " WHERE completed = 'yes'" .
-            " ORDER BY date ASC";
+            " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -491,7 +491,7 @@ function fetch_events_in_date_range($start_date, $end_date) {
     $start_date = mysqli_real_escape_string($connection, $start_date);
     $end_date = mysqli_real_escape_string($connection, $end_date);
     $query = "select * from dbevents
-              where date >= '$start_date' and date <= '$end_date'
+              where startDate >= '$start_date' and endDate <= '$end_date'
               order by startTime asc";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -501,7 +501,7 @@ function fetch_events_in_date_range($start_date, $end_date) {
     require_once('include/output.php');
     $events = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
-        $key = $result_row['date'];
+        $key = $result_row['startDate'];
         if (isset($events[$key])) {
             $events[$key] []= hsc($result_row);
         } else {
@@ -557,6 +557,22 @@ function fetch_event_by_id($id) {
     mysqli_close($connection);
     return null;
 }
+// JUST ADDED
+function fetch_num_attendees($id) {
+    $connection = connect();
+    $id = mysqli_real_escape_string($connection, $id);
+    $query = "select count(*) as RowCount from dbeventpersons where eventID = '$id'";
+    $result = mysqli_query($connection, $query);
+    $event = mysqli_fetch_assoc($result);
+    if ($event) {
+        require_once('include/output.php');
+        $event = hsc($event);
+        mysqli_close($connection);
+        return $event;
+    }
+    mysqli_close($connection);
+    return null;
+}
 
 function create_event($event) {
     $connection = connect();
@@ -586,17 +602,17 @@ function create_event($event) {
         $restricted = 0;
     }
         */
-    $restricted = 0;
+    $access = 0;
     $description = $event["description"];
-    $training_level_required = $event["training_level_required"];
+    //$branch = $event["branch"];
     //$location = $event["location"];
     //$services = $event["service"];
 
     //$animal = $event["animal"];
     $completed = "no";
     $query = "
-        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, training_level_required, type)
-        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$training_level_required', '$type')
+        insert into dbevents (name, startDate, startTime, endTime, access, description, capacity, completed, location, type)
+        values ('$name', '$date', '$startTime', '$endTime', $access, '$description', $capacity, '$completed', '$location', '$type')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {

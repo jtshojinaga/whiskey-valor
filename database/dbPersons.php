@@ -223,7 +223,7 @@ function check_out($personID, $eventID, $end_time) {
 /* Return true if a given user is currently able to check-in to a given event */
 function can_check_in($personID, $event_info) {
 
-    if (!(time() > strtotime($event_info['date']) && time() < strtotime($event_info['date']) + 86400)) {
+    if (!(time() > strtotime($event_info['startDate']) && time() < strtotime($event_info['endDate']) + 86400)) {
         // event is not ongoing
         return False;
     }
