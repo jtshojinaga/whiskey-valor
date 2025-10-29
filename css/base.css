@@ -1266,7 +1266,7 @@ a.event-link:hover {
     padding: 1rem;
     min-width: 50%;
     max-width: 75%;
-    min-height: 100%;
+    height: 100%;
 }
 
 .application-title {
@@ -1306,10 +1306,15 @@ a.event-link:hover {
     align-items: center;
 }
 
+.application-control-buttons button {
+    max-width: 20%;
+}
+
 .application-nav-button {
     background-color: rgba(0,0,0,0.15);
     border-radius: 15px;
     padding: 15px;
+    cursor: pointer;
 }
 .application-nav-button:hover {
     background-color: rgba(255,255,255,0.1);

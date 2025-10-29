@@ -44,9 +44,9 @@
                 <div class="application-sidebar">
                     <div class="application-control-buttons">
                         <!-- accent app, deny app, app flag, etc; will be replaced w buttons-->
-                         <p>approve</p>
-                         <p>deny</p>
-                         <p>flag</p>
+                         <button type="button" value="approve">Approve</button>
+                         <button type="button" value="deny">Deny</button>
+                         <button type="button" value="flag">Flag</button>
                     </div>
                     <div class="application-comment">
                         <!-- post and view a comment; needs to integrate w backend -->
