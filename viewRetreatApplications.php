@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <a href="./viewApplication.php?app_id=test" class="button-cancel">View Test Application Page</a>
+            <a href="./viewApplication.php?app_id=test">View Test Application Page</a>
         <?php endif ?>
     </body>
 </html>
