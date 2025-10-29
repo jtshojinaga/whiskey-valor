@@ -3,7 +3,7 @@
     /**
      * Represents an entry in the audit log. Allows admins to track changes to account information.
      */
-    class AuditEntry {
+    class logEntry {
 
         private $id;
         private $timestamp; //The time in which the change happened.
