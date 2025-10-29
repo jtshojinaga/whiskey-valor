@@ -28,6 +28,8 @@
                     <!-- feel free to change or use these as you like -->
                 </div>
             </div>
+
+            <a href="./viewApplication.php?app_id=test" class="button-cancel">View Test Application Page</a>
         <?php endif ?>
     </body>
 </html>
