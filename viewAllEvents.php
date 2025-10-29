@@ -67,10 +67,10 @@
                     <table class="general">
                         <thead>
                             <tr>
-                                <th style="width:1px">Training Required</th>
-                                <th>Title</th>
-                                <th>Event Type</th>
+                                <th style="width:1px"> Title</th>
+                                <th style="width:1px">Event Type</th>
                                 <th style="width:1px">Date</th>
+                                <th style="width:1px"></th>
                                 <th style="width:1px">Capacity</th>
                                 <th style="width:1px"></th>
                             </tr>

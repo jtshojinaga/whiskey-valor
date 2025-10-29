@@ -18,6 +18,7 @@
  * @param string $type  e.g. 'volunteer', 'admin', 'board', 'donator', 'participant'
  * @return array       List of email strings
  */
+
 function getEmailsByType(string $type): array {
     include_once('database/dbinfo.php');
     $conn = connect();
@@ -146,7 +147,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
             $emailSubject = "Removed from " . $eventName . ".";
         } if ($emailType == 2) //Approved for an event
         {
-            $emailContents = approvalEmailBuilder($eventName, $userName, $actionJustification);
+            //$emailContents = approvalEmailBuilder($eventName, $userName, $actionJustification);
             $emailSubject = "Approved for " . $eventName . ".";
         }
 
