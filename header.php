@@ -706,7 +706,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['settimes.php'] = 1;
         $permission_array['eventfailurebaddeparturetime.php'] = 1;
         $permission_array['viewretreatapplications.php'] = 2;
-        
+        $permission_array['viewapplication.php'] = 2;
         // LOWERCASE
 
 
