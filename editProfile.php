@@ -130,30 +130,30 @@
         @*/
 
        /*$type = 'v';
-
-
-       
         
 
         
         $skills = $args['skills'];
         $interests = $args['interests'];*/
+
+        $person = retrieve_person($id);
+
         if(isset($args['email_prefs'])) {
             $email_consent = $args['email_prefs']; 
         } else {
-            $email_consent = 'false';
+            $email_consent = $person->get_email_prefs();
         }
 
         if(isset($args['branch'])) {
             $branch = $args['branch'];
         } else {
-            $branch = 'N/A';
+            $branch = $person->get_branch();
         }
 
         if(isset($args['affiliation'])) {
             $affiliation = $args['affiliation'];
         } else {
-            $affiliation = 'civilian';
+            $affiliation = $person->get_affiliation();
         }
         
        
