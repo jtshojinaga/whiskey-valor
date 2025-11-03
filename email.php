@@ -103,23 +103,22 @@ function emailAll(string $fromUser, string $subject, string $body): array {
 function sendEmails(array $emails, string $fromUser, string $subject, string $body): array {
     //I wish the site url would work since it would be prettier but it stops working after 
     //a certian amount of emails
-    //$domain = 'jenniferp161.sg-host.com';
-    //$domain = 'gvam1012.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
-    //$fromAddress = "{$fromUser}@{$domain}";
+    $domain = 'jenniferp161.sg-host.com';
+    $domain = 'gvam1012.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
+    $fromAddress = "{$fromUser}@{$domain}";
     
     // Simplified headers – only include essential information.
-       //$headers = "From: {$fromAddress}\r\n";
+    $headers = "From: {$fromAddress}\r\n";
     
-    //$results = [];
-    //foreach ($emails as $email) {
-        //if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            //$results[$email] = mail($email, $subject, $body, $headers);
-        //} else {
-            //$results[$email] = false;
-        //}
-    //}
-    //return $results;
-    return [];
+    $results = [];
+    foreach ($emails as $email) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $results[$email] = mail($email, $subject, $body, $headers);
+        } else {
+            $results[$email] = false;
+        }
+    }
+    return $results;
     //Commented out for the video - Jake
 }
 
