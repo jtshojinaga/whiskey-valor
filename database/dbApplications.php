@@ -168,7 +168,7 @@ function flag_app($appID) {
 function get_all_apps() {
     $con=connect();
     $query = "SELECT * FROM dbapplications" .
-            " ORDER BY flagged";
+            " ORDER BY flagged DESC";
     $result = mysqli_query($con,$query);
     $theApps = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
