@@ -708,6 +708,9 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['viewretreatapplications.php'] = 2;
         $permission_array['viewapplication.php'] = 2;
         $permission_array['createemail.php'] = 2;
+        $permission_array['viewallapplications.php'] = 2;
+        $permission_array['applicationsuccess.php'] = 2;
+        $permission_array['denyapplication.php'] = 2;
         // LOWERCASE
 
 
@@ -829,7 +832,7 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="images/whiskeyLogo.png" alt="Logo"></a>
             </div>
             <div class="nav-links">
                 <div class="nav-item">Events

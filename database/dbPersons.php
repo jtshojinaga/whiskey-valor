@@ -24,13 +24,14 @@ include_once(dirname(__FILE__).'/../domain/Person.php');
 
 
 function add_person($person) {
-    if (!$person instanceof Person) {
-        die("Error: add_person type mismatch");
-    }
-
     $con = connect();
     $query = "SELECT * FROM dbpersons WHERE id = '" . $person->get_id() . "'";
     $result = mysqli_query($con, $query);
+    // if (!$person instanceof Person) {
+    //     die("Error: add_person type mismatch");
+    // }
+
+    
 
     // If the result is empty, it means the person doesn't exist, so we can add the person
     if (mysqli_num_rows($result) == 0) {
