@@ -48,7 +48,7 @@
 
         <?php
 
-        $dayEvents = fetch_events_on_date($selectedDateString);
+        $dayEvents = fetch_events_on_date($selectedDateString, $loggedIn);
         echo "<script> console.log('Events:', " . json_encode($dayEvents) . ");</script>";
         
         // Set up attributes for the <td>
@@ -63,7 +63,7 @@
         { // Check if fetch_events_on_date returned anything
             foreach ($dayEvents as $info) 
                 {
-                    $backgroundCol = '#996d49ff'; // default color
+                    $backgroundCol = '#294877'; // default color
 
                     if (isset($_SESSION['access_level'])) {
 

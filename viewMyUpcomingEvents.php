@@ -25,6 +25,11 @@ error_reporting(E_ALL);
 
 $user_id = $_SESSION['_id']; // Store user ID from session
 
+
+$sort = $_GET['sort'] ?? 'asc';
+$sortDirection = ($sort === 'desc') ? 'DESC' : 'ASC';
+$nextSort = ($sort === 'asc') ? 'desc' : 'asc';
+
 // Handle cancellation of events
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $event_id = $_POST['event_id'] ?? null;
@@ -62,13 +67,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch events the user is signed up for
-function fetch_user_events($user_id) {
+/*function fetch_user_events($user_id) {
     $connection = connect();
-    $query = "SELECT e.id, e.name, e.date 
+    $query = "SELECT e.id, e.name, e.startDate 
               FROM dbevents e
               INNER JOIN dbeventpersons ep ON e.id = ep.eventID
               WHERE ep.userID = '$user_id'
-              ORDER BY e.date ASC";
+              ORDER BY e.startDate ASC";
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        die('Query failed: ' . mysqli_error($connection));
+    }
+
+    $events = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $events[] = $row;
+    }
+
+    mysqli_close($connection);
+    return $events;
+} */
+ 
+    // Fetch events the user is signed up for
+function fetch_user_events($user_id, $sortDirection) {
+    $connection = connect();
+
+    // Query user's events and sort them by date depending on sort choice
+    $query = "SELECT e.id, e.name, e.startDate 
+              FROM dbevents e
+              INNER JOIN dbeventpersons ep ON e.id = ep.eventID
+              WHERE ep.userID = '$user_id'
+              ORDER BY e.startDate $sortDirection";
+
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -83,6 +114,8 @@ function fetch_user_events($user_id) {
     mysqli_close($connection);
     return $events;
 }
+
+
 
 // Fetch event name by ID
 function fetch_event_name($event_id) {
@@ -102,7 +135,7 @@ function fetch_event_name($event_id) {
 
 function fetch_my_pending($userid) {
     $connection = connect();
-    $query = "SELECT e.id, e.name, e.date 
+    $query = "SELECT e.id, e.name, e.startDate 
               FROM dbevents e
               INNER JOIN dbpendingsignups ep ON e.id = ep.eventname
               WHERE ep.username = '$userid'";
@@ -120,7 +153,7 @@ function fetch_my_pending($userid) {
     return $pending;
 }
 
-$upcoming_events = fetch_user_events($user_id);
+$upcoming_events = fetch_user_events($user_id, $sortDirection);
 $pending_events = fetch_my_pending($user_id);
 ?>
 
@@ -143,6 +176,17 @@ $pending_events = fetch_my_pending($user_id);
         <?php endif; ?>
 
         <?php if (count($upcoming_events) > 0): ?>
+            <!-- Sort toggle button -->
+    <div style="margin-bottom: 1rem;">
+        <a class="button" href="?sort=<?php echo htmlspecialchars($nextSort); ?>">
+            Sort by Date 
+            <?php echo ($sort === 'asc') ? '▼ (Newest First)' : '▲ (Oldest First)'; ?>
+        </a>
+    </div>
+            
+            
+            
+            
             <div class="table-wrapper">
             <h2>My Upcoming Events</h2>
                 <table class="general">
@@ -162,7 +206,7 @@ $pending_events = fetch_my_pending($user_id);
                                         <?php echo htmlspecialchars($event['name']); ?>
                                     </a>
                                 </td>
-                                <td><?php echo htmlspecialchars($event['date']); ?></td>
+                                <td><?php echo htmlspecialchars($event['startDate']); ?></td>
                                 <td>
                                     <form method="POST" style="display:inline;">
                                         <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event['id']); ?>">
@@ -201,7 +245,7 @@ $pending_events = fetch_my_pending($user_id);
                                         <?php echo htmlspecialchars($event['name']); ?>
                                     </a>
                                 </td>
-                                <td><?php echo htmlspecialchars($event['date']); ?></td>
+                                <td><?php echo htmlspecialchars($event['startDate']); ?></td>
                                 <td>
                                     <form method="POST" style="display:inline;">
                                         <input type="hidden" name="pending_event_id" value="<?php echo htmlspecialchars($event['id']); ?>">
