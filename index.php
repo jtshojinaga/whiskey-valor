@@ -33,7 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="./css/base.css" rel="stylesheet">
-    <title>Frederickburg SPCA Volunteer Management | Dashboard</title>
+    <title>Whiskey Valor Volunteer Management | Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -495,10 +495,11 @@
         <h2><b>Admin Dashboard</h2>
     </div>
     <div class="full-width-bar-sub">
-        <div class="content-box-test" onclick="window.location.href='calendar.php'">
+        <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Calendar</div>
             <div class="graph-text">See upcoming events/trainings.</div>
@@ -506,10 +507,11 @@
         </div>
 
 
-        <div class="content-box-test" onclick="window.location.href='resources.php'">
+        <div class="content-box-test" onclick="window.location.href='resources.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
             </div>
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Manage Documents</div>
             <div class="graph-text">Resources for volunteers.</div>
@@ -538,7 +540,7 @@
             <button class="arrow-button">→</button>
         </div>
 
-        <div class="content-box-test" onclick="window.location.href='generateReport.php'">
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'">
         <div class="content-box-test" onclick="window.location.href='generateReport.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
@@ -550,7 +552,7 @@
             <div class="graph-text">From this quarter or annual.</div>
             <button class="arrow-button">→</button>
         </div>
-    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'">
+    <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'"> -->
     <div class="content-box-test" onclick="window.location.href='generateEmailList.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
@@ -561,9 +563,9 @@
             <div class="graph-text">Volunteer Emails</div>
             <div class="graph-text">Volunteer Emails</div>
             <button class="arrow-button">→</button>
-        </div>
+    </div>
 
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'"> -->
         <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
@@ -592,7 +594,7 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Socials -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
+            <img src="images/whiskeyLogoBlack.png" alt="Logo" class="footer-logo">
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
@@ -605,14 +607,14 @@
         <div class="footer-right">
             <div class="footer-section">
                 <div class="footer-topic">Connect</div>
-                <a href="https://www.facebook.com/share/g/15X2tqwFkA/">Facebook</a>
-                <a href="https://www.instagram.com/fredspca/?hl=en">Instagram</a>
-                <a href="https://fredspca.org">Main Website</a>
+                <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
+                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a>
+                <a href="https://whiskeyvalor.org">Main Website</a>
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact Us</div>
-                <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
+                <a href="https://whiskeyvalor.org/pages/contact">Send Us An Email</a>
+                <!-- <a href="tel:5408981500">540-898-1500 (ext 117)</a> -->
             </div>
         </div>
     </footer>
@@ -768,7 +770,7 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Socials -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
+            <img src="images/whiskeyLogoBlack.png" alt="Logo" class="footer-logo">
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
@@ -781,14 +783,14 @@
         <div class="footer-right">
             <div class="footer-section">
                 <div class="footer-topic">Connect</div>
-                <a href="https://www.facebook.com/share/g/15X2tqwFkA/">Facebook</a>
-                <a href="https://www.instagram.com/fredspca/?hl=en">Instagram</a>
-                <a href="https://fredspca.org">Main Website</a>
+                <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
+                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a>
+                <a href="https://whiskeyvalor.org">Main Website</a>
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact Us</div>
-                <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
+                <a href="https://whiskeyvalor.org/pages/contact">Send Us An Email</a>
+                <!-- <a href="tel:5408981500">540-898-1500 (ext 117)</a> -->
             </div>
         </div>
     </footer>

@@ -39,15 +39,19 @@ function add_event($event) {
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con,'INSERT INTO dbevents VALUES("' .
                 $event->getID() . '","' .
-                $event->getDate() . '","' .
-                $event->getStartTime() . "," .
-                #$event->get_venue() . '","' .
                 $event->getName() . '","' . 
+                $event->getType() . '","' . 
+                $event->getStartDate() . '","' .
+                $event->getStartTime() . "," .
+                $event->getEndTime() . "," .
+                $event->getEndDate() . "," .
                 $event->getDescription() . '","' .
                 $event->getCapacity() . "," .
+                $event->getLocation() . "," .
+                $event->getAffiliation() . "," .
+                $event->getBranch() . '","' . 
+                $event->Access() . '","' . 
                 $event->getCompleted() . "," .
-                $event->getRestrictedSignup() . "," .
-                $event->getTrainingLevelRequired() . "," .
                 #$event->getID() .            
                 '");');							
         mysqli_close($con);
@@ -411,16 +415,20 @@ function make_an_event($result_row) {
 	 */
     $theEvent = new Event(
                     $result_row['id'],
-                    $result_row['name'],                   
-                    date: $result_row['startDate'],
+                    $result_row['name'],       
+                    type: $result_row['type'],            
+                    startDate: $result_row['startDate'],
                     startTime: $result_row['startTime'],
                     endTime: $result_row['endTime'],
+                    endDate: $result_row['endDate'],
                     description: $result_row['description'],
                     capacity: $result_row['capacity'],
-                    completed: $result_row['completed'],
-                    restricted_signup: $result_row['restricted_signup'],
-                    training_level_required: $result_row['training_level_required'],
-                    type: $result_row['type']
+                    location: $result_row['location'],
+                    affiliation: $result_row['affiliation'],
+                    branch: $result_row['branch'],
+                    access: $result_row['access'],
+                    completed: $result_row['completed']
+                    
                 ); 
     return $theEvent;
 }
