@@ -103,25 +103,26 @@ function emailAll(string $fromUser, string $subject, string $body): array {
 function sendEmails(array $emails, string $fromUser, string $subject, string $body): array {
     //I wish the site url would work since it would be prettier but it stops working after 
     //a certian amount of emails
-    //$domain = 'jenniferp161.sg-host.com';
-    //$domain = 'gvam1012.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
-    //$fromAddress = "{$fromUser}@{$domain}";
+    $domain = 'ZANNYMAIL.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
+    $fromAddress = "{$fromUser}@{$domain}";
     
     // Simplified headers – only include essential information.
-       //$headers = "From: {$fromAddress}\r\n";
+       $headers = "From: {$fromAddress}\r\n";
     
-    //$results = [];
-    //foreach ($emails as $email) {
-        //if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            //$results[$email] = mail($email, $subject, $body, $headers);
-        //} else {
-            //$results[$email] = false;
-        //}
-    //}
-    //return $results;
+    $results = [];
+    foreach ($emails as $email) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $results[$email] = mail($email, $subject, $body, $headers);
+        } else {
+            $results[$email] = false;
+        }
+    }
+    return $results;
+    
     return [];
     //Commented out for the video - Jake
 }
+
 
 
     /**
@@ -203,6 +204,29 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
         $lastName = $userRow['last_name'];
         $userName = $firstName . " " . $lastName;
         return [$eventName, $userName, $userEmail];
+
+    }
+
+    /**
+     * A function to get every email within Whiskey Valor.
+     * @return bool|mysqli_result   an array of the emails
+     */
+    function retrieveAllEmails(): array
+    {  
+        $connection = connect();
+        //TODO: Need to add an extra clause for email preferences
+        $query = "SELECT email FROM dbpersons WHERE email IS NOT NULL AND email <> ''";
+        $queryPrep = mysqli_prepare($connection, $query);
+        mysqli_stmt_execute($queryPrep);
+        $result = mysqli_stmt_get_result($queryPrep);
+        $emails = []; // 1. Initialize an empty array
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $emails[] = $row['email']; // 3. Add just the email string to your array
+        }
+
+        mysqli_stmt_close($queryPrep); // Good practice to close the statement
+        return $emails;
 
     }
      
