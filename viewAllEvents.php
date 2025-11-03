@@ -65,10 +65,10 @@
                     <table class="general">
                         <thead>
                             <tr>
-                                <th style="width:1px">Training Required</th>
-                                <th>Title</th>
-                                <th>Event Type</th>
+                                <th style="width:1px"> Title</th>
+                                <th style="width:1px">Event Type</th>
                                 <th style="width:1px">Date</th>
+                                <th style="width:1px"></th>
                                 <th style="width:1px">Capacity</th>
                                 <th style="width:1px"></th>
                             </tr>
@@ -103,12 +103,11 @@
                                     //TODO: remove training_level_required and add other necessary fields -Blue
                                     echo "
                                     <tr data-event-id='$eventID'>
-                                        
                                         <td><a href='event.php?id=$eventID' class='event-link'>$title</a></td>
                                         <td>$type</td>
                                         <td>$startDate</td>
                                         <td>$endDate</td>";
-                                        
+                                 
                                     if($numSignups >= $capacity) {
                                         echo "<td class='full-capacity'>Full</td>";
                                     } else {

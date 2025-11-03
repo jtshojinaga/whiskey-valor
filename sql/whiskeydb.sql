@@ -521,6 +521,7 @@ CREATE TABLE `dbpendingsignups` (
   `username` varchar(25) NOT NULL,
   `eventname` varchar(100) NOT NULL,
   `role` varchar(5) NOT NULL,
+  `aproval_status` TINYINT(1) DEFAULT 0 NOT NULL,
   `notes` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -838,7 +839,7 @@ ALTER TABLE `dbevents`
 -- AUTO_INCREMENT for table `dbmessages`
 --
 ALTER TABLE `dbmessages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=432;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=429;
 
 --
 -- AUTO_INCREMENT for table `dbshifts`

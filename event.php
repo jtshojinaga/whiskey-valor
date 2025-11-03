@@ -349,6 +349,7 @@
             <form action="eventSignUp.php" method="get">
                 <input type="hidden" name="event_name" value="<?php echo htmlspecialchars($event_info['name']); ?>">
                 <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event_info['id']); ?>">
+                <input type="hidden" name="type" value="<?php echo htmlspecialchars($event_info['type']); ?>">
                 <button type="submit" class="button primary">Sign Up!</button>
             </form>
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
