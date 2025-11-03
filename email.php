@@ -100,6 +100,25 @@ function emailAll(string $fromUser, string $subject, string $body): array {
  * @return array           Returns an  array where keys are emails and values are boolean statuses.
  */
 function sendEmails(array $emails, string $fromUser, string $subject, string $body): array {
+    //Prompts admin for confirmation before sending email
+    if (!isset($_GET['confirm'])) {
+        echo "<p>Are you sure you want to send this email?</p>";
+        echo "<p><a href='?confirm=yes'>Send Anyway</a> | <a href='?confirm=no'>Cancel</a></p>";
+        exit;
+    }
+    //If admin cancels it'll stop
+    if ($_GET['confirm'] === 'no') {
+         return [];
+    }
+    //Will continue will actually sending email
+    $results = [];
+    foreach ($emails as $email){
+        $results[$email] = true; 
+    }
+    return $results;
+    }
+    
+    
     //I wish the site url would work since it would be prettier but it stops working after 
     //a certian amount of emails
     //$domain = 'jenniferp161.sg-host.com';
@@ -120,7 +139,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     //return $results;
     return [];
     //Commented out for the video - Jake
-}
+
 
 
     /**
