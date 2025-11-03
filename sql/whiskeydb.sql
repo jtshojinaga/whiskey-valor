@@ -522,11 +522,13 @@ CREATE TABLE `dbpersons` (
   `state` varchar(2) DEFAULT NULL,
   `zip_code` text DEFAULT NULL,
   `phone1` varchar(12) NOT NULL,
+  'age' INTEGER NOT NULL,
   `phone1type` text DEFAULT NULL,
   `emergency_contact_phone` varchar(12) DEFAULT NULL,
   `emergency_contact_phone_type` text DEFAULT NULL,
   `birthday` text DEFAULT NULL,
   `email` text DEFAULT NULL,
+  'email_prefs' TINYINT(1) NOT NULL DEFAULT 1,
   `emergency_contact_first_name` text NOT NULL,
   `contact_num` varchar(255) DEFAULT 'n/a',
   `emergency_contact_relation` text NOT NULL,
@@ -538,13 +540,15 @@ CREATE TABLE `dbpersons` (
   `skills` text NOT NULL,
   `interests` text NOT NULL,
   `archived` tinyint(1) NOT NULL,
+  'affiliation' text DEFAULT NULL,
+  'branch' text DEFAULT NULL,
   `emergency_contact_last_name` text NOT NULL,
   `is_new_volunteer` tinyint(1) NOT NULL DEFAULT 1,
   `is_community_service_volunteer` tinyint(1) NOT NULL DEFAULT 0,
   `total_hours_volunteered` decimal(5,2) DEFAULT 0.00,
   `volunteer_of_the_month` tinyint(1) DEFAULT 0,
   `votm_awarded_month` date DEFAULT NULL,
-  `training_level` text DEFAULT NULL
+  `training_level` text DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --

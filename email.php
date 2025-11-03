@@ -122,35 +122,6 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     //Commented out for the video - Jake
 }
 
-    /**
-     * Manual email is a function to send emails manually(wow). 
-     * @param array $toPeople An array of people(NOTE: undecided if People objects or just IDs.) to which the email is addressed.
-     * @param string $fromAddress The address/user/admin who is sending the email.
-     * @param string $subject The subject line of the email to be mass-sent.
-     * @param string $content The body of content to be sent.
-     * @return bool Return true if the opperation was a success. False if there was an error durring the method.
-     */
-    function manualEmail(array $toPeople, string $fromAddress, string $subject, string $content): bool
-    {
-        //Include dbPersons because I'd like to take in an array of People(or Person Ids) to be able to seamlessly build dynamic emails.
-        include_once(dirname(__FILE__).'/../database/dbPersons.php');
-        
-        //An array of arrays, each an entry of Address(0) and Name(1)
-        $personalInfoArray = [];
-        
-        
-        // Itterate through Addresses to get information.
-        foreach($toPeople as $person)
-        {
-            $personName = $person->get_first_name() . " " . $person->get_last_name();
-            $personAddress = $person->get_email();
-
-            $personalInfoArray = array($personAddress, $personName);
-        }
-
-        
-
-    }
 
 
     /**
@@ -232,6 +203,29 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
         $lastName = $userRow['last_name'];
         $userName = $firstName . " " . $lastName;
         return [$eventName, $userName, $userEmail];
+
+    }
+
+    /**
+     * A function to get every email within Whiskey Valor.
+     * @return bool|mysqli_result   an array of the emails
+     */
+    function retrieveAllEmails(): array
+    {  
+        $connection = connect();
+        //TODO: Need to add an extra clause for email preferences
+        $query = "SELECT email FROM dbpersons WHERE email IS NOT NULL AND email <> ''";
+        $queryPrep = mysqli_prepare($connection, $query);
+        mysqli_stmt_execute($queryPrep);
+        $result = mysqli_stmt_get_result($queryPrep);
+        $emails = []; // 1. Initialize an empty array
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $emails[] = $row['email']; // 3. Add just the email string to your array
+        }
+
+        mysqli_stmt_close($queryPrep); // Good practice to close the statement
+        return $emails;
 
     }
      
