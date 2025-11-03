@@ -210,19 +210,56 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
      * A function to get every email within Whiskey Valor.
      * @return bool|mysqli_result   an array of the emails
      */
-    function retrieveAllEmails(): array
+    function retrieveAllEmails(array $inNames): array
     {  
-        $connection = connect();
-        //TODO: Need to add an extra clause for email preferences
-        $query = "SELECT email FROM dbpersons WHERE email IS NOT NULL AND email <> ''";
-        $queryPrep = mysqli_prepare($connection, $query);
-        mysqli_stmt_execute($queryPrep);
-        $result = mysqli_stmt_get_result($queryPrep);
         $emails = []; // 1. Initialize an empty array
+        $connection = connect();
+        $result = null;
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $emails[] = $row['email']; // 3. Add just the email string to your array
+        if($inNames[0] == "All Whiskey Valor Members"){
+            //TODO: Need to add an extra clause for email preferences
+            $query = "SELECT email FROM dbpersons WHERE email IS NOT NULL AND email <> ''";
+            $queryPrep = mysqli_prepare($connection, $query);
+            mysqli_stmt_execute($queryPrep);
+            $result = mysqli_stmt_get_result($queryPrep);
+            while ($row = mysqli_fetch_assoc($result)) 
+            {
+                $emails[] = $row['email']; // 3. Add just the email string to your array
+            }
+            
+        }else
+        {
+            foreach ($inNames as $name)
+            {
+                //TODO: Need to add an extra clause for email preferences
+               
+                $trimmedName = trim($name);
+
+                
+                $nameParts = explode(' ', $trimmedName);
+
+                //Make sure we have at least a first and last name
+                if (count($nameParts) >= 2) 
+                {
+                    $firstName = $nameParts[0];
+                    $lastName = $nameParts[1];
+
+                    $query = "SELECT email FROM dbpersons WHERE email IS NOT NULL AND email <> '' AND first_name = ? AND last_name = ?";
+                    $queryPrep = mysqli_prepare($connection, $query);
+                    mysqli_stmt_bind_param($queryPrep, "ss", $firstName, $lastName);
+                    mysqli_stmt_execute($queryPrep);
+                    $result = mysqli_stmt_get_result($queryPrep);
+                    
+                    if ($row = mysqli_fetch_assoc($result)) 
+                    {
+                        $emails[] = $row['email'];
+                    }
+                
+            }
         }
+        
+    }
+
 
         mysqli_stmt_close($queryPrep); // Good practice to close the statement
         return $emails;

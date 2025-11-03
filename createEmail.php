@@ -12,7 +12,7 @@
     require('include/input-validation.php');
     
 
-    function submitEmail(array $names, $emailSubject, $emailBody, $sendNow, $sendTime)
+    function submitEmail(array $names, $emailSubject, $emailBody, $sendNow, $sendTime, $recipientsType)
     {
         error_log("--- New Email Submission ---");
         error_log("Subject: " . $emailSubject);
@@ -23,7 +23,7 @@
             error_log("Send Time: " . $sendTime);
         }else
         {
-            sendEmails(retrieveAllEmails(),"WhiskeyValorAdmin", $emailSubject, $emailBody);
+            sendEmails(retrieveAllEmails($names),"WhiskeyValorAdmin", $emailSubject, $emailBody);
             echo("<p>Emails Sent!</p>");
         }
         error_log("Recipients: " . implode(', ', $names));
@@ -54,7 +54,7 @@
         $names = [];
         if ($recipientsType == 'specific') {
             if (!empty($recipientName)) {
-                $names[] = $recipientName;
+                $names = explode(",",$recipientName);
             }
         } else {
             $names[] = "All Whiskey Valor Members"; 
@@ -67,7 +67,7 @@
              $submissionMessage = "<div class='error-toast'>At least one recipient is required.</div>";
         } else {
            
-            $success = submitEmail($names, $subject, $content, $sendNow, $sendTime);
+            $success = submitEmail($names, $subject, $content, $sendNow, $sendTime, $recipientsType);
 
             if ($success) {
                 $submissionMessage = "<div class='success-toast'>Email has been created successfully!</div>";
@@ -76,7 +76,6 @@
             }
         }
     }
-?>
 ?>
 
 <!DOCTYPE html>
