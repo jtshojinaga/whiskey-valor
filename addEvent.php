@@ -43,6 +43,12 @@
             $date = $args['date'] = validateDate($args["date"]);
             $args["training_level_required"] = $_POST['training_level_required'];
     
+            $args['startDate'] = $date;
+            $args['endDate']   = $date;   
+            $args['startTime'] = $startTime;
+            $args['endTime']   = $endTime;
+
+
             if (!$startTime || !$endTime || !$date > 11){
                 echo 'bad args';
                 die();

@@ -586,7 +586,9 @@ function create_event($event) {
     $connection = connect();
     $name = $event["name"];
     //$abbrevName = $event["abbrev-name"];
-    $date = $event["date"];
+    // $date = $event["date"];
+    $date    = $event["startDate"] ?? $event["date"];
+    $endDate = $event["endDate"]   ?? $date; // default single-day
     $startTime = $event["start-time"];    
     $endTime = $event["end-time"];
     $description = $event["description"];
@@ -610,17 +612,17 @@ function create_event($event) {
         $restricted = 0;
     }
         */
-    $access = 0;
+    $access = 'Public';
     $description = $event["description"];
     //$branch = $event["branch"];
     //$location = $event["location"];
     //$services = $event["service"];
 
     //$animal = $event["animal"];
-    $completed = "no";
+    $completed = 'N';
     $query = "
-        insert into dbevents (name, startDate, startTime, endTime, access, description, capacity, completed, location, type)
-        values ('$name', '$date', '$startTime', '$endTime', $access, '$description', $capacity, '$completed', '$location', '$type')
+        insert into dbevents (name, startDate, startTime, endTime, endDate, access, description, capacity, completed, location, type)
+        values ('$name', '$date', '$startTime', '$endTime', '$endDate', '$access', '$description', $capacity, '$completed', '$location', '$type')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
