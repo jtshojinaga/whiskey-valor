@@ -192,7 +192,7 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: #C9AB81;
+            background: rgb(31,31,33);
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -213,7 +213,7 @@ if (date("H:i:s") > "18:19:59") {
         .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: #C9AB81;
+            color: white;
             cursor: pointer;
         }
 
@@ -257,8 +257,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .nav-item:hover, .nav-item.active {
-            color: #C9AB81;
-            outline: 1px solid #C9AB81;
+            color: #f5ce7aff;
+            outline: 1px solid #f5d07aff;
             outline-offset: 7px;
         }
 
@@ -276,7 +276,7 @@ if (date("H:i:s") > "18:19:59") {
         .icon {
             width: 47px;
             height: 47px;
-            background: #C9AB81;
+            /*background: #292D32;*/
             border-radius: 50%;
 
         }
@@ -705,7 +705,11 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['requestfailed.php'] = 1;
         $permission_array['settimes.php'] = 1;
         $permission_array['eventfailurebaddeparturetime.php'] = 1;
-        
+        $permission_array['viewretreatapplications.php'] = 2;
+        $permission_array['viewapplication.php'] = 2;
+        $permission_array['viewallapplications.php'] = 2;
+        $permission_array['applicationsuccess.php'] = 2;
+        $permission_array['denyapplication.php'] = 2;
         // LOWERCASE
 
 
@@ -827,7 +831,7 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="images/whiskeyLogo.png" alt="Logo"></a>
             </div>
             <div class="nav-links">
                 <div class="nav-item">Events

@@ -39,9 +39,8 @@
         $notes = "Skills: $skills | Dietary restrictions: $restrictions | Disabilities: $disabilities | Materials: $materials";
 
         // 🔹 FIXED: read restricted flag from POST, not GET
-        $restricted = isset($args['restricted']) ? $args['restricted'] : '';
-
-        if ($restricted === "Yes") {
+        $type = isset($args['type']) ? $args['type'] : '';
+        if ($type === "Retreat") {
             $id = request_event_signup($name, $account_name, $role, $notes);
             if (!$id) {
                 header('Location: requestFailed.php');
@@ -84,7 +83,12 @@
     // Get event info from GET parameters
     $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
     $event_name = isset($_GET['event_name']) ? htmlspecialchars($_GET['event_name']) : '';
-    $restricted = isset($_GET['restricted']) ? htmlspecialchars($_GET['restricted']) : '';
+    $type = isset($_GET['type']) ? htmlspecialchars($_GET['type']) : '';
+
+    if ($event_id === 0){
+        header('Location: requestFailed.php');
+                die();
+    }
 
     // Retrieve user info from session
     $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
@@ -137,8 +141,8 @@
                     </div>
                 </fieldset>
 
-                <!-- 🔹 Preserve restricted flag across POST -->
-                <input type="hidden" name="restricted" value="<?php echo $restricted; ?>">
+                <!-- 🔹 Preserve type flag across POST -->
+                <input type="hidden" name="type" value="<?php echo $type; ?>">
 
                 <br/>
                 <input type="submit" value="Sign up for Event">

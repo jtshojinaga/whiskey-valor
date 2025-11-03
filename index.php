@@ -33,7 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="./css/base.css" rel="stylesheet">
-    <title>Frederickburg SPCA Volunteer Management | Dashboard</title>
+    <title>Whiskey Valor Volunteer Management | Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -42,8 +42,6 @@
         }
 
         body {
-            background-color: #1F1F21;
-            color: #C9AB81; 
             font-family: Quicksand, sans-serif;
         }
 
@@ -213,7 +211,7 @@
             padding: 10px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-            color: #1F1F21;
+            color: white;
             font-size: 24px;
             font-weight: 700;
             text-align: center;
@@ -494,15 +492,17 @@
 </div>
 
     <div style="margin-top: 50px; padding: 0px 80px;">
-        <h2><b>Admin Dashboard</b></h2>
+        <h2><b>Admin Dashboard</h2>
     </div>
-    <div class="full-width-bar-sub" style="background-color: #1F1F21; padding: 30px; border-radius: 12px;">
-        <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px;">
+    <div class="full-width-bar-sub">
+        <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
+            <img class="background-image" src="images/blank-white-background.jpg" />
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Calendar</div>
-            <div class="graph-text" style="color: black;">See upcoming events/trainings.</div>
+            <div class="graph-text">See upcoming events/trainings.</div>
             <button class="arrow-button">→</button>
         </div>
 
@@ -511,8 +511,10 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
             </div>
+            <img class="background-image" src="images/blank-white-background.jpg" />
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Manage Documents</div>
-            <div class="graph-text" style="color: black;">Resources for volunteers.</div>
+            <div class="graph-text">Resources for volunteers.</div>
             <button class="arrow-button">→</button>
         </div>
                 <?php
@@ -523,45 +525,56 @@
                         $inboxIcon = 'inbox-unread.svg';
                     }
                 ?>
-        <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px; position: relative; height: 250px;">
+        <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
             </div>
-            
+            <img class="background-image" src="images/blank-white-background.jpg" />
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">System Notifications<?php 
                         if ($unreadMessageCount > 0) {
                             echo ' (' . $unreadMessageCount . ')';
                         }
                     ?></div>
-            <div class="graph-text" style="color: black;">Stay up to date.</div>
+            <div class="graph-text">Stay up to date.</div>
             <button class="arrow-button">→</button>
         </div>
 
-        <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'">
+        <div class="content-box-test" onclick="window.location.href='generateReport.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
+            <img class="background-image" src="images/blank-white-background.jpg" />
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Generate Report</div>
-            <div class="graph-text"style="color: black;" >From this quarter or annual.</div>
+            <div class="graph-text">From this quarter or annual.</div>
+            <div class="graph-text">From this quarter or annual.</div>
             <button class="arrow-button">→</button>
         </div>
-    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px;">
+    <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'"> -->
+    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
-        
+            <img class="background-image" src="images/blank-white-background.jpg" />
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Generate Email List</div>
-            <div class="graph-text" style="color: black;">Volunteer Emails</div>
+            <div class="graph-text">Volunteer Emails</div>
+            <div class="graph-text">Volunteer Emails</div>
             <button class="arrow-button">→</button>
-        </div>
+    </div>
 
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px; position: relative; height: 250px;">
+        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'"> -->
+        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
-        
+            <img class="background-image" src="images/blank-white-background.jpg" />
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Discussions</div>
-            <div class="graph-text"style="color: black;" >See the latest.</div>
+            <div class="graph-text">See the latest.</div>
+            <div class="graph-text">See the latest.</div>
             <button class="arrow-button">→</button>
         </div>
     </div>
@@ -581,7 +594,7 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Socials -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
+            <img src="images/whiskeyLogoBlack.png" alt="Logo" class="footer-logo">
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
@@ -594,14 +607,14 @@
         <div class="footer-right">
             <div class="footer-section">
                 <div class="footer-topic">Connect</div>
-                <a href="https://www.facebook.com/share/g/15X2tqwFkA/">Facebook</a>
-                <a href="https://www.instagram.com/fredspca/?hl=en">Instagram</a>
-                <a href="https://fredspca.org">Main Website</a>
+                <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
+                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a>
+                <a href="https://whiskeyvalor.org">Main Website</a>
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact Us</div>
-                <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
+                <a href="https://whiskeyvalor.org/pages/contact">Send Us An Email</a>
+                <!-- <a href="tel:5408981500">540-898-1500 (ext 117)</a> -->
             </div>
         </div>
     </footer>
@@ -757,7 +770,7 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Socials -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
+            <img src="images/whiskeyLogoBlack.png" alt="Logo" class="footer-logo">
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
@@ -770,14 +783,14 @@
         <div class="footer-right">
             <div class="footer-section">
                 <div class="footer-topic">Connect</div>
-                <a href="https://www.facebook.com/share/g/15X2tqwFkA/">Facebook</a>
-                <a href="https://www.instagram.com/fredspca/?hl=en">Instagram</a>
-                <a href="https://fredspca.org">Main Website</a>
+                <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
+                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a>
+                <a href="https://whiskeyvalor.org">Main Website</a>
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact Us</div>
-                <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
+                <a href="https://whiskeyvalor.org/pages/contact">Send Us An Email</a>
+                <!-- <a href="tel:5408981500">540-898-1500 (ext 117)</a> -->
             </div>
         </div>
     </footer>

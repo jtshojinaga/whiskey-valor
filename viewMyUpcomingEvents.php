@@ -94,11 +94,11 @@ function fetch_user_events($user_id, $sortDirection) {
     $connection = connect();
 
     // Query user's events and sort them by date depending on sort choice
-    $query = "SELECT e.id, e.name, e.date 
+    $query = "SELECT e.id, e.name, e.startDate 
               FROM dbevents e
               INNER JOIN dbeventpersons ep ON e.id = ep.eventID
               WHERE ep.userID = '$user_id'
-              ORDER BY e.date $sortDirection";
+              ORDER BY e.startDate $sortDirection";
 
     $result = mysqli_query($connection, $query);
 
