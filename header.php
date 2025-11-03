@@ -831,7 +831,7 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="images/whiskeyLogo.png" alt="Logo"></a>
             </div>
             <div class="nav-links">
                 <div class="nav-item">Events
