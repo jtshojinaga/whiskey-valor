@@ -100,13 +100,16 @@
 }
 * { font-family: Quicksand, sans-serif; }
 	</style>
-        <title>Fredericksburg SPCA Volunteer System | Log In</title>
+        <title>Whiskey Valor Foundation | Log In</title>
     </head>
     <body>
 <div class="h-screen flex">
 
   <!-- Left: Image Section (Hidden on small screens) -->
   <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px] bg-[#1F1F21]">
+      <img src="images/whiskeyBarrels.png"
+            alt="Barrels"
+            style="height: 100%;">
   </div>
 
   <!-- Right: Form Section -->
@@ -118,7 +121,7 @@
 
       <!-- Logo Placeholder (Now the same width as inputs and centered) -->
       <div class="w-full flex justify-center mb-6">
-        <img src="images/whiskey_valor_logo.png"
+        <img src="images/whiskeyLogo.png"
              alt="Logo"
              class="w-full max-w-xs">
       </div>
@@ -149,7 +152,7 @@
         </div>
         <div class="flex justify-between items-center mb-4">
           <a href="#" class="text-[#22654D] text-sm hover:underline">Forgot password?</a>
-          <a href="https://fredspca.org/" class="text-[#22654D] text-sm hover:underline">Fredericksburg SPCA Website</a>
+          <a href="https://whiskeyvalor.org" class="text-[#22654D] text-sm hover:underline">Whiskey Valor Website</a>
         </div>
         <button class="cursor-pointer w-full bg-[#C9AB81] hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300">Login</button>
       </form>
