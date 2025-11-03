@@ -707,6 +707,9 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['eventfailurebaddeparturetime.php'] = 1;
         $permission_array['viewretreatapplications.php'] = 2;
         $permission_array['viewapplication.php'] = 2;
+        $permission_array['viewallapplications.php'] = 2;
+        $permission_array['applicationsuccess.php'] = 2;
+        $permission_array['denyapplication.php'] = 2;
         // LOWERCASE
 
 
