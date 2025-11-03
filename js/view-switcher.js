@@ -78,12 +78,16 @@ function loadView(viewFile) {
 // Function to initialize filter functionality
 function initializeFilters() {
     // Show/hide filter menu when the filter button is clicked
+    // NOTE: keep the .filter-menu (the menu button) visible at all times and only
+    // toggle the calendar-filter (the pop-out). Use a CSS class to animate instead
+    // of jQuery .show()/.hide() which inject inline styles (display:none).
     $('.filter-wrapper input').on('change', function() {
-        const menu = $(this).siblings('.filter-menu, .calendar-filter');
+        // the pop-out container (icons/buttons) is the .calendar-filter sibling
+        const popout = $(this).siblings('.calendar-filter');
         if (this.checked) {
-            menu.show();
+            popout.addClass('open');
         } else {
-            menu.hide();
+            popout.removeClass('open');
         }
     });
 
