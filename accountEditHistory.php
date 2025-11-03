@@ -1,7 +1,4 @@
 <?php
 
-    function createEditLog()
-    {
-
-    }
+//Viewing edit logs.
 ?>
