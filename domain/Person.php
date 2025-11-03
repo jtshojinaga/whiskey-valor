@@ -116,6 +116,11 @@ class Person {
 		return $this->last_name;
 	}
 
+	function get_over_21() {
+		return $this->age;
+	}
+
+
 	function get_street_address() {
 		return $this->street_address;
 	}
@@ -135,13 +140,33 @@ class Person {
 	function get_phone1() {
 		return $this->phone1;
 	}
-	
-	function get_over_21() {
-		return $this->age;
-	}
 
 	function get_phone1type() {
 		return $this->phone1type;
+	}
+
+	function get_email() {
+		return $this->email;
+	}
+
+	function get_email_prefs() {
+		return $this->email_prefs;
+	}
+
+	function get_affiliation() {
+		return $this->affiliation;
+	}
+
+	function get_branch() {
+		return $this->branch;
+	}
+
+	function get_emergency_contact_first_name() {
+		return $this->emergency_contact_first_name;
+	}
+
+	function get_emergency_contact_last_name() {
+		return $this->emergency_contact_last_name;
 	}
 
 	function get_emergency_contact_phone() {
@@ -156,19 +181,6 @@ class Person {
 		return $this->birthday;
 	}
 
-	function get_email() {
-		return $this->email;
-	}
-
-	function get_email_prefs() {
-		return $this->email_consent;
-	}
-
-
-	function get_emergency_contact_first_name() {
-		return $this->emergency_contact_first_name;
-	}
-
 
 	function get_contact_num() {
 		return $this->contact_num;
@@ -181,6 +193,10 @@ class Person {
 	function get_contact_method() {
 		return $this->contact_method;
 	}
+
+	//function get_photo_release_notes() {
+	//	return $this->photo_release_notes;
+	//}
 
 	function get_type() {
 		return $this->type;
@@ -198,20 +214,8 @@ class Person {
 		return $this->password;
 	}
 
-	function get_affiliation() {
-		return $this->affiliation;
-	}
-
-	function get_branch() {
-		return $this->branch;
-	}
-
 	function get_archived() {
 		return $this->archived;
-	}
-
-	function get_emergency_contact_last_name() {
-		return $this->emergency_contact_last_name;
 	}
 
 	function get_access_level() {
