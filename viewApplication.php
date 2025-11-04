@@ -107,11 +107,12 @@
                             <button id="deny" type="submit" name="action" value="deny" class="btn-action">
                                 <img src="images/disapprove.png" alt="Deny application">
                             </button>
-                            <button id="flag" type="submit" name="action" value="flag" class="btn-action">
+                            <button id="flag" type="submit" name="action" value="<?php if($app->getFlagged()) { echo 'unflag'; } else { echo 'flag'; }?>" class="btn-action">
                                 <?php if($app->getFlagged()): ?>
-                                    <img id="unflagged" src="images/flag.png" alt="Flag application">
-                                <?php else: ?>
                                     <img id="flagged" src="images/filled-flag.png" alt="Unflag application">
+                                    
+                                <?php else: ?>
+                                    <img id="unflagged" src="images/flag.png" alt="Flag application">
                                 <?php endif; ?>
                             </button>
                         </form>
