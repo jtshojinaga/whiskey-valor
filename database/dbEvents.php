@@ -39,19 +39,19 @@ function add_event($event) {
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con,'INSERT INTO dbevents VALUES("' .
                 $event->getID() . '","' .
-                $event->getName() . '","' .
-                $event->getEventType() . '","' .  
+                $event->getName() . '","' . 
+                $event->getType() . '","' . 
                 $event->getStartDate() . '","' .
-                $event->getStartTime() . '","' .
-                $event->getEndTime() . '","' . 
-                $event->getEndDate() . '","' .
+                $event->getStartTime() . "," .
+                $event->getEndTime() . "," .
+                $event->getEndDate() . "," .
                 $event->getDescription() . '","' .
-                $event->getCapacity() . '","' . 
-                $event->getLocation() . '","' .
-                $event->getAffiliation() . '","' .
-                $event->getBranch() . '","' .
-                $event->getAccess() . '","' .
-                $event->getCompleted() . '","' .
+                $event->getCapacity() . "," .
+                $event->getLocation() . "," .
+                $event->getAffiliation() . "," .
+                $event->getBranch() . '","' . 
+                $event->Access() . '","' . 
+                $event->getCompleted() . "," .
                 #$event->getID() .            
                 '");');							
         mysqli_close($con);
@@ -299,7 +299,7 @@ function is_archived($id) {
 
     if ($row == NULL) return False; // no match for that event ID
 
-    if ($row['completed'] == 'Y') {
+    if ($row['completed'] == 'yes') {
         // event is archived
         return True;
     } else {
@@ -312,7 +312,7 @@ function is_archived($id) {
  */
 function archive_event($id) {
     $con=connect();
-    $query = "UPDATE dbevents SET completed = 'Y' WHERE id = '" .$id. "'";
+    $query = "UPDATE dbevents SET completed = 'yes' WHERE id = '" .$id. "'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
     return $result;
@@ -323,7 +323,7 @@ function archive_event($id) {
  */
 function unarchive_event($id) {
     $con=connect();
-    $query = "UPDATE dbevents SET completed = 'N' WHERE id = '" .$id. "'";
+    $query = "UPDATE dbevents SET completed = 'no' WHERE id = '" .$id. "'";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;
@@ -347,6 +347,21 @@ function remove_event($id) {
     }
     $query = 'DELETE FROM dbevents WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
+
+
+    /* WIP writing code to remove event registrations for events that are cancelled. 
+    (Cleans up database from un-needed entries)
+
+    $query = 'SELECT * FROM dbeventpersons WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+
+    if ($result != null || mysqli_num_rows($result) != 0){
+        $query = 'DELETE FROM dbeventpersons WHERE id = "' . $id . '"';
+        $result = mysqli_query($con,$query);
+    }
+    
+    */
+
     mysqli_close($con);
     return true;
 }
@@ -386,9 +401,9 @@ function retrieve_event2($id) {
 }
 
 // not in use, may be useful for future iterations in changing how events are edited (i.e. change the remove and create new event process)
-function update_event_start_date($id, $new_event_date) {
+function update_event_date($id, $new_event_date) {
 	$con=connect();
-	$query = 'UPDATE dbevents SET startDate = "' . $new_event_date . '" WHERE id = "' . $id . '"';
+	$query = 'UPDATE dbevents SET event_date = "' . $new_event_date . '" WHERE id = "' . $id . '"';
 	$result = mysqli_query($con,$query);
 	mysqli_close($con);
 	return $result;
@@ -401,7 +416,7 @@ function make_an_event($result_row) {
     $theEvent = new Event(
                     $result_row['id'],
                     $result_row['name'],       
-                    type: $result_row['type'],         
+                    type: $result_row['type'],            
                     startDate: $result_row['startDate'],
                     startTime: $result_row['startTime'],
                     endTime: $result_row['endTime'],
@@ -411,8 +426,9 @@ function make_an_event($result_row) {
                     location: $result_row['location'],
                     affiliation: $result_row['affiliation'],
                     branch: $result_row['branch'],
-                    completed: $result_row['completed'],
-                    access: $result_row['access']
+                    access: $result_row['access'],
+                    completed: $result_row['completed']
+                    
                 ); 
     return $theEvent;
 }
@@ -431,19 +447,11 @@ function get_all_events() {
     return $theEvents;
  }
  
- function get_all_events_sorted_by_date_not_archived($loggedIn) {
+ function get_all_events_sorted_by_date_not_archived() {
     $con=connect();
-    if ($loggedIn) {
-        $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'N'" .
+    $query = "SELECT * FROM dbevents" .
+            " WHERE completed = 'no'" .
             " ORDER BY startDate ASC";
-    }
-    else {
-        $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'N'" .
-            "and access = 'Public'" .
-            " ORDER BY startDate ASC";
-    }
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -453,23 +461,12 @@ function get_all_events() {
     mysqli_close($con);
     return $theEvents;
  }
-// if logged in, all events. otherwise only public
- function get_all_events_sorted_by_date_and_archived($loggedIn) {
+
+ function get_all_events_sorted_by_date_and_archived() {
     $con=connect();
-    if ($loggedIn) {
-        $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'Y'" .
+    $query = "SELECT * FROM dbevents" .
+            " WHERE completed = 'yes'" .
             " ORDER BY startDate ASC";
-
-    }
-    else {
-        $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'Y'" .
-            "and access = 'Public'" .
-            " ORDER BY startDate ASC";
-
-    }
-    
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -497,24 +494,13 @@ function getonlythose_dbEvents($name, $day, $venue) {
    return $theEvents;
 }
 
-function fetch_events_in_date_range($start_date, $end_date, $loggedIn) {
+function fetch_events_in_date_range($start_date, $end_date) {
     $connection = connect();
     $start_date = mysqli_real_escape_string($connection, $start_date);
     $end_date = mysqli_real_escape_string($connection, $end_date);
-    if ($loggedIn) {
-        $query = "select * from dbevents
-              where startDate >= '$start_date' and startDate <= '$end_date'
+    $query = "select * from dbevents
+              where startDate >= '$start_date' and endDate <= '$end_date'
               order by startTime asc";
-    }
-    else {
-        $query = "select * from dbevents
-              where startDate >= '$start_date' and startDate <= '$end_date'
-              and access = 'Public'
-              order by startTime asc";
-    }
-    // $query = "select * from dbevents
-    //           where startDate >= '$start_date' and startDate <= '$end_date'
-    //           order by startTime asc";
     $result = mysqli_query($connection, $query);
     if (!$result) {
         mysqli_close($connection);
@@ -579,45 +565,62 @@ function fetch_event_by_id($id) {
     mysqli_close($connection);
     return null;
 }
+// JUST ADDED
+function fetch_num_attendees($id) {
+    $connection = connect();
+    $id = mysqli_real_escape_string($connection, $id);
+    $query = "select count(*) as RowCount from dbeventpersons where eventID = '$id'";
+    $result = mysqli_query($connection, $query);
+    $event = mysqli_fetch_assoc($result);
+    if ($event) {
+        require_once('include/output.php');
+        $event = hsc($event);
+        mysqli_close($connection);
+        return $event;
+    }
+    mysqli_close($connection);
+    return null;
+}
 
 function create_event($event) {
     $connection = connect();
     $name = $event["name"];
-    $type = $event['type'];
-    $startDate = $event["start-date"];
+    //$abbrevName = $event["abbrev-name"];
+    $date = $event["date"];
     $startTime = $event["start-time"];    
     $endTime = $event["end-time"];
-    $endDate = $event["end-date"];
     $description = $event["description"];
+    $type = $event['type'];
     if (isset($event["capacity"])) {
         $capacity = $event["capacity"];
     } else {
         $capacity = 999;
     }
-
     if (isset($event["location"])) {
         $location = $event["location"];
     } else {
         $location = "";
     }
-
-    if (isset($event["affiliation"])) {
-        $affiliation = $event["affiliation"];
+    //$completed = $event["completed"];
+    /*
+    $restricted_signup = $event["role"];
+    if ($restricted_signup == "r") {
+        $restricted = 1;
     } else {
-        $affiliation = 0;
+        $restricted = 0;
     }
+        */
+    $access = 0;
+    $description = $event["description"];
+    //$branch = $event["branch"];
+    //$location = $event["location"];
+    //$services = $event["service"];
 
-    if (isset($event["branch"])) {
-        $branch = $event["branch"];
-    } else {
-        $branch = 0;
-    }
-    
-    $access = $event["access"];
-    $completed = "N";
+    //$animal = $event["animal"];
+    $completed = "no";
     $query = "
-        insert into dbevents (name, type, startDate, startTime, endTime, endDate, description, capacity, location, affiliation, branch, access, completed)
-        values ('$name', '$type', '$startDate', '$startTime', '$endTime', '$endDate','$description', $capacity, '$location', '$affiliation', '$branch', '$access', '$completed')
+        insert into dbevents (name, startDate, startTime, endTime, access, description, capacity, completed, location, type)
+        values ('$name', '$date', '$startTime', '$endTime', $access, '$description', $capacity, '$completed', '$location', '$type')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {

@@ -1,5 +1,5 @@
 # Student Names
-Michael Glanzmann
+Michael Glanzmann  
 Blue Shojinaga
 Jake Lipinski
 Kassandra Williams
