@@ -136,7 +136,7 @@
                 </div>
             </div>
 
-            <a href="./viewRetreatApplications.php" class="btn">Back to All Applications</a>
+            <a href="./viewAllApplications.php" class="btn">Back to All Applications</a>
         <?php endif ?>
     </body>
 </html>
