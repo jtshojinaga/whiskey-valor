@@ -14,6 +14,7 @@
     require_once('database/dbPersons.php');
     require_once('database/dbApplications.php');
     require_once('database/dbEvents.php');
+    require_once('domain/Application.php');
 
     $args = sanitize($_GET);
     $app_id = $args['app_id'] ?? null;
@@ -45,15 +46,15 @@
             <h1 class="application-title" style="color: white" >Application for <?php echo $user->get_first_name() . " " . $user->get_last_name(); ?></h1>
             <div class="application-view-container">
                 <?php 
-                    $next_app_id = get_next_app($user_id)->get_id();
-                    $next_app_uid = get_next_app($user_id)->get_user_id();
-                    $prev_app_id = get_previous_app($user_id)->get_id();
-                    $prev_app_uid = get_previous_app($user_id)->get_user_id();
+                    $next_app_id = get_next_app($app_id)->getID();
+                    $next_app_uid = get_next_app($app_id)->getUserID();
+                    $prev_app_id = get_previous_app($app_id)->getID();
+                    $prev_app_uid = get_previous_app($app_id)->getUserID();
                 ?>
                 <div class="application-nav-button">
                     <!-- prev application button; will be replaced with imgs -->
                      <a href="<?php echo 'viewApplication.php?app_id=', urlencode($prev_app_id), '&user_id=', urlencode($prev_app_uid); ?>">
-                        <img src="images/arrow-backward.png" alt="Previous application">
+                        <img src="images/arrow-back.png" alt="Previous application" style="filter: invert(1);">
                      </a>
                 </div>
                 <div class="application-view">
@@ -120,7 +121,7 @@
                 <div class="application-nav-button">
                     <!-- next application button -->
                      <a href="<?php echo 'viewApplication.php?app_id=', urlencode($next_app_id), '&user_id=', urlencode($next_app_uid); ?>">
-                        <img src="images/arrow-forward.png" alt="Next application">
+                        <img src="images/arrow-forward.png" alt="Next application" style="filter: invert(1);">
                      </a>
                 </div>
             </div>
