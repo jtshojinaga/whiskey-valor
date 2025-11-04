@@ -1235,15 +1235,6 @@ a.event-link:hover {
     content: ' Full! ';
 }
 
-/* go nuts */
-.applications-container {
-    display: flex;
-}
-
-.application-card {
-    display: flex;
-}
-
 .application-view-container {
     background-color: rgba(0,0,0,0.2);
     border-radius: 15px;

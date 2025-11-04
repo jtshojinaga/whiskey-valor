@@ -32,7 +32,7 @@
     <head>
         <?php require_once('universal.inc'); ?>
         <title>Whiskey Valor | View Application</title>
-        <link rel="stylesheet" href="css/base.css">
+        <!--<link rel="stylesheet" href="css/base.css">-->
         <link rel="stylesheet" href="css/application.css">
     </head>
     <body>
@@ -54,7 +54,7 @@
                 <div class="application-nav-button">
                     <!-- prev application button; will be replaced with imgs -->
                      <a href="<?php echo 'viewApplication.php?app_id=', urlencode($prev_app_id), '&user_id=', urlencode($prev_app_uid); ?>">
-                        <img src="images/arrow-back.png" alt="Previous application" style="filter: invert(1);">
+                        <img src="images/arrow-back.png" alt="Previous application" style="margin-left: 5px;">
                      </a>
                 </div>
                 <div class="application-view">
@@ -101,9 +101,19 @@
                         <form id="application-form" method="POST" action="process_application.php">
                             <input type="hidden" name="app_id" value="<?php echo htmlspecialchars($app_id); ?>">
                             <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user_id); ?>">
-                            <button type="submit" name="action" value="approve">Approve</button>
-                            <button type="submit" name="action" value="deny">Deny</button>
-                            <button type="submit" name="action" value="flag">Flag</button>
+                            <button id="approve" type="submit" name="action" value="approve" class="btn-action">
+                                <img src="images/approve.png" alt="Approve application">
+                            </button>
+                            <button id="deny" type="submit" name="action" value="deny" class="btn-action">
+                                <img src="images/disapprove.png" alt="Deny application">
+                            </button>
+                            <button id="flag" type="submit" name="action" value="flag" class="btn-action">
+                                <?php if($app->getFlagged()): ?>
+                                    <img id="unflagged" src="images/flag.png" alt="Flag application">
+                                <?php else: ?>
+                                    <img id="flagged" src="images/filled-flag.png" alt="Unflag application">
+                                <?php endif; ?>
+                            </button>
                         </form>
                     </div>
                 <div class="application-comment">
@@ -121,12 +131,12 @@
                 <div class="application-nav-button">
                     <!-- next application button -->
                      <a href="<?php echo 'viewApplication.php?app_id=', urlencode($next_app_id), '&user_id=', urlencode($next_app_uid); ?>">
-                        <img src="images/arrow-forward.png" alt="Next application" style="filter: invert(1);">
+                        <img src="images/arrow-forward.png" alt="Next application">
                      </a>
                 </div>
             </div>
 
-            <a href="./viewRetreatApplications.php">Back to All Applications</a>
+            <a href="./viewRetreatApplications.php" class="btn">Back to All Applications</a>
         <?php endif ?>
     </body>
 </html>
