@@ -443,7 +443,7 @@
     <div class="content-box">
         <img src="images/VolM.png" />
         <div class="small-text">Make a difference.</div>
-        <div class="large-text">Volunteer Management</div>
+        <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
     <span class="button-text">Go</span>
     <div class="circle">&gt;</div>
@@ -481,9 +481,9 @@
 
     <div class="content-box">
         <img src="images/GrM.png" />
-        <div class="small-text">Our team makes this all possible.</div>
-        <div class="large-text">Group Management</div>
-<button class="circle-arrow-button" onclick="window.location.href='groupManagement.php'">
+        <div class="small-text">Get away from it all.</div>
+        <div class="large-text">Retreat Applications</div>
+<button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">
     <span class="button-text">Go</span>
     <div class="circle">&gt;</div>
 </button>
