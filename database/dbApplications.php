@@ -153,17 +153,25 @@ function update_app_note($appID, $note) {
 
 function flag_app($appID) {
     $connection = connect();
-    $query = "
-        update dbapplications set flagged=1
-        where id='$appID'
-    ";
+    $query = 'UPDATE dbapplications SET flagged=1
+    WHERE id= "' . $appID .'"';
+
     $result = mysqli_query($connection, $query);
     mysqli_commit($connection);
     mysqli_close($connection);
     return $result;
 }
 
+function unflag_app($appID) {
+    $connection = connect();
+    $query = 'UPDATE dbapplications SET flagged=0
+    WHERE id= "' . $appID .'"';
 
+    $result = mysqli_query($connection, $query);
+    mysqli_commit($connection);
+    mysqli_close($connection);
+    return $result;
+}
 
 function get_all_apps() {
     $con=connect();
@@ -178,5 +186,14 @@ function get_all_apps() {
     mysqli_close($con);
     return $theApps;
  }
+
+function get_next_app($id) {
+    $app_list = get_all_apps();
+
+}
+
+function get_previous_app($id) {
+    $app_list = get_all_apps();
+}
 
 ?>

@@ -44,9 +44,17 @@
             
             <h1 class="application-title" style="color: white" >Application for <?php echo $user->get_first_name() . " " . $user->get_last_name(); ?></h1>
             <div class="application-view-container">
+                <?php 
+                    $next_app_id = get_next_app($user_id)->get_id();
+                    $next_app_uid = get_next_app($user_id)->get_user_id();
+                    $prev_app_id = get_previous_app($user_id)->get_id();
+                    $prev_app_uid = get_previous_app($user_id)->get_user_id();
+                ?>
                 <div class="application-nav-button">
                     <!-- prev application button; will be replaced with imgs -->
-                     <
+                     <a href="<?php echo 'viewApplication.php?app_id=', urlencode($prev_app_id), '&user_id=', urlencode($prev_app_uid); ?>">
+                        <img src="images/arrow-backward.png" alt="Previous application">
+                     </a>
                 </div>
                 <div class="application-view">
                     <!-- view the application content -->
@@ -111,7 +119,9 @@
             </div>
                 <div class="application-nav-button">
                     <!-- next application button -->
-                     >
+                     <a href="<?php echo 'viewApplication.php?app_id=', urlencode($next_app_id), '&user_id=', urlencode($next_app_uid); ?>">
+                        <img src="images/arrow-forward.png" alt="Next application">
+                     </a>
                 </div>
             </div>
 
