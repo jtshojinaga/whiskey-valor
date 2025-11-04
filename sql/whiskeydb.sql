@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 03, 2025 at 05:23 PM
+-- Generation Time: Nov 04, 2025 at 06:51 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -122,6 +122,27 @@ CREATE TABLE `dbdiscussions` (
 
 INSERT INTO `dbdiscussions` (`author_id`, `title`, `body`, `time`) VALUES
 ('vmsroot', 'test', 'this is test', '2025-04-30-10:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbdrafts`
+--
+
+CREATE TABLE `dbdrafts` (
+  `userID` varchar(256) NOT NULL,
+  `recipientID` varchar(256) NOT NULL,
+  `subject` text NOT NULL,
+  `body` text NOT NULL,
+  `scheduledSend` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dbdrafts`
+--
+
+INSERT INTO `dbdrafts` (`userID`, `recipientID`, `subject`, `body`, `scheduledSend`) VALUES
+('vmsroot', 'Jlipinsk', 'Testing', 'Hopefully this works!', '2025-11-30');
 
 -- --------------------------------------------------------
 
@@ -514,6 +535,7 @@ INSERT INTO `dbmessages` (`id`, `senderID`, `recipientID`, `title`, `body`, `tim
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- Table structure for table `dbpendingsignups`
 --
 
@@ -538,6 +560,8 @@ INSERT INTO `dbpendingsignups` (`username`, `eventname`, `role`, `notes`) VALUES
 -- --------------------------------------------------------
 
 --
+=======
+>>>>>>> 9d52a64 (updated sql file, added missing file)
 -- Table structure for table `dbpersonhours`
 --
 
@@ -655,6 +679,29 @@ INSERT INTO `dbshifts` (`shift_id`, `person_id`, `date`, `startTime`, `endTime`,
 (32, 'lukeg', '2025-07-09', '10:57:46', '10:57:57', 0.00, 'Laundry'),
 (33, 'lukeg', '2025-07-09', '11:04:46', NULL, NULL, NULL),
 (34, 'vmsroot', '2025-09-10', '11:36:05', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbsignups`
+--
+
+CREATE TABLE `dbsignups` (
+  `username` varchar(25) NOT NULL,
+  `eventname` varchar(100) NOT NULL,
+  `notes` varchar(100) NOT NULL,
+  `attended` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dbsignups`
+--
+
+INSERT INTO `dbsignups` (`username`, `eventname`, `notes`, `attended`) VALUES
+('vmsroot', '108', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock', 0),
+('vmsroot', '101', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv', 0),
+('vmsroot', '108', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock', 0),
+('vmsroot', '101', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv', 0);
 
 -- --------------------------------------------------------
 
