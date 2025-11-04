@@ -12,7 +12,7 @@
     require('include/input-validation.php');
     
 
-    function submitEmail(array $names, $emailSubject, $emailBody, $sendNow, $sendTime)
+    function submitEmail(array $names, $emailSubject, $emailBody, $sendNow, $sendTime, $recipientsType)
     {
         error_log("--- New Email Submission ---");
         error_log("Subject: " . $emailSubject);
@@ -23,7 +23,8 @@
             error_log("Send Time: " . $sendTime);
         }else
         {
-            sendEmails(retrieveAllEmails(),"WhiskeyValorAdmin", $emailSubject, $emailBody);
+            sendEmails(retrieveAllEmails($names),"WhiskeyValorAdmin", $emailSubject, $emailBody);
+            echo("<p>Emails Sent!</p>");
         }
         error_log("Recipients: " . implode(', ', $names));
         error_log("--------------------------");
@@ -53,7 +54,7 @@
         $names = [];
         if ($recipientsType == 'specific') {
             if (!empty($recipientName)) {
-                $names[] = $recipientName;
+                $names = explode(",",$recipientName);
             }
         } else {
             $names[] = "All Whiskey Valor Members"; 
@@ -66,7 +67,7 @@
              $submissionMessage = "<div class='error-toast'>At least one recipient is required.</div>";
         } else {
            
-            $success = submitEmail($names, $subject, $content, $sendNow, $sendTime);
+            $success = submitEmail($names, $subject, $content, $sendNow, $sendTime, $recipientsType);
 
             if ($success) {
                 $submissionMessage = "<div class='success-toast'>Email has been created successfully!</div>";
@@ -76,7 +77,6 @@
         }
     }
 ?>
-?>
 
 <!DOCTYPE html>
 <html>
@@ -84,6 +84,7 @@
         <?php require_once('universal.inc'); ?>
         <title>Whiskey Valor | View Application</title>
         <link src="css/base.css" rel="stylesheet">
+        
  
  
     </head>
@@ -98,6 +99,7 @@
 
             
             <form action="" method="POST">
+
                 <label for="subject">* Email Subject</label>
                 <input type="text" id="subject" name="subject" required>
                 
@@ -106,30 +108,56 @@
 
                 <label for="scheduled">Send Now?</label>
                 <select name="scheduled" id="scheduled">
-                   <option value="true">Yes</option>
-                   <option value="false">No</option> 
-                </select>
+                    <option value="true">Yes</option>
+                    <option value="false">No (Schedule for later)</option> </select>
                 
                 <div id="selectorTime" style="display:none;">
                     <label for="sendTime">When should the email be sent?</label>
                     <input type="datetime-local" id="sendTime" name="sendTime">
                 </div>
-                
                 <label for="recipients">Recipients</label>
                 <select name="recipients" id="recipients">
                     <option value="all">All Whiskey Valor Members</option>
-                    <option value="specific">Specific Users</option>
-                </select>
-
+                    <option value="specific">Specific Users</option> </select>
 
                 <div id="selectorRecipients" style="display:none;">
                     <label for="recipientFullName">User Full Name</label>
                     <input type="text" id="recipientFullName" name="recipientFullName">
-
                 </div>
-
                 <input type="submit" value="Create Email.">
             </form>
+
+            <script>
+                const recipientSelect = document.getElementById('recipients');      // Correct ID
+                const recipientsDiv = document.getElementById('selectorRecipients'); // Correct ID
+                //ADDRESSES
+                function toggleRecipients() {
+                //Change display type for recipients
+                if (recipientSelect.value === 'specific') { // Correct value
+                    recipientsDiv.style.display = 'block';
+                } else {
+                    recipientsDiv.style.display = 'none';
+                }
+                }
+                recipientSelect.addEventListener('change', toggleRecipients);
+                toggleRecipients(); // Run once on page load
+
+                //TIME
+                
+                const scheduledSelect = document.getElementById('scheduled');
+                const timeDiv = document.getElementById('selectorTime');
+
+                function toggleTime() {
+                //Change display type for scheduling
+                if (scheduledSelect.value === 'false') { 
+                    timeDiv.style.display = 'block';
+                } else {
+                    timeDiv.style.display = 'none';
+                }
+                }
+                scheduledSelect.addEventListener('change', toggleTime);
+                toggleTime(); // Run once on page load
+            </script>
 
         <?php endif ?>
     </body>
