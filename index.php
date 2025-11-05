@@ -491,93 +491,122 @@
 
 </div>
 
-    <div style="margin-top: 50px; padding: 0px 80px;">
-        <h2><b>Admin Dashboard</h2>
-    </div>
-    <div class="full-width-bar-sub">
-        <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
-            <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
-            </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">Calendar</div>
-            <div class="graph-text">See upcoming events/trainings.</div>
-            <button class="arrow-button">→</button>
-        </div>
+<div style="margin-top: 50px; padding: 0px 80px;">
+    <h2><b>Admin Dashboard</b></h2>
+</div>
 
+<div class="full-width-bar-sub">
 
-        <div class="content-box-test" onclick="window.location.href='resources.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
-            <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
-            </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">Manage Documents</div>
-            <div class="graph-text">Resources for volunteers.</div>
-            <button class="arrow-button">→</button>
-        </div>
-                <?php
-                    require_once('database/dbMessages.php');
-                    $unreadMessageCount = get_user_unread_count($person->get_id());
-                    $inboxIcon = 'inbox.svg';
-                    if ($unreadMessageCount) {
-                        $inboxIcon = 'inbox-unread.svg';
-                    }
-                ?>
-        <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
-            <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
-            </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">System Notifications<?php 
-                        if ($unreadMessageCount > 0) {
-                            echo ' (' . $unreadMessageCount . ')';
-                        }
-                    ?></div>
-            <div class="graph-text">Stay up to date.</div>
-            <button class="arrow-button">→</button>
-        </div>
+    <?php
+        require_once('database/dbMessages.php');
 
-    <div class="content-box-test" onclick="window.location.href='generateReport.php'">
-        <div class="content-box-test" onclick="window.location.href='generateReport.php'">
-            <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
-            </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">Generate Report</div>
-            <div class="graph-text">From this quarter or annual.</div>
-            <div class="graph-text">From this quarter or annual.</div>
-            <button class="arrow-button">→</button>
+        // Ensure variable is always defined
+        $unreadMessageCount = 0;
+        $inboxIcon = 'inbox.svg';
+        if (isset($person)) {
+            $unreadMessageCount = get_user_unread_count($person->get_id());
+            if ($unreadMessageCount > 0) {
+                $inboxIcon = 'inbox-unread.svg';
+            }
+        }
+    ?>
+
+    <!-- Calendar -->
+    <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
-    <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'"> -->
-    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'">
-            <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
-            </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">Generate Email List</div>
-            <div class="graph-text">Volunteer Emails</div>
-            <div class="graph-text">Volunteer Emails</div>
-            <button class="arrow-button">→</button>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">Calendar</div>
+        <div class="graph-text">See upcoming events/trainings.</div>
+        <button class="arrow-button">→</button>
     </div>
 
-        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'"> -->
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
-            <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
-            </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">Discussions</div>
-            <div class="graph-text">See the latest.</div>
-            <div class="graph-text">See the latest.</div>
-            <button class="arrow-button">→</button>
+    <!-- Manage Documents -->
+    <div class="content-box-test" onclick="window.location.href='resources.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">Manage Documents</div>
+        <div class="graph-text">Resources for volunteers.</div>
+        <button class="arrow-button">→</button>
     </div>
+
+    <!-- System Notifications -->
+    <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
+        </div>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">
+            System Notifications<?php 
+                if ($unreadMessageCount > 0) {
+                    echo ' (' . $unreadMessageCount . ')';
+                }
+            ?>
+        </div>
+        <div class="graph-text">Stay up to date.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+    <!-- Generate Report -->
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
+        </div>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">Generate Report</div>
+        <div class="graph-text">From this quarter or annual.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+    <!-- Create Email -->
+    <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/Email.png" alt="Email Icon">
+        </div>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">Create Email</div>
+        <div class="graph-text">Send new messages to volunteers.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+    <!-- View Drafts -->
+    <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/Drafts.png" alt="Drafts Icon">
+        </div>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">View Drafts</div>
+        <div class="graph-text">Check saved email drafts.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+    <!-- Generate Email List -->
+    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Email List Icon">
+        </div>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">Generate Email List</div>
+        <div class="graph-text">Volunteer Emails</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+    <!-- Discussions -->
+    <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
+        </div>
+        <img class="background-image" src="images/blank-white-background.jpg" />
+        <div class="large-text-sub">Discussions</div>
+        <div class="graph-text">See the latest.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+</div>
+
 
 
     
