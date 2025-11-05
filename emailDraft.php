@@ -19,7 +19,7 @@ $draftID = "";
 // If a user selects a draft to view
 if (isset($_GET['draft_id'])) {
     $draftID = intval($_GET['draft_id']);
-    $stmt = $conn->prepare("SELECT * FROM dbdrafts WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM dbdrafts WHERE userId = ?");
     $stmt->bind_param("i", $draftID);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_draft'])) {
     <div class="draft-list">
         <h3>Saved Drafts</h3>
         <?php
-        $stmt = $conn->prepare("SELECT id, recipientID, subject, scheduledSend FROM dbdrafts ORDER BY id DESC");
+        $stmt = $conn->prepare("SELECT userId, recipientID, subject, scheduledSend FROM dbdrafts ORDER BY userId DESC");
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_draft'])) {
             echo "<p>No drafts found.</p>";
         } else {
             while ($row = $result->fetch_assoc()) {
-                $id = $row['id'];
+                $id = $row['userId'];
                 $recipient = htmlspecialchars($row['recipientID']);
                 $subjectDisplay = htmlspecialchars($row['subject']);
                 $date = $row['scheduledSend'] ?: "No date";

@@ -540,8 +540,8 @@
             <button class="arrow-button">→</button>
         </div>
 
-    <div class="content-box-test" onclick="window.location.href='generateReport.php'">
-        <div class="content-box-test" onclick="window.location.href='generateReport.php'">
+        <!--<div class="content-box-test" onclick="window.location.href='generateReport.php'">-->
+        <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
@@ -552,8 +552,8 @@
             <div class="graph-text">From this quarter or annual.</div>
             <button class="arrow-button">→</button>
         </div>
-    <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'"> -->
-    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'">
+        <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'"> -->
+        <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
@@ -563,10 +563,10 @@
             <div class="graph-text">Volunteer Emails</div>
             <div class="graph-text">Volunteer Emails</div>
             <button class="arrow-button">→</button>
-    </div>
+        </div>
 
         <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'"> -->
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
@@ -618,7 +618,6 @@
             </div>
         </div>
     </footer>
-    <p>_</p>
 
     <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>

@@ -215,7 +215,7 @@ function fetch_all_pending() {
 
 function all_pending_names() {
     $connection = connect();
-    $query = "SELECT eventname FROM dbpendingsignups";
+    $query = "SELECT eventname FROM dbsignups";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
