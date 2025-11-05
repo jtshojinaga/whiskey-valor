@@ -710,6 +710,9 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['viewallapplications.php'] = 2;
         $permission_array['applicationsuccess.php'] = 2;
         $permission_array['denyapplication.php'] = 2;
+        $permission_array['createemail.php'] = 2;
+        $permission_array['viewdrafts.php'] = 2;  // Not sure if we want normal users to be able to send emails
+        $permission_array['editdrafts.php'] = 2;
         // LOWERCASE
 
 
