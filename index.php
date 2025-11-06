@@ -647,7 +647,6 @@
             </div>
         </div>
     </footer>
-    <p>_</p>
 
     <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
