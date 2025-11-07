@@ -58,7 +58,27 @@
         <?php require_once('header.php') ?>
         <main>
             <h1 style="color: white;">Logging Attendance for <?php echo $event_name; ?></h1>
-
+            <div class="attendees-wrapper">
+            <form method="POST" id="attendance-form">
+                <div class="attendees-table-wrapper">
+                    <div class="thead">
+                        <div class="tr">
+                            <span class="td"><input type="checkbox" name="all" id="select-all"></span>
+                            <span class="td">Attendee</span>
+                            <span class="td">Username</span>
+                        </div>
+                    </div>
+                    <div class="tbody">
+                        <div class="tr">
+                            <span class="td"><input type="checkbox" name="johndoe"></span>
+                            <span class="td">John Doe</span>
+                            <span class="td">johndoe1996</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" name="log" id="log">Log Selected Attendees</button>
+            </form>
+            </div>
         </main>
     </body>
 </html>

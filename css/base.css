@@ -1334,3 +1334,39 @@ a.event-link:hover {
     font-weight: bold;
 
 }
+
+/* used for logAttendees.php */
+.attendees-wrapper {
+    background-color: rgba(0, 0, 0, .25);
+    margin: auto;
+    padding: 1.5rem;
+    border-radius: 15px;
+    max-width: 75%;
+}
+
+DIV.attendees-table-wrapper {
+    display:table;
+    align-content: center;
+    justify-content: center;
+}
+
+DIV.thead {
+    display:table-header-group;
+}
+
+DIV.tbody {
+    display: table-row-group;
+}
+
+DIV.tr {
+    display: table-row;
+}
+
+SPAN.td {
+    display: table-cell;
+}
+
+button#log {
+    width: 100%;
+    margin-top: 1rem;
+}
