@@ -1342,31 +1342,54 @@ a.event-link:hover {
     padding: 1.5rem;
     border-radius: 15px;
     max-width: 75%;
+    align-content: center;
 }
 
 DIV.attendees-table-wrapper {
-    display:table;
-    align-content: center;
-    justify-content: center;
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 DIV.thead {
-    display:table-header-group;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-weight: bold;
 }
 
 DIV.tbody {
-    display: table-row-group;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 DIV.tr {
     display: table-row;
+    width: 100% !important;
 }
 
 SPAN.td {
     display: table-cell;
+    min-width: 7rem;
+}
+
+.tbody SPAN.td {
+    border-top: 1px solid white;
+}
+
+SPAN.td#data {
+    min-width: 10rem;
 }
 
 button#log {
     width: 100%;
     margin-top: 1rem;
+}
+
+SPAN.td input[type=checkbox] {
+    margin: 6px;
 }

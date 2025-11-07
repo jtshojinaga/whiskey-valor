@@ -63,16 +63,16 @@
                 <div class="attendees-table-wrapper">
                     <div class="thead">
                         <div class="tr">
-                            <span class="td"><input type="checkbox" name="all" id="select-all"></span>
-                            <span class="td">Attendee</span>
-                            <span class="td">Username</span>
+                            <span class="td"><input type="checkbox" name="all" id="select-all">Select All</span>
+                            <span class="td" id="data">Attendee</span>
+                            <span class="td" id="data">Username</span>
                         </div>
                     </div>
                     <div class="tbody">
                         <div class="tr">
                             <span class="td"><input type="checkbox" name="johndoe"></span>
-                            <span class="td">John Doe</span>
-                            <span class="td">johndoe1996</span>
+                            <span class="td" id="data">John Doe</span>
+                            <span class="td" id="data">johndoe1996</span>
                         </div>
                     </div>
                 </div>
