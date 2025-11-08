@@ -83,6 +83,62 @@
             if(!$id){
                 die();
             } else {
+                $id = create_event($args);
+if (!$id) {
+    die();
+} else {
+    // --- RECURRING EVENT DUPLICATION (final, robust) ---
+    $isRecurring    = isset($_POST['recurring']);
+    $recurrenceType = $_POST['recurrence_type'] ?? '';
+    $customDays     = isset($_POST['custom_days']) ? (int)$_POST['custom_days'] : 0;
+
+    // how many EXTRA items to create (tune if you want)
+    $counts = [
+        'daily'   => 30,  // next 30 days
+        'weekly'  => 12,  // next 12 weeks
+        'monthly' => 6,   // next 6 months
+        'custom'  => 12,  // 12 custom intervals
+    ];
+
+    // pick interval
+    $intervalMap = [
+        'daily'   => 'P1D',
+        'weekly'  => 'P1W',
+        'monthly' => 'P1M',
+    ];
+    if ($recurrenceType === 'custom') {
+        $customDays = max(1, $customDays);
+        $intervalSpec = 'P' . $customDays . 'D';
+    } else {
+        $intervalSpec = $intervalMap[$recurrenceType] ?? null;
+    }
+
+    if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
+        $current = new DateTime($args['startDate']);  // base date
+        $step    = new DateInterval($intervalSpec);
+        $times   = $counts[$recurrenceType];
+
+        for ($i = 0; $i < $times; $i++) {
+            $current->add($step);
+            $ymd = $current->format('Y-m-d');
+
+            $dup = $args;                 // clone original payload
+            $dup['startDate'] = $ymd;
+            $dup['endDate']   = $ymd;
+            $dup['date']      = $ymd;     // legacy key some code paths read
+
+            create_event($dup);
+
+            
+        }
+    }
+    
+
+    header('Location: eventSuccess.php');
+    exit();
+}
+
+                
                 header('Location: eventSuccess.php');
                 exit();
             }
