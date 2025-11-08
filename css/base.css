@@ -1359,22 +1359,28 @@ DIV.thead {
     flex-direction: row;
     justify-content: space-evenly;
     font-weight: bold;
+    min-width: 100%;
+    align-items: center;
 }
 
 DIV.tbody {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    max-width: 100%;
+    align-items: center;
 }
 
 DIV.tr {
     display: table-row;
     width: 100% !important;
+    margin: 0.5rem 0;
 }
 
 SPAN.td {
     display: table-cell;
-    min-width: 7rem;
+    min-width: 9rem;
 }
 
 .tbody SPAN.td {
@@ -1382,7 +1388,7 @@ SPAN.td {
 }
 
 SPAN.td#data {
-    min-width: 10rem;
+    min-width: 21rem;
 }
 
 button#log {

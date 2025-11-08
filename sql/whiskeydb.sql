@@ -535,7 +535,6 @@ INSERT INTO `dbmessages` (`id`, `senderID`, `recipientID`, `title`, `body`, `tim
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
 -- Table structure for table `dbpendingsignups`
 --
 
@@ -560,8 +559,6 @@ INSERT INTO `dbpendingsignups` (`username`, `eventname`, `role`, `notes`) VALUES
 -- --------------------------------------------------------
 
 --
-=======
->>>>>>> 9d52a64 (updated sql file, added missing file)
 -- Table structure for table `dbpersonhours`
 --
 

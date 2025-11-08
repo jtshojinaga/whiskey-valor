@@ -23,7 +23,9 @@
 
     include_once('database/dbPersons.php');
     include_once('database/dbEvents.php');
+    include_once('database/dbAttendance.php');
     include_once('domain/Event.php');
+    include_once('domain/Person.php');
     require_once('include/input-validation.php');
     $args = sanitize($_GET);
     if (isset($args["id"])) {
@@ -55,7 +57,6 @@
         <title>Logging Attendance for <?php echo $event_name; ?> | Whiskey Valor Foundation</title>
     </head>
     <body>
-        <?php require_once('header.php') ?>
         <main>
             <h1 style="color: white;">Logging Attendance for <?php echo $event_name; ?></h1>
             <div class="attendees-wrapper">
@@ -66,13 +67,30 @@
                             <span class="td"><input type="checkbox" name="all" id="select-all">Select All</span>
                             <span class="td" id="data">Attendee</span>
                             <span class="td" id="data">Username</span>
+                            <span class="td" id="data">Notes</span>
                         </div>
                     </div>
                     <div class="tbody">
+                    <?php foreach ($attendees_list as $attendee) { 
+                        $first = isset($attendee['first_name']) ? htmlspecialchars($attendee['first_name']) : '';
+                        $last = isset($attendee['last_name']) ? htmlspecialchars($attendee['last_name']) : '';
+                        $uid = isset($attendee['id']) ? htmlspecialchars($attendee['id']) : '';
+
+                        $name = trim($first . ' ' . $last);
+
+                        echo "<div class='tr'>";
+                        // Use a checkbox array and store the uid as the value
+                        echo "<span class='td'><input type='checkbox' name='attendee[]' value='{$uid}'></span>";
+                        echo "<span class='td' id='data'>{$name}</span>";
+                        echo "<span class='td' id='data'>{$uid}</span>";
+                        echo "<span class='td' id='data'><input type='text' name='attendee[]'></span>";
+                        echo "</div>";
+                    } ?>
                         <div class="tr">
                             <span class="td"><input type="checkbox" name="johndoe"></span>
                             <span class="td" id="data">John Doe</span>
                             <span class="td" id="data">johndoe1996</span>
+                            <span class='td' id='data'><input type='text' name='example'></span>
                         </div>
                     </div>
                 </div>
