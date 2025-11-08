@@ -57,6 +57,7 @@
         <title>Logging Attendance for <?php echo $event_name; ?> | Whiskey Valor Foundation</title>
     </head>
     <body>
+        <?php require_once('header.php') ?>
         <main>
             <h1 style="color: white;">Logging Attendance for <?php echo $event_name; ?></h1>
             <div class="attendees-wrapper">
