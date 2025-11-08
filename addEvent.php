@@ -79,28 +79,25 @@
                 die();
             }
 
+            $args['series_id'] = bin2hex(random_bytes(16)); // new new
+
             $id = create_event($args);
-            if(!$id){
-                die();
+                if (!$id) {
+              die();
             } else {
-                $id = create_event($args);
-if (!$id) {
-    die();
-} else {
-    // --- RECURRING EVENT DUPLICATION (final, robust) ---
+    
     $isRecurring    = isset($_POST['recurring']);
     $recurrenceType = $_POST['recurrence_type'] ?? '';
     $customDays     = isset($_POST['custom_days']) ? (int)$_POST['custom_days'] : 0;
 
-    // how many EXTRA items to create (tune if you want)
+    
     $counts = [
         'daily'   => 30,  // next 30 days
         'weekly'  => 12,  // next 12 weeks
         'monthly' => 6,   // next 6 months
         'custom'  => 12,  // 12 custom intervals
     ];
-
-    // pick interval
+    
     $intervalMap = [
         'daily'   => 'P1D',
         'weekly'  => 'P1W',
@@ -114,7 +111,7 @@ if (!$id) {
     }
 
     if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
-        $current = new DateTime($args['startDate']);  // base date
+        $current = new DateTime($args['startDate']);  
         $step    = new DateInterval($intervalSpec);
         $times   = $counts[$recurrenceType];
 
@@ -122,10 +119,10 @@ if (!$id) {
             $current->add($step);
             $ymd = $current->format('Y-m-d');
 
-            $dup = $args;                 // clone original payload
+            $dup = $args;                 
             $dup['startDate'] = $ymd;
             $dup['endDate']   = $ymd;
-            $dup['date']      = $ymd;     // legacy key some code paths read
+            $dup['date']      = $ymd;    
 
             create_event($dup);
 
@@ -133,7 +130,6 @@ if (!$id) {
         }
     }
     
-
     header('Location: eventSuccess.php');
     exit();
 }
@@ -144,7 +140,7 @@ if (!$id) {
             }
             
         }
-    }
+    
     $date = null;
     if (isset($_GET['date'])) {
         $date = $_GET['date'];

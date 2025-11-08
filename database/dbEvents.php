@@ -903,6 +903,19 @@ function approve_signup($event_id, $account_name, $position, $notes) {
     return $result2;
 }
 
+function approve_multiple_signups($event_id, $account_names, $notes = '') {
+    $approved = 0;
+    if (!is_array($account_names) || empty($account_names)) return 0;
+
+    foreach ($account_names as $account_name) {
+        $ok = approve_signup($event_id, $account_name, 'Volunteer', $notes);
+        if ($ok) {
+            $approved++;
+        }
+    }
+    return $approved;
+}
+
 /**
  * Reject a single sign up
  * @param mixed $event_id The Event ID
