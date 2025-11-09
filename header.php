@@ -796,6 +796,13 @@ if (date("H:i:s") > "18:19:59") {
   </div>
 </a>
 
+<a href="noShows.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/group.svg">
+    <span>No Shows</span>
+  </div>
+</a>
+
                     </div>
                </div>
             </div>

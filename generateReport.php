@@ -22,7 +22,7 @@ $fiscalYearEnd = $fiscalYearStart + 1;
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fredericksburg SPCA | Volunteer Reports</title>
+    <title>Whiskey Valor | Attendance Reports</title>
   <link href="css/normal_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
@@ -49,32 +49,39 @@ require_once('header.php');
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 </head>
 <body>
+    <?php require_once('database/dbEvents.php');?>
+    <?php require_once('database/dbPersons.php');?>
 
     <!-- Hero Section with Title -->
     <header class="hero-header"> 
         <div class="center-header">
-            <h1>Generate Volunteer Document</h1>
+            <h1>Generate Attendance Report</h1>
         </div>
     </header>
 
     <main>
+        <?php $events = get_all_events_sorted_by_date_not_archived();?>
+
         <div class="main-content-box w-full max-w-3xl p-8">
             <div class="text-center mb-8">
-                <h2>Volunteer Reports</h2>
+                <h2>Attendance Reports</h2>
                 <p class="sub-text">Fiscal Year: <?= $fiscalYearStart ?> - <?= $fiscalYearEnd ?></p>
             </div>
 
             <form method="POST" action="processReport.php" class="space-y-6">
-                <!-- Report Type -->
+                <!-- Event ID -->
                 <div>
-                    <label for="reportType" class="font-semibold">Select Report Type:</label>
-                    <select name="reportType" id="reportType" onchange="toggleDateFields()">
-                        <option value="monthly">Monthly</option>
-                        <option value="annually">Annually</option>
+                    <label for="eventID" class="font-semibold">Select Event ID:</label>
+                    <select name="eventID" id="eventID">
+                        <?php foreach ($events as $event) {
+                            $eventID = $event->getID();
+                            echo "<option value='$eventID'>$eventID</option>";
+                        }
+                        ?>
                     </select>
                 </div>
 
-                <!-- Month (conditionally hidden) -->
+                <!-- Month (conditionally hidden)
                 <div id="monthField">
                     <label for="month" class="font-semibold">Select Month:</label>
                     <select name="month" id="month">
@@ -89,7 +96,7 @@ require_once('header.php');
                         }
                         ?>
                     </select>
-                </div>
+                </div> -->
 
                 <!-- Format -->
                 <div>
@@ -122,9 +129,9 @@ require_once('header.php');
 
     <script>
         function toggleDateFields() {
-            const reportType = document.getElementById("reportType").value;
-            const monthField = document.getElementById("monthField");
-            monthField.style.display = reportType === "annually" ? "none" : "block";
+            const eventID = document.getElementById("eventID").value;
+            // const monthField = document.getElementById("monthField");
+            // monthField.style.display = reportType === "annually" ? "none" : "block";
         }
         document.addEventListener("DOMContentLoaded", toggleDateFields);
     </script>

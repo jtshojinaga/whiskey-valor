@@ -79,7 +79,7 @@ function add_event($event) {
 
 function request_event_signup($eventID, $account_name, $role, $notes) {
     $connection = connect();
-    //Getting access to facilitate the ability for Admin's to approve or dissaprove using dbpendingsignups.
+    //Getting access to facilitate the ability for Admin's to approve or dissaprove using dbapplications.
     $query1 = "SELECT id, access FROM dbevents WHERE name LIKE '$eventID'";
     $result1 = mysqli_query($connection, $query1);
     $row = mysqli_fetch_assoc($result1);
@@ -88,7 +88,7 @@ function request_event_signup($eventID, $account_name, $role, $notes) {
     $query2 = "SELECT userID FROM dbeventpersons WHERE eventID LIKE '$value' AND userID LIKE '$account_name'";
     $result2 = mysqli_query($connection, $query2);
 
-    $query3 = "SELECT username FROM dbpendingsignups WHERE eventname LIKE '$value' AND username LIKE '$account_name'";
+    $query3 = "SELECT user_ID FROM dbapplications WHERE event_ID LIKE '$value' AND username LIKE '$account_name'";
     $result3 = mysqli_query($connection, $query3);
 
     $row2 = null;
@@ -103,7 +103,7 @@ function request_event_signup($eventID, $account_name, $role, $notes) {
                 return null;
         } 
     } else {       
-            $query = "insert into dbpendingsignups (username, eventname, role, notes) values ('$account_name', '$value', '$role', '$notes')";
+            $query = "insert into dbsignups (username, eventname, role, notes) values ('$account_name', '$value', '$role', '$notes')";
             $result = mysqli_query($connection, $query);
             mysqli_commit($connection);
             return $value;
@@ -156,6 +156,7 @@ function check_if_signed_up($eventID, $userID) {
         return False;
     }
 }
+
 
 /* @@@ Madison's work! */
 /*
@@ -450,7 +451,7 @@ function get_all_events() {
  function get_all_events_sorted_by_date_not_archived() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'no'" .
+            " WHERE completed = 'N'" . // ?
             " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
@@ -465,7 +466,7 @@ function get_all_events() {
  function get_all_events_sorted_by_date_and_archived() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'yes'" .
+            " WHERE completed = 'Y'" .
             " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
