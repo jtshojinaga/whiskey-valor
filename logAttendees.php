@@ -80,24 +80,26 @@
                         $name = trim($first . ' ' . $last);
 
                         echo "<div class='tr'>";
-                        // Use a checkbox array and store the uid as the value
-                        echo "<span class='td'><input type='checkbox' name='attendee[]' value='{$uid}'></span>";
-                        echo "<span class='td' id='data'>{$name}</span>";
-                        echo "<span class='td' id='data'>{$uid}</span>";
-                        echo "<span class='td' id='data'><input type='text' name='attendee[]'></span>";
+                        // added cb class for js targeting
+                        echo "<span class='td'><input type='checkbox' class='cb' name='attendee[]' value='" . $uid . "'></span>";
+                        echo "<span class='td' id='data'>" . $name . "</span>";
+                        echo "<span class='td' id='data'>" . $uid . "</span>";
+                        // key is uid to associate entries with user
+                        echo "<span class='td' id='data'><input type='text' class='note' name='attendee_notes[" . $uid . "]' placeholder='Enter note...'></span>";
                         echo "</div>";
                     } ?>
                         <div class="tr">
-                            <span class="td"><input type="checkbox" name="johndoe"></span>
+                            <span class="td"><input type="checkbox" class="cb" name="attendee[]" value="johndoe1996"></span>
                             <span class="td" id="data">John Doe</span>
                             <span class="td" id="data">johndoe1996</span>
-                            <span class='td' id='data'><input type='text' name='example'></span>
+                            <span class='td' id='data'><input type='text' class='note' name='attendee_notes[johndoe1996]' placeholder="Enter note..."></span>
                         </div>
                     </div>
                 </div>
                 <button type="submit" name="log" id="log">Log Selected Attendees</button>
             </form>
             </div>
+            <script src="js/select-all.js"></script>
         </main>
     </body>
 </html>

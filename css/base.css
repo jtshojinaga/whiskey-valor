@@ -286,6 +286,15 @@ input[type=submit]:hover, button:hover, .button:hover, a.button-signup:hover {
     background-color: var(--accent-color);
 }
 
+/* Disabled submit/button appearance for attendance logging */
+.disabled-btn,
+button.disabled-btn,
+input[type="submit"].disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(30%);
+}
+
 /* input.visited:invalid {
     outline: 2px solid var(--secondary-accent-color);
 } */
@@ -1375,7 +1384,7 @@ DIV.tbody {
 DIV.tr {
     display: table-row;
     width: 100% !important;
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
 }
 
 SPAN.td {
@@ -1398,4 +1407,8 @@ button#log {
 
 SPAN.td input[type=checkbox] {
     margin: 6px;
+}
+
+.note {
+    margin-top: 0.5rem;
 }
