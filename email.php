@@ -103,6 +103,7 @@ function emailAll(string $fromUser, string $subject, string $body): array {
 function sendEmails(array $emails, string $fromUser, string $subject, string $body): array {
     //I wish the site url would work since it would be prettier but it stops working after 
     //a certian amount of emails
+    $domain = 'ZANNYMAIL.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
 <<<<<<< HEAD
     $domain = 'jenniferp161.sg-host.com';
     $domain = 'gvam1012.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
@@ -120,6 +121,8 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
         }
     }
     return $results;
+    
+    return [];
 =======
     $domain = 'ZANNYMAIL.siteground.biz';   // <------------- NEEDS TO BE CHANGED ON LIVE PRODUCTION!!! 
     $fromAddress = "{$fromUser}@{$domain}";
