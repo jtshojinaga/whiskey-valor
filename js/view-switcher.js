@@ -1,8 +1,20 @@
 $(document).ready(function () {
-    // Get the current month from PHP or URL parameter
-    let currentMonth = new URLSearchParams(window.location.search).get('month') || 
-                      $('#calendar').data('current-month') || 
-                      new Date().toISOString().slice(0, 10); // Returns YYYY-MM-DD format
+    // Helper: normalize month param to YYYY-MM
+    function normalizeMonthParam(val) {
+        if (!val) return null;
+        // YYYY-MM-DD -> YYYY-MM
+        if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return val.slice(0,7);
+        // YYYY-MM
+        if (/^\d{4}-\d{2}$/.test(val)) return val;
+        // try parseable date string
+        const d = new Date(val);
+        if (!isNaN(d)) return d.toISOString().slice(0,7);
+        return null;
+    }
+
+    // Get the current month from URL or calendar data or today (as YYYY-MM)
+    let urlMonth = new URLSearchParams(window.location.search).get('month');
+    let currentMonth = normalizeMonthParam(urlMonth) || $('#calendar').data('current-month') || new Date().toISOString().slice(0,7);
 
     // Initialize filters
     initializeFilters();
@@ -14,14 +26,12 @@ $(document).ready(function () {
     $("#calendar-view-button").click(function (e) {
         e.preventDefault(); // Allows us to use images as the butons
         loadView(`calendar-view.php?month=${encodeURIComponent(currentMonth)}`);
-        console.log('calendar click');
     });
 
     // Switch to list view
     $("#list-view-button").click(function (e) {
         e.preventDefault();
         loadView(`event-list.php?month=${encodeURIComponent(currentMonth)}`);
-        console.log('list-click');
     });
 
     // Switch to weekly view
@@ -36,23 +46,26 @@ $(document).ready(function () {
         loadView(`calendar-view_daily.php?month=${encodeURIComponent(currentMonth)}`);
     });
 
-    // Navigate to previous month
+    // Navigate to previous month (reads data-month on the clicked control first,
+    // falls back to the calendar table's data-prev-month)
     $(document).on("click", "#previous-month-button", function (e) {
         e.preventDefault();
-        const prevMonth = $('#calendar').data('prev-month');
-        if (prevMonth) {
-            currentMonth = prevMonth;
-            loadView(`calendar-view.php?month=${encodeURIComponent(prevMonth)}`);
+        const raw = $(this).data('month') || $('#calendar').data('prev-month');
+        const month = normalizeMonthParam(raw);
+        if (month) {
+            currentMonth = month;
+            loadView(`calendar-view.php?month=${encodeURIComponent(month)}`);
         }
     });
 
     // Navigate to next month
     $(document).on("click", "#next-month-button", function (e) {
         e.preventDefault();
-        const nextMonth = $('#calendar').data('next-month');
-        if (nextMonth) {
-            currentMonth = nextMonth;
-            loadView(`calendar-view.php?month=${encodeURIComponent(nextMonth)}`);
+        const raw = $(this).data('month') || $('#calendar').data('next-month');
+        const month = normalizeMonthParam(raw);
+        if (month) {
+            currentMonth = month;
+            loadView(`calendar-view.php?month=${encodeURIComponent(month)}`);
         }
     });
 });
