@@ -586,7 +586,9 @@ function create_event($event) {
     $connection = connect();
     $name = $event["name"];
     //$abbrevName = $event["abbrev-name"];
-    $date = $event["date"];
+    // $date = $event["date"];
+    $date    = $event["startDate"] ?? $event["date"];
+    $endDate = $event["endDate"]   ?? $date; // default single-day
     $startTime = $event["start-time"];    
     $endTime = $event["end-time"];
     $description = $event["description"];
@@ -610,17 +612,22 @@ function create_event($event) {
         $restricted = 0;
     }
         */
-    $access = 0;
+    $access = 'Public';
     $description = $event["description"];
     //$branch = $event["branch"];
     //$location = $event["location"];
     //$services = $event["service"];
 
     //$animal = $event["animal"];
-    $completed = "no";
+    $completed = 'N';
+
+    $series_id = isset($event['series_id'])
+        ? mysqli_real_escape_string($connection, $event['series_id'])
+        : null;
+
     $query = "
-        insert into dbevents (name, startDate, startTime, endTime, access, description, capacity, completed, location, type)
-        values ('$name', '$date', '$startTime', '$endTime', $access, '$description', $capacity, '$completed', '$location', '$type')
+        insert into dbevents (name, startDate, startTime, endTime, endDate, access, description, capacity, completed, location, type, series_id)
+        values ('$name', '$date', '$startTime', '$endTime', '$endDate', '$access', '$description', $capacity, '$completed', '$location', '$type', " .($series_id ? "'$series_id'" : "NULL") . ")
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -899,6 +906,19 @@ function approve_signup($event_id, $account_name, $position, $notes) {
          emailHandler($event_id, $account_name, 2, "Sign-up Approved TEST TEST.");
     }
     return $result2;
+}
+
+function approve_multiple_signups($event_id, $account_names, $notes = '') {
+    $approved = 0;
+    if (!is_array($account_names) || empty($account_names)) return 0;
+
+    foreach ($account_names as $account_name) {
+        $ok = approve_signup($event_id, $account_name, 'Volunteer', $notes);
+        if ($ok) {
+            $approved++;
+        }
+    }
+    return $approved;
 }
 
 /**

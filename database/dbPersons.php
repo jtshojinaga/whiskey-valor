@@ -612,37 +612,38 @@ function make_a_person($result_row) {
 			$ct, $t, $st, $cntm, $pos, $credithours, $comm, $mot, $spe,
 			$convictions, $av, $sch, $hrs, $bd, $sd, $hdyh, $notes, $pass)
 	 */
-    $thePerson = new Person(
-        $result_row['id'],
-        $result_row['start_date'],
-        $result_row['first_name'],
-        $result_row['last_name'],
-        $result_row['street_address'],
-        $result_row['city'],
-        $result_row['state'],
-        $result_row['zip_code'],
-        $result_row['phone1'],
-        $result_row['over21'],
-        $result_row['phone1type'],
-        $result_row['emergency_contact_phone'],
-        $result_row['emergency_contact_phone_type'],
-        $result_row['birthday'],
-        $result_row['email'],
-        $result_row['email_prefs'],
-        $result_row['emergency_contact_first_name'],
-        $result_row['contact_num'],
-        $result_row['emergency_contact_relation'],
-        $result_row['contact_method'],
-        $result_row['type'],
-        $result_row['status'],
-        $result_row['notes'],
-        $result_row['password'],
-        $result_row['affiliation'],
-        $result_row['branch'],
-        $result_row['archived'], 
-        $result_row['emergency_contact_last_name']
-        #$result_row['access_level']
-    );
+        $thePerson = new Person(
+    @$result_row['id'],
+    @$result_row['start_date'],
+    @$result_row['first_name'],
+    @$result_row['last_name'],
+    @$result_row['street_address'],
+    @$result_row['city'],
+    @$result_row['state'],
+    @$result_row['zip_code'],
+    @$result_row['phone1'],
+    @$result_row['over21'],
+    @$result_row['phone1type'],
+    @$result_row['emergency_contact_phone'],
+    @$result_row['emergency_contact_phone_type'],
+    @$result_row['birthday'],
+    @$result_row['email'],
+    @$result_row['email_prefs'],
+    @$result_row['emergency_contact_first_name'],
+    @$result_row['contact_num'],
+    @$result_row['emergency_contact_relation'],
+    @$result_row['contact_method'],
+    @$result_row['type'],
+    @$result_row['status'],
+    @$result_row['notes'],
+    @$result_row['password'],
+    @$result_row['affiliation'],
+    @$result_row['branch'],
+    @$result_row['archived'], 
+    @$result_row['emergency_contact_last_name']
+    #@$result_row['access_level']
+);
+
 
     return $thePerson;
 }
