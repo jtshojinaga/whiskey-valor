@@ -620,9 +620,14 @@ function create_event($event) {
 
     //$animal = $event["animal"];
     $completed = 'N';
+
+    $series_id = isset($event['series_id'])
+        ? mysqli_real_escape_string($connection, $event['series_id'])
+        : null;
+
     $query = "
-        insert into dbevents (name, startDate, startTime, endTime, endDate, access, description, capacity, completed, location, type)
-        values ('$name', '$date', '$startTime', '$endTime', '$endDate', '$access', '$description', $capacity, '$completed', '$location', '$type')
+        insert into dbevents (name, startDate, startTime, endTime, endDate, access, description, capacity, completed, location, type, series_id)
+        values ('$name', '$date', '$startTime', '$endTime', '$endDate', '$access', '$description', $capacity, '$completed', '$location', '$type', " .($series_id ? "'$series_id'" : "NULL") . ")
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
