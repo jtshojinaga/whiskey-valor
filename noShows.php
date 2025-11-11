@@ -77,13 +77,14 @@ require_once('header.php');
                 </thead>
                 <tbody>
                     <?php if (!empty($no_shows)): ?>
-                        <?php foreach ($no_shows as $user) {
-
-                            $userID = $no_shows['username'];
-  
+                        <?php 
+                        $num_no_shows = count($no_shows);
+                        ?>
+                        <?php for ($i=0; $i<$num_no_shows; $i++) {
+                            $userID = $no_shows[$i][0];
                             $user = retrieve_person($userID);
-                            $name = $user->get_first_name() . " " . $user->get_last_name();
-                            $no_sho = $no_shows['NoShowCount'];
+                            $name = get_name_from_id($userID);
+                            $no_sho = $no_shows[$i][1];
                             
                             echo "
                             <tr>
@@ -102,9 +103,7 @@ require_once('header.php');
                 </tbody>
             </table>
 
-            <div class="text-center mt-6">
-                <a href="createGroup.php" class="blue-button">Create a New Group</a>
-            </div>
+
 
         </div>
         <div class="text-center mt-4">
@@ -114,7 +113,6 @@ require_once('header.php');
         <div class="info-section">
             <div class="blue-div"></div>
             <p class="info-text">
-                Manage all volunteer and participant groups here. You can create, delete, and assign members to any group as needed.
             </p>
         </div>
     </main>

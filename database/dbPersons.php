@@ -1136,7 +1136,7 @@ function find_user_names($name) {
         
         $result = mysqli_query($connection, $query);
         if ($result) {
-            $row = mysqli_fetch_assoc($result);
+            $rows = mysqli_fetch_all($result);
             // username, noshowcount
             //$no_shows = $row['NoShowCount'];
         }
@@ -1147,7 +1147,7 @@ function find_user_names($name) {
 
         }
         mysqli_close($connection);
-        return $row;
+        return $rows;
     }
 
     function get_events_attended_by($personID) {
