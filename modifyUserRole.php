@@ -91,7 +91,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Archive User</title>
+        <title>Whiskey Valor | Archive User</title>
         <style>
             .modUser{
                 display: flex;

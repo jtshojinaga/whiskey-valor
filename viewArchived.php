@@ -38,7 +38,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Archived Animals</title>
+        <title>Whiskey Valor | Archived Animals</title>
     </head>
     <body>
         <?php require_once('header.php') ?>

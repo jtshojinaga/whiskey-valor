@@ -22,7 +22,7 @@ $fiscalYearEnd = $fiscalYearStart + 1;
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fredericksburg SPCA | Volunteer Reports</title>
+    <title>Whiskey Valor | Volunteer Reports</title>
   <link href="css/normal_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->

@@ -8,7 +8,7 @@
     <html>
         <head>
             <?php require_once('universal.inc') ?>
-            <title>Fredericksburg SPCA | Create Event</title>
+            <title>Whiskey Valor | Create Event</title>
         </head>
         <body>
             <?php require_once('header.php') ?>
