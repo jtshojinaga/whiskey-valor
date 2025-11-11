@@ -23,7 +23,6 @@
 
     include_once('database/dbPersons.php');
     include_once('database/dbEvents.php');
-    include_once('database/dbAttendance.php');
     include_once('domain/Event.php');
     include_once('domain/Person.php');
     require_once('include/input-validation.php');
@@ -61,7 +60,7 @@
         <main>
             <h1 style="color: white;">Logging Attendance for <?php echo $event_name; ?></h1>
             <div class="attendees-wrapper">
-            <form method="POST" id="attendance-form">
+            <form method="POST" id="attendance-form" action="processAttendees.php">
                 <div class="attendees-table-wrapper">
                     <div class="thead">
                         <div class="tr">
@@ -73,9 +72,10 @@
                     </div>
                     <div class="tbody">
                     <?php foreach ($attendees_list as $attendee) { 
-                        $first = isset($attendee['first_name']) ? htmlspecialchars($attendee['first_name']) : '';
-                        $last = isset($attendee['last_name']) ? htmlspecialchars($attendee['last_name']) : '';
-                        $uid = isset($attendee['id']) ? htmlspecialchars($attendee['id']) : '';
+                        $uid = isset($attendee['userID']) ? htmlspecialchars($attendee['userID']) : '';
+                        $attendee = retrieve_person($uid);
+                        $first = $attendee->get_first_name();
+                        $last = $attendee->get_last_name();
 
                         $name = trim($first . ' ' . $last);
 
@@ -88,12 +88,6 @@
                         echo "<span class='td' id='data'><input type='text' class='note' name='attendee_notes[" . $uid . "]' placeholder='Enter note...'></span>";
                         echo "</div>";
                     } ?>
-                        <div class="tr">
-                            <span class="td"><input type="checkbox" class="cb" name="attendee[]" value="johndoe1996"></span>
-                            <span class="td" id="data">John Doe</span>
-                            <span class="td" id="data">johndoe1996</span>
-                            <span class='td' id='data'><input type='text' class='note' name='attendee_notes[johndoe1996]' placeholder="Enter note..."></span>
-                        </div>
                     </div>
                 </div>
                 <button type="submit" name="log" id="log">Log Selected Attendees</button>
