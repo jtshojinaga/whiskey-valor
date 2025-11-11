@@ -74,7 +74,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Change Password</title>
+        <title>Whiskey Valor | Change Password</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
