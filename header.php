@@ -717,6 +717,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['logattendees.php'] = 2;
         $permission_array['processattendees.php'] = 2;
         $permission_array['viewdata.php'] = 2;
+        $permission_array['deleteusersearch.php'] = 2;
         // LOWERCASE
 
 
