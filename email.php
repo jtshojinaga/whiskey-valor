@@ -286,9 +286,33 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
 
         mysqli_stmt_close($queryPrep); // Good practice to close the statement
         return $emails;
-
     }
-     
+    
+     /**
+     * Schedule an email to be sent at a later time.
+     *
+     * @param string $userID   The user sending the email.
+     * @param string $recipientID  Recipient of the email.
+     * @param string $subject    Email subject.
+     * @param string $body       Email body.
+     * @param string $scheduledSend Datetime (Y-m-d H:i:s) to send the email.
+     * @return bool
+     */
+    function scheduleEmail(string $userID, string $recipientID, string $subject, string $body, string $scheduledSend): bool {
+        $conn = connect();
+
+        $stmt = $conn->prepare("
+            INSERT INTO dbscheduledemails (userID, recipient, subject, body, scheduledSend)
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $success = $stmt->bind_param('sssss', $userID, $recipientID, $subject, $body, $scheduledSend);
+        $success = $stmt->execute();
+
+        $stmt->close();
+        $conn->close();
+        return $success;
+    }
+
     
     //Email Builders below here!
     /** 
