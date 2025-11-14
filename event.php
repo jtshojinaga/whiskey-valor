@@ -31,6 +31,11 @@
         echo 'bad event ID';
         die();
     }
+    //Is if this event is part of a recurring series
+    $isRecurring = !empty($event_info['series_id']);
+    $confirmText = $isRecurring
+    ? "This is a recurring event. Deleting it will remove all occurrences. Are you sure you want to delete this recurring event?"
+    : "Are you sure you want to delete this event?";
 
     // Get number of attendees to display on event page
     $event_num_attendees = fetch_num_attendees($id);
@@ -262,21 +267,23 @@
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
-                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
-                    onclick="return confirmDelete(<?= htmlspecialchars($id) ?>);">
-                        <i class="fas fa-trash"></i>
                 </a>
-            <?php endif; ?>
+                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon"
+                    onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">
+                    <i class="fas fa-trash"></i>
+                </a>
+        <?php endif; ?>
+
         </h2>
 
-        <script>
-            function confirmDelete() {
-                if (confirm("Are you sure you want to delete this event?")) {
-                    // If the user clicks "OK", navigate to the link
-                    window.location.href = 'deleteEvent.php?eventID=' + eventID;
-                }
-            }
-        </script>
+        
+
+
+
+
+
+
+        
 
                 <div id="table-wrapper">
             <table>
