@@ -85,6 +85,7 @@ if ($isAdmin && $_SERVER["REQUEST_METHOD"] == "POST")
     </style>
 </head>
 <body>
+    <h1 style="color:white;">Create New Email</h1>
 <?php 
     $__old = error_reporting(E_ALL & ~E_WARNING);
     require_once('header.php'); if(!$isAdmin): ?> 
@@ -98,35 +99,37 @@ if ($isAdmin && $_SERVER["REQUEST_METHOD"] == "POST")
     <?php echo $submissionMessage; ?>
 
     <form id="emailForm" action="" method="POST">
-        <label for="subject">* Email Subject</label>
-        <input type="text" id="subject" name="subject" required>
+        <div class="section-box" style="width:80%;margin:auto;">
+            <label for="subject"><em>*</em> Email Subject</label>
+            <input type="text" id="subject" name="subject" required>
         
-        <label for="content">Email Body</label>
-        <textarea id="content" name="content" rows="10"></textarea>
+            <label for="content">Email Body</label>
+            <textarea id="content" name="content" rows="10"></textarea>
 
-        <label for="scheduled">Send Now?</label>
-        <select name="scheduled" id="scheduled">
-            <option value="true">Yes</option>
-            <option value="false">No (Schedule for later)</option>
-        </select>
+            <label for="scheduled">Send Now?</label>
+            <select name="scheduled" id="scheduled">
+                <option value="true">Yes</option>
+                <option value="false">No (Schedule for later)</option>
+            </select>
         
-        <div id="selectorTime" style="display:none;">
-            <label for="sendTime">When should the email be sent?</label>
-            <input type="datetime-local" id="sendTime" name="sendTime">
+            <div id="selectorTime" style="display:none;">
+                <label for="sendTime">When should the email be sent?</label>
+                <input type="datetime-local" id="sendTime" name="sendTime">
+            </div>
+
+            <label for="recipients">Recipients</label>
+            <select name="recipients" id="recipients">
+                <option value="all">All Whiskey Valor Members</option>
+                <option value="specific">Specific Users</option>
+            </select>
+
+            <div id="selectorRecipients" style="display:none;">
+                <label for="recipientFullName">User Full Name</label>
+                <input type="text" id="recipientFullName" name="recipientFullName">
+            </div>
+
+            <input type="submit" id="createEmailBtn" value="Create Email" style="width:100%;">
         </div>
-
-        <label for="recipients">Recipients</label>
-        <select name="recipients" id="recipients">
-            <option value="all">All Whiskey Valor Members</option>
-            <option value="specific">Specific Users</option>
-        </select>
-
-        <div id="selectorRecipients" style="display:none;">
-            <label for="recipientFullName">User Full Name</label>
-            <input type="text" id="recipientFullName" name="recipientFullName">
-        </div>
-
-        <input type="submit" id="createEmailBtn" value="Create Email.">
     </form>
 
     <div id="confirmModal" class="modal-backdrop" aria-hidden="true">

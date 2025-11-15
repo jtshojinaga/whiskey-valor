@@ -49,29 +49,29 @@ table, td, tr, th, form, fieldset, em, button, a {
     --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
 
-    --happy-toast-background-color: #1a7024;
-    --happy-toast-font-color: white;
+    --happy-toast-background-color: #5D7E61;
+    --happy-toast-font-color: rgb(255, 255, 255);
 
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    --error-toast-background-color: #f0858e;
-    --error-toast-font-color: white;
+    --error-toast-background-color: #A66654;
+    --error-toast-font-color: rgb(255, 255, 255);
 
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: rgb(184, 184, 184); /* Changed to Fred SPCA Navy */
+    --main-color: #2A435A; 
 
     --accent-color: rgb(201, 171, 129);
  
     --secondary-accent-color: rgb(175, 141, 92);
 
     --calendar-event-color: #808080;
-    --calendar-event-color-hover: var(--main-color);
+    --calendar-event-color-hover: var(--accent-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
 
-    --button-font-color: rgb(31,31,33);
+    --button-font-color: rgb(255, 255, 255);
     --button-padding: 0.5rem 1.5rem;
     --button-border-radius: 0.25rem;
 
@@ -79,9 +79,9 @@ table, td, tr, th, form, fieldset, em, button, a {
     --light-border: 1px solid var(--shadow-and-border-color);
     --text-field-border: 2px solid #e8e8e8;
 
-    --cancel-button-background-color: #dd3737;
+    --cancel-button-background-color: #A66654;
 
-    --error-color: red;
+    --error-color: #A66654;
 
     /* Global rules */
     font-size: 18px;
@@ -174,11 +174,11 @@ nav {
 }
 
 a {
-    color: var(--accent-color);
+    color: white;
 }
 
 a:visited {
-    color: var(--secondary-accent-color);
+    color: rgb(226, 226, 226);
 }
 
 a:hover {
@@ -273,7 +273,7 @@ input[type=submit], button, .button, a.button-signup {
     color: var(--button-font-color);
     background-color: var(--main-color);
     padding: var(--button-padding);
-    border: none;
+    border: 3px solid rgba(255, 255, 255, 0.295);
     border-radius: var(--button-border-radius);
     font-weight: 500;
     width: 94%;
@@ -372,6 +372,7 @@ h3:not(:first-of-type) {
 .error {
     color: var(--error-color);
     font-size: .75rem;
+    color: white;
 }
 
 .hidden {
@@ -694,6 +695,7 @@ img.filter-button {
 
 button.cancel, a.cancel {
     background-color: var(--cancel-button-background-color);
+    color: white;
 }
 
 button.cancel:hover, a.cancel:hover {
@@ -745,7 +747,7 @@ main.dashboard > p {
 .dashboard-item:hover {
     background-color: var(--accent-color);
     cursor: pointer;
-    text-shadow: rgb(52, 138, 12);
+    text-shadow: var(--accent-color);
 }
 
 .dashboard-item > img {
@@ -1342,6 +1344,23 @@ a.event-link:hover {
 .app-comment-user {
     font-weight: bold;
 
+}
+
+.app-link {
+    display: inline-block;
+    background-color: var(--main-color);
+    color: white;
+    border-radius: var(--button-border-radius);
+    border: 3px solid rgba(255,255,255,0.295);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: background-color .3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.app-link:hover {
+    background-color: #3B5D7D;
 }
 
 /* used for logAttendees.php */
