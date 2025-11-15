@@ -680,7 +680,7 @@ function update_event($eventID, $eventDetails) {
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
+        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);

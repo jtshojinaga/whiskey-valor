@@ -22,71 +22,137 @@
         echo 'bad access level';
         die();
     }
+
     require_once('include/input-validation.php');
     require_once('database/dbEvents.php');
+
     $errors = '';
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $args = sanitize($_POST, null);
         $required = array(
-            "id", "name", "date", "start-time", "description");
+            "id", "name", "date", "start-time", "description"
+        );
 
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';
             die();
         } else {
             require_once('database/dbPersons.php');
+
             $id = $args['id'];
+            $existingEvent = fetch_event_by_id($id);
+
             $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
             if (!$validated) {
                 $errors .= '<p>The provided time range was invalid.</p>';
             }
+
             $startTime = $args['start-time'] = $validated[0];
-            $endTime = $args['end-time'] = $validated[1];
-            $date = $args['date'] = validateDate($args["date"]);
+            $endTime   = $args['end-time']   = $validated[1];
+            $date      = $args['date']       = validateDate($args["date"]);
+
             $capacity = intval($args["capacity"]);
             $assignedVolunteerCount = count(getvolunteers_byevent($id));
             $difference = $assignedVolunteerCount - $capacity;
             if ($capacity < $assignedVolunteerCount) {
                $errors .= "<p>There are currently $assignedVolunteerCount volunteers assigned to this event. The new capacity must not exceed this number. You must remove $difference volunteer(s) from the event to reduce the capacity to $capacity.</p>";
             }
+
             if (!$startTime || !$date > 11){
                 $errors .= '<p>Your request was missing arguments.</p>';
             }
+
             if (!$errors) {
                 $success = update_event($id, $args);
                 if (!$success){
                     echo "Oopsy!";
                     die();
                 }
+
+                $isRecurring    = isset($_POST['recurring']) ? 1 : 0;
+                $recurrenceType = $isRecurring ? ($_POST['recurrence_type'] ?? '') : '';
+                $customDays     = ($isRecurring && $recurrenceType === 'custom')
+                                  ? (int)($_POST['custom_days'] ?? 0)
+                                  : 0;
+
+                if (
+                    $isRecurring &&
+                    in_array($recurrenceType, ['daily','weekly','monthly','custom'], true) &&
+                    (!$existingEvent || empty($existingEvent['series_id']))
+                ) {
+                    require_once('database/dbinfo.php');
+                    $con = connect();
+
+                    $series_id = bin2hex(random_bytes(16));
+                    $esc = mysqli_real_escape_string($con, $series_id);
+                    mysqli_query($con, "UPDATE dbevents SET series_id = '$esc' WHERE id = " . intval($id));
+
+                    $counts = [
+                        'daily'   => 30,
+                        'weekly'  => 12,
+                        'monthly' => 6,
+                        'custom'  => 12,
+                    ];
+                    $intervalMap = [
+                        'daily'   => 'P1D',
+                        'weekly'  => 'P1W',
+                        'monthly' => 'P1M',
+                    ];
+
+                    if ($recurrenceType === 'custom') {
+                        if ($customDays < 1) {
+                            $customDays = 1;
+                        }
+                        $intervalSpec = 'P' . $customDays . 'D';
+                    } else {
+                        $intervalSpec = $intervalMap[$recurrenceType] ?? null;
+                    }
+
+                    if ($intervalSpec && isset($counts[$recurrenceType])) {
+                        $current = new DateTime($date);
+                        $step    = new DateInterval($intervalSpec);
+                        $times   = $counts[$recurrenceType];
+
+                        for ($i = 0; $i < $times; $i++) {
+                            $current->add($step);
+                            $ymd = $current->format('Y-m-d');
+
+                            $dup = $args;
+                            $dup['date']       = $ymd;
+                            $dup['start-time'] = $args['start-time'];
+                            $dup['end-time']   = $args['end-time'];
+                            $dup['series_id']  = $series_id;
+
+                            create_event($dup);
+                        }
+                    }
+
+                    mysqli_close($con);
+                }
+
                 header('Location: event.php?id=' . $id . '&editSuccess');
+                die();
             }
         }
     }
+
     if (!isset($_GET['id'])) {
-        // uhoh
         die();
     }
-    $args = sanitize($_GET);
-    $id = $args['id'];
+
+    $args  = sanitize($_GET);
+    $id    = $args['id'];
     $event = fetch_event_by_id($id);
     if (!$event) {
         echo "Event does not exist";
         die();
     }
+
     require_once('include/output.php');
 
-    // get animal data from database for form
-    // Connect to database
     include_once('database/dbinfo.php'); 
-    $con=connect();  
-    /*$sql = "SELECT * FROM `dbLocations`";
-    $all_locations = mysqli_query($con,$sql);
-    $sql = "SELECT * FROM `dbServices`";
-    $all_services = mysqli_query($con,$sql);
-
-    // get current selected services for event
-    $current_services = get_services($id);
-    */
+    $con = connect();
 ?>
 <!DOCTYPE html>
 <html>
@@ -106,79 +172,103 @@
                 <label for="name">Event Name </label>
                 <input type="hidden" name="id" value="<?php echo $id ?>"/> 
                 <input type="text" id="name" name="name" value="<?php echo $event['name'] ?>" required placeholder="Enter name"> 
-                <!--
-                <label for="name">Abbreviated Name</label>
-                <input type="text" id="abbrev-name" name="abbrev-name" value="<//?php echo $event['abbrevName'] ?>" maxlength="11"  required placeholder="Enter name that will appear on calendar">
-                --->
+
                 <label for="name">Date </label>
                 <input type="date" id="date" name="date" value="<?php echo $event['date'] ?>" min="<?php echo date('Y-m-d'); ?>" required>
+
                 <label for="name">Start Time </label>
                 <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
+
                 <label for="name">End Time </label>
                 <input type="text" id="end-time" name="end-time" value="<?php echo time24hto12h($event['endTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 12:00 PM">
+
                 <label for="name">Description </label>
                 <input type="text" id="description" name="description" value="<?php echo $event['description'] ?>" required placeholder="Enter description">
+
                 <label for="name">Location </label>
                 <input type="text" id="location" name="location" value="<?php echo $event['location'] ?>" placeholder="Enter location">
+
                 <label for="name">Capacity </label>
                 <input type="number" id="capacity" name="capacity" value="<?php echo $event['capacity'] ?>" placeholder="Enter capacity (e.g. 1-99)">
-                <!--<fieldset>
-                    <label for="name">* Service </label>
-                    </?php 
-                        // fetch data from the $all_services variable
-                        // and individually display as an option
-                        echo '<ul>';
-                        while ($service = mysqli_fetch_array(
-                                $all_services, MYSQLI_ASSOC)):; 
-                            $shouldCheck = false;
-                            foreach($current_services as $current_serv) {
-                                if ($service['id'] == $current_serv['id']) {
-                                    $shouldCheck = true;
-                                }
-                            }
-                            if ($shouldCheck) {
-                                echo '<li><input class="checkboxes" type="checkbox" name="service[]" value="' . $service['id'] . '" checked required/> ' . $service['name'];
-                            } else {
-                                echo '<li><input class="checkboxes" type="checkbox" name="service[]" value="' . $service['id'] . '" required/> ' . $service['name'];
-                            }
-                        endwhile;
-                    ?>
-                </fieldset> --->
-                <!--<label for="name">Location </label>
-                <select for="name" id="location" name="location" required>
-                    </?php 
-                        // fetch data from the $all_locations variable
-                        // and individually display as an option
-                        while ($location = mysqli_fetch_array(
-                                $all_locations, MYSQLI_ASSOC)):; 
-                    
-                            if ($event['locationID'] == $location['id']) {
-                                echo '<option selected value="' . $location['id']. '">';
-                            } else {
-                                echo '<option value="' . $location['id']. '">';
-                            }
-                            echo $location['name'];
-                            echo '</option>';
-                        
-                        endwhile; 
-                        // terminate while loop
-                    ?>
-                </select>---><p></p>
+
+                <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                    <legend>Make this a recurring event</legend>
+
+                    <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
+                        <input
+                            type="checkbox"
+                            id="recurring"
+                            name="recurring"
+                            value="1"
+                            <?php if (!empty($event['series_id'])) echo 'checked'; ?>
+                        >
+                        Recurring
+                    </label>
+
+                    <div id="recurring-options" style="display:none; margin-top:6px;">
+                        <label for="recurrence_type">Recurrence:</label>
+                        <select name="recurrence_type" id="recurrence_type">
+                            <option value="">-- Select --</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="custom">Custom</option>
+                        </select>
+
+                        <div id="custom-interval" style="display:none; margin-top:8px;">
+                            <label for="custom_days">Repeat every:</label>
+                            <input type="number" min="1" id="custom_days" name="custom_days" placeholder="e.g. 10">
+                            <span>days</span>
+                        </div>
+                    </div>
+                </fieldset>
+
                 <input type="submit" value="Update Event">
                 <a class="button cancel" href="event.php?id=<?php echo htmlspecialchars($_GET['id']) ?>" style="margin-top: .5rem">Cancel</a>
             </form>
 
             <script type="text/javascript">
-                    $(document).ready(function(){
-                        var checkboxes = $('.checkboxes');
-                        checkboxes.change(function(){
-                            if($('.checkboxes:checked').length>0) {
-                                checkboxes.removeAttr('required');
-                            } else {
-                                checkboxes.attr('required', 'required');
-                            }
-                        });
+                $(document).ready(function(){
+                    var checkboxes = $('.checkboxes');
+                    checkboxes.change(function(){
+                        if($('.checkboxes:checked').length>0) {
+                            checkboxes.removeAttr('required');
+                        } else {
+                            checkboxes.attr('required', 'required');
+                        }
                     });
+                });
+
+                (function(){
+                    const recurring     = document.getElementById('recurring');
+                    const options       = document.getElementById('recurring-options');
+                    const recurrenceType= document.getElementById('recurrence_type');
+                    const customBlock   = document.getElementById('custom-interval');
+                    const customDays    = document.getElementById('custom_days');
+
+                    function toggleOptions(){
+                        const on = recurring && recurring.checked;
+                        if (options) options.style.display = on ? 'block' : 'none';
+                        if (!on) {
+                            if (recurrenceType) recurrenceType.value = '';
+                            if (customBlock) customBlock.style.display = 'none';
+                            if (customDays) customDays.value = '';
+                        }
+                    }
+                    function toggleCustom(){
+                        if (!recurrenceType || !customBlock) return;
+                        customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
+                    }
+
+                    if (recurring) {
+                        recurring.addEventListener('change', toggleOptions);
+                        toggleOptions();
+                    }
+                    if (recurrenceType) {
+                        recurrenceType.addEventListener('change', toggleCustom);
+                        toggleCustom();
+                    }
+                })();
             </script>
         </main>
     </body>
