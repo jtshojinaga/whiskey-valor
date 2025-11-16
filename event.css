@@ -77,10 +77,11 @@ table th { word-break: break-word; }
 }
 
 /* Action buttons */
-.action-buttons { text-align: center; margin: 1rem 0; }
-.action-buttons .button { margin: 0.35rem; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; }
+.action-buttons { margin: 1rem 0rem; display: flex; flex-direction: row; align-items: stretch; justify-content: space-evenly;}
+.action-buttons .button { margin: 0.35rem; padding: 0.6rem 1rem; border-radius: 13px; cursor: pointer; width: 10rem; height: 4rem;}
 .button.cancel { background-color: var(--cancel-button-background-color); color: var(--button-font-color); }
-.button.signup  { background-color: var(--accent-color); color: var(--button-font-color); }
+.button.signup  { background-color: var(--main-color) !important; color: var(--button-font-color); }
+.button.signup:hover { background-color: var(--accent-color) !important; }
 .button.success { background-color: #28a745; color: #fff; }
 .button.danger  { background-color: #dc3545; color: #fff; }
 

@@ -385,7 +385,7 @@
 
                 <!-- end of Thomas's work -->
 
-                <a href="logAttendees.php?id=<?php echo urlencode($id); ?>" class="button signup">Log Attendees</a>
+                <a href="logAttendees.php?id=<?php echo urlencode($id); ?>" class="button signup">Log Event Attendees</a>
 
 
                 <!-- <a href="editEvent.php?id=<?= $id ?>" class="button cancel">Edit Event Details</a> -->
@@ -393,7 +393,7 @@
 
             <?php endif ?>
 
-            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
+            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Back to Calendar</a>
 
         </div>
 

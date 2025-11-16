@@ -244,7 +244,7 @@
     .circle-arrow-button {
         position: absolute;
         bottom: 30px;
-        right: 30px;
+        right: 18px;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -253,6 +253,7 @@
         font-size: 20px;
         font-family: Quicksand, sans-serif;
         font-weight: bold;
+        color: black;
         cursor: pointer;
         transition: transform 0.3s ease;
     }
@@ -269,6 +270,10 @@
         justify-content: center;
         font-size: 22px;
         transition: transform 0.3s ease;
+    }
+
+    .circle-arrow-button:hover {
+        background-color:transparent !important;
     }
 
     .circle-arrow-button:hover .circle {
@@ -553,7 +558,7 @@
     <!-- Generate Report -->
     <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
+            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
         <img class="background-image" src="images/blank-white-background.jpg" />
         <div class="large-text-sub">Generate Report</div>
@@ -564,7 +569,7 @@
     <!-- Create Email -->
     <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/Email.png" alt="Email Icon">
+            <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
         </div>
         <img class="background-image" src="images/blank-white-background.jpg" />
         <div class="large-text-sub">Create Email</div>
@@ -575,7 +580,7 @@
     <!-- View Drafts -->
     <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/Drafts.png" alt="Drafts Icon">
+            <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
         </div>
         <img class="background-image" src="images/blank-white-background.jpg" />
         <div class="large-text-sub">View Drafts</div>
@@ -586,7 +591,7 @@
     <!-- Generate Email List -->
     <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Email List Icon">
+            <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
         </div>
         <img class="background-image" src="images/blank-white-background.jpg" />
         <div class="large-text-sub">Generate Email List</div>
