@@ -1088,18 +1088,16 @@ function find_user_names($name) {
         return $result;
     }
     date_default_timezone_set("America/New_York");
-
+// FIX
     function fetch_user_no_shows($personID) {
         $connection = connect();
         $query = 
-            "SELECT dbpendingsignups.username, COUNT(*) AS NoShowCount
-            FROM dbpendingsignups, dbevents
-            WHERE dbpendingsignups.username='" . $personID . "'" . " 
-                and dbpendingsignups.eventname=dbevents.id
+            "SELECT dbeventpersons.userID, COUNT(*) AS NoShowCount
+            FROM dbeventpersons, dbevents
+            WHERE dbeventpersons.userID='" . $personID . "'" . " 
+                and dbeventpersons.eventID=dbevents.id
                 and dbevents.completed='Y' 
-                and (dbpendingsignups.eventname, dbpendingsignups.username) 
-            NOT IN (
-                SELECT dbeventpersons.eventID, dbeventpersons.userID FROM dbeventpersons)
+                and dbeventpersons.attended=0
             GROUP BY dbpendingsignups.username;
             ";
         
@@ -1124,14 +1122,13 @@ function find_user_names($name) {
     function fetch_no_shows() {
         $connection = connect();
         $query = 
-            "SELECT dbpendingsignups.username, COUNT(*) AS NoShowCount
-            FROM dbpendingsignups, dbevents
+            "SELECT dbeventpersons.userID, COUNT(*) AS NoShowCount
+            FROM dbeventpersons, dbevents
             WHERE 
-                dbpendingsignups.eventname = dbevents.id
+                dbeventpersons.eventID = dbevents.id
                 and dbevents.completed='Y' 
-                and (dbpendingsignups.eventname, dbpendingsignups.username) NOT IN (
-                SELECT dbeventpersons.eventID, dbeventpersons.userID FROM dbeventpersons)
-            GROUP BY dbpendingsignups.username ORDER BY NoShowCount DESC;
+                and dbeventpersons.attended=0
+            GROUP BY dbeventpersons.userID ORDER BY NoShowCount DESC;
             ";
         
         $result = mysqli_query($connection, $query);
@@ -1154,7 +1151,7 @@ function find_user_names($name) {
         $today = date("Y-m-d");
         $query = "select * from dbeventpersons, dbevents
                   where userID='$personID' and eventID=id
-                  and date<='$today'
+                  and date<='$today' and attended=1
                   order by date asc";
         $connection = connect();
         $result = mysqli_query($connection, $query);

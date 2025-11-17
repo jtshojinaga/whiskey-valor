@@ -478,6 +478,16 @@ table td .label {
     background-color: #c82333;
 }
 
+.button.warning {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.button.warning:hover {
+    background-color: #ffca2c;
+}
+
+
 .button.cancel {
     background-color: #6c757d !important;
     color: #fff !important;

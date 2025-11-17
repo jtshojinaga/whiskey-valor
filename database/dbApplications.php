@@ -56,6 +56,39 @@ function remove_app($id) {
     return true;
 }
 
+function fetch_pending_apps() {
+    $con=connect();
+    $query = "SELECT * FROM dbapplications WHERE status='Pending'" .
+            " ORDER BY flagged DESC";
+    $result = mysqli_query($con,$query);
+    $theApps = array();
+    while ($result_row = mysqli_fetch_assoc($result)) {
+        $theApp = make_an_app($result_row);
+        $theApps[] = $theApp;
+    }
+    mysqli_close($con);
+    return $theApps;
+}
+
+function all_pending_names() {
+    $con=connect();
+    $query = "SELECT name FROM dbapplications, dbevents WHERE event_id=dbevents.id AND status='Pending'";
+    $result = mysqli_query($con,$query);
+    if (!$result) {
+        mysqli_close($con);
+        return [];
+    }
+    else {
+        $rows = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row['name']; // Collect only the event IDs
+        }
+        mysqli_close($con);
+        return $rows;
+
+    }
+    
+}
 
 /*
  * @return an Application from dbapplication table matching a particular id.
