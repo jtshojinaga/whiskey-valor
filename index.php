@@ -475,6 +475,7 @@
     <span class="button-text"><?php 
                         require_once('database/dbEvents.php');
                         require_once('database/dbPersons.php');
+                        require_once('database/dbapplications.php');
                         $pendingsignups = all_pending_names();
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';

@@ -84,6 +84,7 @@ table th { word-break: break-word; }
 .button.signup:hover { background-color: var(--accent-color) !important; }
 .button.success { background-color: #28a745; color: #fff; }
 .button.danger  { background-color: #dc3545; color: #fff; }
+.button.warning  { background-color: #ff8b3e; color: #fff; }
 
 /* Toasts */
 .happy-toast { background-color: var(--happy-toast-background-color); color: var(--happy-toast-font-color); padding: 0.75rem; border-radius: 8px; }
