@@ -71,7 +71,7 @@
                                     $status = $app->getStatus();
                                     $flagged = $app->getFlagged();
                                     $event = retrieve_event($event_id);
-                                    $eventName = $event->getName();
+                                    $eventName = $app->getName();
 
 
                                     //TODO: remove training_level_required and add other necessary fields -Blue

@@ -136,7 +136,9 @@ require_once('header.php');
                                         <td>' . ucfirst($person->get_type()) . '</td>
                                         <td>' . ucfirst($person->get_status()) . '</td>
                                         <td><a href="viewProfile.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Profile</a></td>
-                                        <td><a href="deleteUser.php?id=' . $person->get_id() . '" class="text-blue-700 underline"">Delete User</a></td>
+                                        <td><a href="deleteUser.php?id=' . $person->get_id() . '" 
+                                                onclick="return confirm(\'Are You Sure?\');"
+                                                class="text-blue-700 underline">Delete User</a></td>
                                     </tr>';
                         }
                         echo '
