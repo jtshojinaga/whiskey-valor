@@ -1141,7 +1141,7 @@ function find_user_names($name) {
 
         else {;
             echo "we have no result";
-            die("Error: " . mysqli_error($con)); // Debugging MySQL error
+            die("Error: " . mysqli_error($connection)); // Debugging MySQL error
 
         }
         mysqli_close($connection);
