@@ -887,8 +887,46 @@ ALTER TABLE `discussion_replies`
 --
 ALTER TABLE `monthly_hours_snapshot`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- Table structure for table `dbattendance`
+--
+
+CREATE TABLE `dbattendance` (
+  `id` int(11) NOT NULL,
+  `eventId` int(11) NOT NULL,
+  `userId` varchar(256) NOT NULL,
+  `loggedById` varchar(256) DEFAULT NULL,
+  `attended` tinyint(1) NOT NULL DEFAULT 0,
+  `attendanceNote` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `dbattendance`
+--
+ALTER TABLE `dbattendance`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `dbattendance`
+--
+ALTER TABLE `dbattendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+
+

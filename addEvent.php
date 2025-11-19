@@ -43,21 +43,104 @@
             $date = $args['date'] = validateDate($args["date"]);
             $args["training_level_required"] = $_POST['training_level_required'];
     
+            $args['startDate'] = $date;
+            $args['endDate']   = $date;   
+            $args['startTime'] = $startTime;
+            $args['endTime']   = $endTime;
+
+
+            //1. Start of use case #8 recurring, etc
+            $isRecurring = isset($_POST['recurring']) ? 1 : 0;
+            $recurrenceType = $isRecurring ? ($_POST['recurrence_type'] ?? '') : '';
+            $customDays = ($isRecurring && $recurrenceType === 'custom') ? (int)($_POST['custom_days'] ?? 0) : null;
+
+            
+            if ($isRecurring) {
+                if (!in_array($recurrenceType, ['daily','weekly','monthly','custom'], true)) {
+                    echo 'invalid recurrence type';
+                    die();
+                }
+                if ($recurrenceType === 'custom' && (!$customDays || $customDays < 1)) {
+                    echo 'invalid custom interval';
+                    die();
+                }
+                $args['is_recurring'] = 1;
+                $args['recurrence_type'] = $recurrenceType;                  // daily|weekly|monthly|custom
+                $args['recurrence_interval_days'] = ($recurrenceType === 'custom') ? $customDays : null;
+            } else {
+                $args['is_recurring'] = 0;
+                $args['recurrence_type'] = null;
+                $args['recurrence_interval_days'] = null;
+            }
+            //1. Start of use case #8 recurring, etc
+
             if (!$startTime || !$endTime || !$date > 11){
                 echo 'bad args';
                 die();
             }
 
+            $args['series_id'] = bin2hex(random_bytes(16)); // new new
+
             $id = create_event($args);
-            if(!$id){
-                die();
+                if (!$id) {
+              die();
             } else {
+    
+    $isRecurring    = isset($_POST['recurring']);
+    $recurrenceType = $_POST['recurrence_type'] ?? '';
+    $customDays     = isset($_POST['custom_days']) ? (int)$_POST['custom_days'] : 0;
+
+    
+    $counts = [
+        'daily'   => 30,  // next 30 days
+        'weekly'  => 12,  // next 12 weeks
+        'monthly' => 6,   // next 6 months
+        'custom'  => 12,  // 12 custom intervals
+    ];
+    
+    $intervalMap = [
+        'daily'   => 'P1D',
+        'weekly'  => 'P1W',
+        'monthly' => 'P1M',
+    ];
+    if ($recurrenceType === 'custom') {
+        $customDays = max(1, $customDays);
+        $intervalSpec = 'P' . $customDays . 'D';
+    } else {
+        $intervalSpec = $intervalMap[$recurrenceType] ?? null;
+    }
+
+    if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
+        $current = new DateTime($args['startDate']);  
+        $step    = new DateInterval($intervalSpec);
+        $times   = $counts[$recurrenceType];
+
+        for ($i = 0; $i < $times; $i++) {
+            $current->add($step);
+            $ymd = $current->format('Y-m-d');
+
+            $dup = $args;                 
+            $dup['startDate'] = $ymd;
+            $dup['endDate']   = $ymd;
+            $dup['date']      = $ymd;    
+
+            create_event($dup);
+
+            
+        }
+    }
+    
+    header('Location: eventSuccess.php');
+    exit();
+}
+
+                
                 header('Location: eventSuccess.php');
                 exit();
             }
             
         }
-    }
+    
     $date = null;
     if (isset($_GET['date'])) {
         $date = $_GET['date'];
@@ -76,7 +159,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Create Event</title>
+        <title>Whiskey Valor | Create Event</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -110,6 +193,32 @@
                     <option value="Orange">Orange</option>
                     <option value="Pink">Pink</option>
                 </select>
+
+                <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                    <legend>Make this a recurring event</legend>
+
+                    <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
+                        <input type="checkbox" id="recurring" name="recurring" value="1">
+                        Recurring
+                    </label>
+
+                    <div id="recurring-options" style="display:none; margin-top:6px;">
+                        <label for="recurrence_type">Recurrence:</label>
+                        <select name="recurrence_type" id="recurrence_type">
+                            <option value="">-- Select --</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="custom">Custom</option>
+                        </select>
+
+                        <div id="custom-interval" style="display:none; margin-top:8px;">
+                            <label for="custom_days">Repeat every:</label>
+                            <input type="number" min="1" id="custom_days" name="custom_days" placeholder="e.g. 10">
+                            <span>days</span>
+                        </div>
+                    </div>
+                </fieldset>
                 
                 <input type="submit" value="Create Event">
                 
@@ -132,6 +241,37 @@
                             }
                         });
                     });
+
+                    (function(){
+                        const recurring = document.getElementById('recurring');
+                        const options = document.getElementById('recurring-options');
+                        const recurrenceType = document.getElementById('recurrence_type');
+                        const customBlock = document.getElementById('custom-interval');
+                        const customDays = document.getElementById('custom_days');
+
+                        function toggleOptions(){
+                            const on = recurring && recurring.checked;
+                            if (options) options.style.display = on ? 'block' : 'none';
+                            if (!on) {
+                                if (recurrenceType) recurrenceType.value = '';
+                                if (customBlock) customBlock.style.display = 'none';
+                                if (customDays) customDays.value = '';
+                            }
+                        }
+                        function toggleCustom(){
+                            if (!recurrenceType || !customBlock) return;
+                            customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
+                        }
+
+                        if (recurring) {
+                            recurring.addEventListener('change', toggleOptions);
+                            toggleOptions();
+                        }
+                        if (recurrenceType) {
+                            recurrenceType.addEventListener('change', toggleCustom);
+                            toggleCustom();
+                        }
+                    })();
                 </script>
         </main>
     </body>

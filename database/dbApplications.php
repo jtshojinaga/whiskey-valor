@@ -186,17 +186,25 @@ function update_app_note($appID, $note) {
 
 function flag_app($appID) {
     $connection = connect();
-    $query = "
-        update dbapplications set flagged=1
-        where id='$appID'
-    ";
+    $query = 'UPDATE dbapplications SET flagged=1
+    WHERE id= "' . $appID .'"';
+
     $result = mysqli_query($connection, $query);
     mysqli_commit($connection);
     mysqli_close($connection);
     return $result;
 }
 
+function unflag_app($appID) {
+    $connection = connect();
+    $query = 'UPDATE dbapplications SET flagged=0
+    WHERE id= "' . $appID .'"';
 
+    $result = mysqli_query($connection, $query);
+    mysqli_commit($connection);
+    mysqli_close($connection);
+    return $result;
+}
 
 function get_all_apps() {
     $con=connect();
@@ -212,4 +220,35 @@ function get_all_apps() {
     return $theApps;
  }
 
+ function get_next_app($currentId) {
+    $app_list = get_all_apps();
+    $n = count($app_list);
+    for ($i = 0; $i < $n; $i++) {
+        $app = $app_list[$i];
+        if ($app->getID() == $currentId) {
+            // wrap to first if at end
+            if ($i + 1 < $n) {
+                return $app_list[$i + 1];
+            }
+            return $app_list[0]; // wrap to first
+        }
+    }
+    return fetch_app_by_id($currentId); // not found
+}
+
+function get_previous_app($currentId) {
+    $app_list = get_all_apps();
+    $n = count($app_list);
+    for ($i = 0; $i < $n; $i++) {
+        $app = $app_list[$i];
+        if ($app->getID() == $currentId) {
+            // wrap to last if at beginning
+            if ($i - 1 >= 0) {
+                return $app_list[$i - 1];
+            }
+            return $app_list[$n - 1]; // wrap to last
+        }
+    }
+    return fetch_app_by_id($currentId); // not found
+}
 ?>

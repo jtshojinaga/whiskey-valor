@@ -165,6 +165,7 @@ if (date("H:i:s") > "18:19:59") {
             font-weight: 700;
             color: #712977ff;
             max-width: 90%;
+            margin-bottom: 80px;
         }
 
         /* Navbar Container */
@@ -343,17 +344,21 @@ if (date("H:i:s") > "18:19:59") {
        /* Button Control */
         .arrow-button {
             position: absolute;
-            bottom: 30px;
-            right: 30px;
+            bottom: 24px;
+            right: 16px;
             background: transparent;
             border: none;
-            font-size: 20px;
+            font-size: 23px;
+            font-weight: bold;
+            color: black;
             cursor: pointer;
             transition: transform 0.3s ease;
+            padding: 0;
         }
 
         .arrow-button:hover {
             transform: translateX(5px); /* Moves the arrow slightly on hover */
+            background: transparent;
         }
 
         /* Footer */
@@ -463,7 +468,6 @@ if (date("H:i:s") > "18:19:59") {
 
         .nav-item:hover img, .nav-item.active img {
             filter: none;
-            background-color: rgb(31,31,33);
         }
        
         .icon .dropdown{
@@ -485,7 +489,7 @@ if (date("H:i:s") > "18:19:59") {
             height: 40px;
             border-radius: 5px;
             border-bottom-right-radius: 20px;
-            filter: invert(1);
+            filter: invert(1) !important;
         }
 
 /* for calendar */
@@ -711,6 +715,13 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['viewallapplications.php'] = 2;
         $permission_array['applicationsuccess.php'] = 2;
         $permission_array['denyapplication.php'] = 2;
+        $permission_array['createemail.php'] = 2;
+        $permission_array['viewdrafts.php'] = 2;  // Not sure if we want normal users to be able to send emails
+        $permission_array['editdrafts.php'] = 2;
+        $permission_array['logattendees.php'] = 2;
+        $permission_array['processattendees.php'] = 2;
+        $permission_array['viewdata.php'] = 2;
+        $permission_array['deleteusersearch.php'] = 2;
         // LOWERCASE
 
 

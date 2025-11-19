@@ -498,7 +498,9 @@ function create_event($event) {
     $connection = connect();
     $name = $event["name"];
     //$abbrevName = $event["abbrev-name"];
-    $date = $event["date"];
+    // $date = $event["date"];
+    $date    = $event["startDate"] ?? $event["date"];
+    $endDate = $event["endDate"]   ?? $date; // default single-day
     $startTime = $event["start-time"];    
     $endTime = $event["end-time"];
     $description = $event["description"];
@@ -522,17 +524,22 @@ function create_event($event) {
         $restricted = 0;
     }
         */
-    $access = 0;
+    $access = 'Public';
     $description = $event["description"];
     //$branch = $event["branch"];
     //$location = $event["location"];
     //$services = $event["service"];
 
     //$animal = $event["animal"];
-    $completed = "no";
+    $completed = 'N';
+
+    $series_id = isset($event['series_id'])
+        ? mysqli_real_escape_string($connection, $event['series_id'])
+        : null;
+
     $query = "
-        insert into dbevents (name, startDate, startTime, endTime, access, description, capacity, completed, location, type)
-        values ('$name', '$date', '$startTime', '$endTime', $access, '$description', $capacity, '$completed', '$location', '$type')
+        insert into dbevents (name, startDate, startTime, endTime, endDate, access, description, capacity, completed, location, type, series_id)
+        values ('$name', '$date', '$startTime', '$endTime', '$endDate', '$access', '$description', $capacity, '$completed', '$location', '$type', " .($series_id ? "'$series_id'" : "NULL") . ")
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -585,7 +592,7 @@ function update_event($eventID, $eventDetails) {
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
+        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);
@@ -782,6 +789,67 @@ function cancel_event($event_id, $account_name) {
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
     mysqli_close($connection);
+    return $result;
+}
+/**
+ * Approve a signup given a single event and a username
+ * @param mixed $event_id The ID for the associated event
+ * @param mixed $account_name The username for the associated account
+ * @param mixed $position The position that the user applied for(DEPRECIATED)
+ * @param mixed $notes Any notes for why the application was approved.
+ * @return bool|mysqli_result
+ */
+function approve_signup($event_id, $account_name, $position, $notes) {
+    $query = "DELETE from dbpendingsignups where username = '$account_name' AND eventname = $event_id";
+    $connection = connect();
+    //echo "username " . $account_name . " eventname " . $event_id;
+    $result = mysqli_query($connection, $query);
+    $result = boolval($result);
+
+    //echo "hello" . $account_name;
+
+    $query2 = "insert into dbeventpersons (eventID, userID, position, notes) values ('$event_id', '$account_name',  '$position', '$notes')";
+    $result2 = mysqli_query($connection, $query2);
+    //$result2 = boolval($result2);
+    //mysqli_close($connection);
+    mysqli_commit($connection);
+    if ($result2 == true)
+    {
+         emailHandler($event_id, $account_name, 2, "Sign-up Approved TEST TEST.");
+    }
+    return $result2;
+}
+
+function approve_multiple_signups($event_id, $account_names, $notes = '') {
+    $approved = 0;
+    if (!is_array($account_names) || empty($account_names)) return 0;
+
+    foreach ($account_names as $account_name) {
+        $ok = approve_signup($event_id, $account_name, 'Volunteer', $notes);
+        if ($ok) {
+            $approved++;
+        }
+    }
+    return $approved;
+}
+
+/**
+ * Reject a single sign up
+ * @param mixed $event_id The Event ID
+ * @param mixed $account_name The Account ID/Username
+ * @param mixed $position The position or 'account type' of the user who applied.
+ * @param mixed $notes Any notes on the rejection.
+ * @return bool True if successfull, false if the rejection failed
+ */
+function reject_signup($event_id, $account_name, $position, $notes) {
+    $query = "DELETE from dbpendingsignups where username = '$account_name' AND eventname = '$event_id'";
+    $connection = connect();
+    $result = mysqli_query($connection, $query);
+    $result = boolval($result);
+    /*if ($result == true) Wrong number for email
+    {
+        emailHandler($event_id, $account_name, 2, "Sign-up DENIED.");
+    }*/
     return $result;
 }
 
