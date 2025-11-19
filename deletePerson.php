@@ -68,7 +68,7 @@ $loggedIn = false;
             <span id="nav-top">
                 <span class="logo">
                     <img src="images/FredSCPAlogo.png">
-                        <span id="vms-logo"> Fredericksburg SPCA Volunteer </span>
+                        <span id="vms-logo"> Whiskey Valor User </span>
                         </span>
                     <img id="menu-toggle" src="images/menu.png">
                 </span>

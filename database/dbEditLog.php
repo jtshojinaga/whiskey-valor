@@ -10,7 +10,7 @@ include_once("dbinfo.php");
      * @param logEntry $in_log the incomming log-object to be added to the database.
      * @return bool Returns true if the process was successful. False if it found the log was already in the databse.
      */
-    function newLogEntry(logEntry $in_log): bool
+    function newLogEntryfromObject(logEntry $in_log): bool
     {
         
         $connection = connect();
@@ -43,5 +43,17 @@ include_once("dbinfo.php");
     /**fucntion fetch_log($logId): array {
 
     } */
+    
+    function newLogEntry($operationType, $inID)
+    {
+        $connection = connect();
+        
+        $query = "INSERT INTO dbeditlog "
+
+        $editorID = $_SESSION['_id'];
+
+        $result = mysqli_query($connection,$query);
+
+    }
 
 ?>

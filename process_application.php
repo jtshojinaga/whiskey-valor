@@ -9,6 +9,7 @@
 
     require_once('database/dbApplications.php');
     require_once('include/input-validation.php');
+    require_once('domain/Application.php');
     $args = sanitize($_POST);
     $app_id = $args['app_id'] ?? null;
     $user_id = $args['user_id' ?? null];
@@ -20,14 +21,17 @@
         die();
     }
 
-    $valid_actions = ['approve', 'deny', 'flag'];
+    $valid_actions = ['approve', 'deny', 'flag', 'unflag'];
     if (!in_array($action, $valid_actions)) {
         die("Invalid action");
     }
 
     if ($action=='flag') {
-        $result = flag_app($app_id);
-    }
+        $result = flag_app($app_id); 
+    } else
+        if($action=='unflag') {
+            $result = unflag_app($app_id);
+        }
     else {
         if ($action=='approve') {
             $status = 'Approved';

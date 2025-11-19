@@ -31,6 +31,11 @@
         echo 'bad event ID';
         die();
     }
+    //Is if this event is part of a recurring series
+    $isRecurring = !empty($event_info['series_id']);
+    $confirmText = $isRecurring
+    ? "This is a recurring event. Deleting it will remove all occurrences. Are you sure you want to delete this recurring event?"
+    : "Are you sure you want to delete this event?";
 
     // Get number of signups to display on event page
     $event_num_signups = fetch_num_signups($id);
@@ -262,21 +267,23 @@
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
-                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
-                    onclick="return confirmDelete(<?= htmlspecialchars($id) ?>);">
-                        <i class="fas fa-trash"></i>
                 </a>
-            <?php endif; ?>
+                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon"
+                    onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">
+                    <i class="fas fa-trash"></i>
+                </a>
+        <?php endif; ?>
+
         </h2>
 
-        <script>
-            function confirmDelete() {
-                if (confirm("Are you sure you want to delete this event?")) {
-                    // If the user clicks "OK", navigate to the link
-                    window.location.href = 'deleteEvent.php?eventID=' + eventID;
-                }
-            }
-        </script>
+        
+
+
+
+
+
+
+        
 
                 <div id="table-wrapper">
             <table>
@@ -378,25 +385,27 @@
 
                 <!-- end of Thomas's work -->
 
+                <a href="logAttendees.php?id=<?php echo urlencode($id); ?>" class="button signup">Log Event Attendees</a>
+
 
                 <!-- <a href="editEvent.php?id=<?= $id ?>" class="button cancel">Edit Event Details</a> -->
                 
 
             <?php endif ?>
 
-            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
+            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Back to Calendar</a>
 
         </div>
 
          <!-- Share Event on Facebook Button -->
-            <?php
+            <!--<?php
                 $page_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             ?>
             <meta property="og:image" content="https://jenniferp160.sg-host.com/images/FredSPCAlogo.png">
             <div class="fb-share-button" data-href= $page_link data-layout="" data-size=""><a target="_blank" 
                 href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2FfredSPCA%2FviewAllEvents.php&amp;src=sdkpreparse" 
                 class="fb-xfbml-parse-ignore">Share</a>
-            </div>
+            </div>-->
 
         <!-- Confirmation Modals -->
         <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>

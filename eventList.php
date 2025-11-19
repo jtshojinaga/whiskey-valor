@@ -55,7 +55,7 @@
 <head>
     <?php require_once('universal.inc'); ?>
     <link rel="stylesheet" href="css/editprofile.css" type="text/css" />
-    <title>Fredericksburg SPCA | User Events</title>
+    <title>Whiskey Valor | User Events</title>
 </head>
 <body>
     <?php require_once('header.php'); ?>
