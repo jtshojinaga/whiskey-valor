@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 17, 2025 at 04:46 AM
+-- Generation Time: Nov 19, 2025 at 05:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,7 +41,7 @@ CREATE TABLE `dbapplications` (
 --
 
 INSERT INTO `dbapplications` (`id`, `user_id`, `event_id`, `status`, `flagged`, `note`) VALUES
-(1, 'test_person', 118, 'Pending', 0, ''),
+(1, 'test_person', 118, 'Approved', 1, ''),
 (2, 'test_acc', 121, 'Pending', 0, ''),
 (3, 'test_persona', 126, 'Pending', 0, '');
 
@@ -172,7 +172,7 @@ CREATE TABLE `dbeventpersons` (
   `eventID` int(11) NOT NULL,
   `userID` varchar(256) NOT NULL,
   `notes` text NOT NULL,
-  `attended` tinyint(1) NOT NULL
+  `attended` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -180,11 +180,7 @@ CREATE TABLE `dbeventpersons` (
 --
 
 INSERT INTO `dbeventpersons` (`id`, `eventID`, `userID`, `notes`, `attended`) VALUES
-(1, 64, 'vmsroot', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: ', 0),
-(2, 100, 'john_doe', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: ', 0),
-(3, 64, 'vmsroot', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: ', 0),
-(4, 118, 'john_doe', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: ', 0),
-(5, 126, 'test_person', 'Skills: No | Dietary restrictions:  | Disabilities: No | Materials: No', 0);
+(6, 118, 'test_person', '', 0);
 
 -- --------------------------------------------------------
 
@@ -860,7 +856,7 @@ ALTER TABLE `dbapplications`
 -- AUTO_INCREMENT for table `dbeventpersons`
 --
 ALTER TABLE `dbeventpersons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `dbevents`
