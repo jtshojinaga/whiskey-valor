@@ -20,7 +20,7 @@
         die();
     }
     if (flag_app($app_id)) {
-        header('Location: viewPendingApps.php?pendingSignupSuccess');
+        header('Location: viewPendingApps.php?pendingFlagSuccess');
         die();
     }
     header('Location: index.php');
