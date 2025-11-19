@@ -51,54 +51,50 @@
                 <div class="application-view">
                     <!-- view the application content -->
                     <div class="user-details">
-                        <span class="user-headers">Username:</span>
-                        <p class="user-content"><?php echo $user_id ?></p>
-                        <span class="user-headers">Name:</span>
-                        <p class="user-content"><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></p>
-                        <span class="user-headers">Branch:</span>
-                        <p class="user-content"><?php echo $user->get_branch()?></p>
-                        <span class="user-headers">Affiliation:</span>
-                        <p class="user-content"><?php echo ucfirst($user->get_affiliation())?></p>
-                        
-                        
-                        <span class="user-headers">Note:</span>
-                        <p class="user-content">Temporary Note</p>
+                        <span>Username:</span>
+                        <p><?php echo $user_id ?></p>
+                        <span>Name:</span>
+                        <p><?php echo $user->get_first_name() . " " . $user->get_last_name() ?></p>
+                        <span>Branch:</span>
+                        <p><?php echo $user->get_branch()?></p>
+                        <span>Affiliation:</span>
+                        <p><?php echo ucfirst($user->get_affiliation())?></p>
+                        <span>Note:</span>
+                        <p>Temporary Note</p>
                     </div>
                     <div class="event-details">
-                        <span class="event-headers">Event:</span>
-                        <p class="event-content"><?php echo $event->getName() ?></p>
-                        <span class="event-headers">Start Date:</span>
-                        <p class="event-content"><?php echo $event->getStartDate() ?></p>
-                        <span class="event-headers">End Date:</span>
-                        <p class="event-content"><?php echo $event->getEndDate() ?></p>
-                        <span class="event-headers">Start Time:</span>
-                        <p class="event-content"><?php echo $event->getStartTime() ?></p>
-                        <span class="event-headers">End Time:</span>
-                        <p class="event-content"><?php echo $event->getEndTime() ?></p>
-                        <span class="event-headers">Location:</span>
-                        <p class="event-content"><?php echo $event->getLocation() ?></p>
-                        <span class="event-headers">Branch:</span>
-                        <p class="event-content"><?php echo $event->getBranch() ?></p>
-                        <span class="event-headers">Affiliation:</span>
-                        <p class="event-content"><?php echo $event->getAffiliation() ?></p>
-
-
-
+                        <span>Event:</span>
+                        <p><?php echo $event->getName() ?></p>
+                        <span>Start Date:</span>
+                        <p><?php echo $event->getStartDate() ?></p>
+                        <span>End Date:</span>
+                        <p><?php echo $event->getEndDate() ?></p>
+                        <span>Start Time:</span>
+                        <p><?php echo $event->getStartTime() ?></p>
+                        <span>End Time:</span>
+                        <p><?php echo $event->getEndTime() ?></p>
+                        <span>Location:</span>
+                        <p><?php echo $event->getLocation() ?></p>
+                        <span>Branch:</span>
+                        <p><?php echo $event->getBranch() ?></p>
+                        <span>Affiliation:</span>
+                        <p><?php echo $event->getAffiliation() ?></p>
                     </div>
+
                 </div>
                 <div class="application-sidebar">
-                <div class="application-comment">
-                    <!-- post and view a comment; needs to integrate w backend -->
-                    <div class="posted-app-comment">
-                        <p class="app-comment-user">Username</p>
-                        <p class="app-comment-text">Blah blah blah blah blah blah blah...</p>
+                    <div class="application-comment">
+                        <!-- post and view a comment; needs to integrate w backend -->
+                        <div class="posted-app-comment">
+                            <p class="app-comment-user">Username</p>
+                            <p class="app-comment-text">Blah blah blah blah blah blah blah...</p>
+                        </div>
+                        <form id="application_comment">
+                            <input type="text" name="app_comment" id="app_comment" placeholder="Enter a comment..." required>
+                            <input type="submit" value="Comment">
+                        </form>
                     </div>
-                    <form id="application_comment">
-                        <input type="text" name="app_comment" id="app_comment" placeholder="Enter a comment..." required>
-                        <input type="submit" value="Comment" style="width: 25%;">
-                    </form>
                 </div>
-            </div>
                 <div class="application-nav-button">
                     <!-- next application button -->
                      >
