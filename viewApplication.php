@@ -67,7 +67,14 @@
                         <span class="user-headers">Branch:</span>
                         <p class="user-content"><?php echo $user->get_branch()?></p>
                         <span class="user-headers">Affiliation:</span>
-                        <p class="user-content"><?php echo ucfirst($user->get_affiliation())?></p>
+                        <p class="user-content">
+                            <?php 
+                            if ($user->get_affiliation()) {
+                                echo ucfirst($user->get_affiliation());
+                            } 
+                            else {
+                                echo "";
+                            }?></p>
                         
                         
                         <span class="user-headers">Note:</span>
