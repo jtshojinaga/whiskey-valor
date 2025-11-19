@@ -23,30 +23,9 @@ $fiscalYearEnd = $fiscalYearStart + 1;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Whiskey Valor | Attendance Reports</title>
-  <link href="css/normal_tw.css" rel="stylesheet">
-
-<!-- BANDAID FIX FOR HEADER BEING WEIRD -->
-<?php
-$tailwind_mode = true;
-require_once('header.php');
-?>
-<style>
-        .date-box {
-            background: #C9AB81;
-            padding: 7px 30px;
-            border-radius: 50px;
-            box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-        }
-        .dropdown {
-            padding-right: 50px;
-        }
-
-</style>
-<!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
+    <!--<script src="js/data-filters.js" defer></script>-->
+    <link href="css/base.css" rel="stylesheet">
+    <?php require_once('header.php'); ?>
 </head>
 <body>
     <?php require_once('database/dbEvents.php');?>
@@ -62,20 +41,21 @@ require_once('header.php');
     <main>
         <?php $events = get_all_events_sorted_by_date_not_archived();?>
 
-        <div class="main-content-box w-full max-w-3xl p-8">
-            <div class="text-center mb-8">
+        <div class="main-content-box">
+            <div class="text-center">
                 <h2>Attendance Reports</h2>
-                <p class="sub-text">Fiscal Year: <?= $fiscalYearStart ?> - <?= $fiscalYearEnd ?></p>
+                <p style="font-size: 18px; color: #c2c2c2ff; margin-top: 0.5rem; margin-bottom: 0.5rem;">Fiscal Year: <?= $fiscalYearStart ?> - <?= $fiscalYearEnd ?></p>
             </div>
 
-            <form method="POST" action="processReport.php" class="space-y-6">
+            <form method="POST" action="processReport.php">
                 <!-- Event ID -->
-                <div>
-                    <label for="eventID" class="font-semibold">Select Event ID:</label>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="eventID" style="font-weight: 600;">Select Event</label>
                     <select name="eventID" id="eventID">
                         <?php foreach ($events as $event) {
                             $eventID = $event->getID();
-                            echo "<option value='$eventID'>$eventID</option>";
+                            $eventName = $event->getName();
+                            echo "<option value='$eventID'>$eventName (ID: $eventID)</option>";
                         }
                         ?>
                     </select>
@@ -98,33 +78,54 @@ require_once('header.php');
                     </select>
                 </div> -->
 
+                <!-- Content Select -->
+
+                    <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--accent-color);">Field Selector</h4>
+                    <div id="field-picker">
+                            <div class="checkbox-grouping">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="user" checked> Username</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="name" checked> Full Name</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="branch"> Branch</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="affiliation"> Affiliation</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="signedup"> Signed Up</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="attended" checked> Attended</label>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Format -->
-                <div>
-                    <label for="format" class="font-semibold">Select File Format:</label>
+                <div style="margin-bottom: 1.5rem; margin-top: 1.5rem;">
+                    <label for="format" style="font-weight: 600;">File Format</label>
                     <select name="format" id="format">
                         <option value="excel">Excel (.xls)</option>
                         <option value="csv">CSV (.csv)</option>
                     </select>
                 </div>
 
-                <div class="text-center">
-                    <input type="submit" value="Generate Report" class="blue-button">
+                <div style="text-align: center; margin-top: 2rem;">
+                    <input type="submit" value="Generate Report" class="button generate-btn">
                 </div>
             </form>
 
         <!-- Return Button -->
         </div>
-            <div class="text-center mt-6">
-                <a href="index.php" class="return-button">Return to Dashboard</a>
-            </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="index.php" class="button" style="display: inline-block; text-decoration: none; width: 41%;">Return to Dashboard</a>
+        </div>
 
         <!-- Info Section -->
-        <div class="info-section">
+        <section class="section-box" style="margin-top: 2rem;">
             <div class="blue-div"></div>
-            <p class="info-text">
+            <p style="margin-top: 1rem;">
                 Use this tool to generate monthly or annual reports on volunteer activity. Reports are available in Excel or CSV format.
             </p>
-        </div>
+        </section>
     </main>
 
     <script>
