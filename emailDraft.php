@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('database/dbinfo.php');
+require_once(__DIR__ . '/database/dbinfo.php');
 include_once('email.php');
 
 // Optional: restrict access

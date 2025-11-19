@@ -1354,6 +1354,22 @@ function get_total_vol_hours($dateFrom, $dateTo) {
         $result = mysqli_query($con, $query);
         
     }
+    function getUsersAndEmails(): array {
+        $conn = connect();
+        $sql = "SELECT first_name, last_name, email FROM dbPersons ORDER BY last_name ASC";
+        $res = $conn->query($sql);
+
+        $members = [];
+        if ($res) {
+            while ($row = $res->fetch_assoc()) {
+                $members[] = [
+                    'label' => $row['first_name'] . " " . $row['last_name'] . " (" . $row['email'] . ")",
+                    'value' => $row['first_name'] . " " . $row['last_name']
+                ];
+            }
+        }
+        return $members;
+    }
     
 
     /*

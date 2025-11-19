@@ -1059,3 +1059,22 @@ function update_animal2($animal) {
     // Return true/false based on the comparison
     return ($eventStatusRow['access'] == "Approval_Needed");
 }
+
+ function getPAttendance($eventID) {
+    $conn=connect();
+
+    $sql = "SELECT userID FROM dbeventpersons WHERE eventID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $eventID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $userIDs = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $userIDs[] = $row['userID'];
+    }
+
+    return $userIDs;
+}
+
