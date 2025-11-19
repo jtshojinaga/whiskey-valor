@@ -443,7 +443,7 @@ function getall_dbPersons($name_from, $name_to, $venue) {
   @return all rows from dbPersons
 
 */
-function getall_volunteers() {
+function getall_persons() {
     $con=connect();
     $query = 'SELECT * FROM dbpersons WHERE id != "vmsroot"';
     $result = mysqli_query($con,$query);
@@ -1088,12 +1088,70 @@ function find_user_names($name) {
         return $result;
     }
     date_default_timezone_set("America/New_York");
+// FIX
+    function fetch_user_no_shows($personID) {
+        $connection = connect();
+        $query = 
+            "SELECT dbeventpersons.userID, COUNT(*) AS NoShowCount
+            FROM dbeventpersons, dbevents
+            WHERE dbeventpersons.userID='" . $personID . "'" . " 
+                and dbeventpersons.eventID=dbevents.id
+                and dbevents.completed='Y' 
+                and dbeventpersons.attended=0
+            GROUP BY dbpendingsignups.username;
+            ";
+        
+        $result = mysqli_query($connection, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $no_shows = $row['NoShowCount'];
+            if (!$no_shows) {
+                $no_shows = 0;
+            }
+        }
+
+        else {;
+            echo "we have no result";
+            die("Error: " . mysqli_error($con)); // Debugging MySQL error
+
+        }
+        mysqli_close($connection);
+        return $no_shows;
+    }
+
+    function fetch_no_shows() {
+        $connection = connect();
+        $query = 
+            "SELECT dbeventpersons.userID, COUNT(*) AS NoShowCount
+            FROM dbeventpersons, dbevents
+            WHERE 
+                dbeventpersons.eventID = dbevents.id
+                and dbevents.completed='Y' 
+                and dbeventpersons.attended=0
+            GROUP BY dbeventpersons.userID ORDER BY NoShowCount DESC;
+            ";
+        
+        $result = mysqli_query($connection, $query);
+        if ($result) {
+            $rows = mysqli_fetch_all($result);
+            // username, noshowcount
+            //$no_shows = $row['NoShowCount'];
+        }
+
+        else {;
+            echo "we have no result";
+            die("Error: " . mysqli_error($con)); // Debugging MySQL error
+
+        }
+        mysqli_close($connection);
+        return $rows;
+    }
 
     function get_events_attended_by($personID) {
         $today = date("Y-m-d");
         $query = "select * from dbeventpersons, dbevents
                   where userID='$personID' and eventID=id
-                  and date<='$today'
+                  and date<='$today' and attended=1
                   order by date asc";
         $connection = connect();
         $result = mysqli_query($connection, $query);

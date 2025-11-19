@@ -81,7 +81,7 @@ require_once('header.php');
                         <?php
                         $date = date('Y-m-d');
                         $checkedInPersons = [];
-                        $all_volunteers = getall_volunteers();
+                        $all_volunteers = getall_persons();
 
                         foreach ($all_volunteers as $volunteer) {
                             $volunteer_id = $volunteer->get_id();

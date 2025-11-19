@@ -32,8 +32,8 @@
         die();
     }
 
-    // Get number of attendees to display on event page
-    $event_num_attendees = fetch_num_attendees($id);
+    // Get number of signups to display on event page
+    $event_num_signups = fetch_num_signups($id);
 
     include_once('database/dbPersons.php');
     if(isset($_SESSION['access_level'])) {
@@ -252,7 +252,7 @@
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
             $event_training_level = $event_info['affiliation'];
-            $num_attendees = $event_num_attendees['RowCount'];
+            $num_signups = $event_num_signups['RowCount'];
             require_once('include/time.php');
         ?>
 
@@ -307,7 +307,7 @@
                 </tr>
                 <tr>
                     <td class="label">Attendees</td>
-                    <td id="description-cell"><?php echo $num_attendees; ?></td>
+                    <td id="description-cell"><?php echo $num_signups; ?></td>
                 </tr>
             </table>
         </div>

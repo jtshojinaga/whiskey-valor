@@ -1,1 +1,0 @@
-ALTER TABLE `dbevents` ADD `url` TEXT NULL DEFAULT NULL AFTER `type`;

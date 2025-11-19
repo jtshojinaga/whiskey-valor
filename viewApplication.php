@@ -87,16 +87,6 @@
                     </div>
                 </div>
                 <div class="application-sidebar">
-                    <div class="application-control-buttons">
-                        <!-- accent app, deny app, app flag, etc; will be replaced w buttons-->
-                        <form id="application-form" method="POST" action="process_application.php">
-                            <input type="hidden" name="app_id" value="<?php echo htmlspecialchars($app_id); ?>">
-                            <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user_id); ?>">
-                            <button type="submit" name="action" value="approve">Approve</button>
-                            <button type="submit" name="action" value="deny">Deny</button>
-                            <button type="submit" name="action" value="flag">Flag</button>
-                        </form>
-                    </div>
                 <div class="application-comment">
                     <!-- post and view a comment; needs to integrate w backend -->
                     <div class="posted-app-comment">
