@@ -679,7 +679,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['eventsuccess.php'] = 2;
         $permission_array['viewsignuplist.php'] = 2;
         $permission_array['vieweventsignups.php'] = 2;
-        $permission_array['viewalleventsignups.php'] = 2;
+        $permission_array['viewpendingapps.php'] = 2;
         $permission_array['resources.php'] = 2;
         $permission_array['uploadresources.php'] = 2;        
         $permission_array['deleteresources.php'] = 2;
@@ -705,7 +705,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['signupsuccess.php'] = 1;
         $permission_array['edittimes.php'] = 1;
         $permission_array['adminviewingevents.php'] = 2;
-        $permission_array['signuppending.php'] = 1;
+        $permission_array['pendingApp.php'] = 1;
         $permission_array['requestfailed.php'] = 1;
         $permission_array['settimes.php'] = 1;
         $permission_array['eventfailurebaddeparturetime.php'] = 1;
@@ -775,10 +775,10 @@ if (date("H:i:s") > "18:19:59") {
     <span>Change Event Hours</span>
   </div>
 </a>
-<a href="viewAllEventSignUps.php" style="text-decoration: none;">
+<a href="viewPendingApps.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/users-solid.svg">
-    <span>Pending Sign-Ups</span>
+    <span>Pending Applications</span>
   </div>
 </a>
 <a href="adminViewingEvents.php" style="text-decoration: none;">
@@ -805,6 +805,13 @@ if (date("H:i:s") > "18:19:59") {
   <div class="in-nav">
     <img src="images/group.svg">
     <span>View Groups</span>
+  </div>
+</a>
+
+<a href="noShows.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/group.svg">
+    <span>No Shows</span>
   </div>
 </a>
 

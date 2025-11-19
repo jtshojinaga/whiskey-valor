@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 04, 2025 at 06:51 PM
+-- Generation Time: Nov 19, 2025 at 05:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,7 +41,7 @@ CREATE TABLE `dbapplications` (
 --
 
 INSERT INTO `dbapplications` (`id`, `user_id`, `event_id`, `status`, `flagged`, `note`) VALUES
-(1, 'test_person', 118, 'Denied', 1, ''),
+(1, 'test_person', 118, 'Approved', 1, ''),
 (2, 'test_acc', 121, 'Pending', 0, ''),
 (3, 'test_persona', 126, 'Pending', 0, '');
 
@@ -168,22 +168,19 @@ CREATE TABLE `dbeventmedia` (
 --
 
 CREATE TABLE `dbeventpersons` (
+  `id` int(11) NOT NULL,
   `eventID` int(11) NOT NULL,
   `userID` varchar(256) NOT NULL,
-  `position` text NOT NULL,
-  `notes` text NOT NULL
+  `notes` text NOT NULL,
+  `attended` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dbeventpersons`
 --
 
-INSERT INTO `dbeventpersons` (`eventID`, `userID`, `position`, `notes`) VALUES
-(64, 'vmsroot', 'v', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: '),
-(100, 'john_doe', 'v', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: '),
-(64, 'vmsroot', 'v', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: '),
-(100, 'john_doe', 'v', 'Skills:  | Dietary restrictions:  | Disabilities:  | Materials: '),
-(123, 'test_person', 'p', 'Skills: No | Dietary restrictions:  | Disabilities: No | Materials: No');
+INSERT INTO `dbeventpersons` (`id`, `eventID`, `userID`, `notes`, `attended`) VALUES
+(6, 118, 'test_person', '', 0);
 
 -- --------------------------------------------------------
 
@@ -213,7 +210,7 @@ CREATE TABLE `dbevents` (
 --
 
 INSERT INTO `dbevents` (`id`, `name`, `type`, `startDate`, `startTime`, `endTime`, `endDate`, `description`, `capacity`, `location`, `affiliation`, `branch`, `access`, `completed`) VALUES
-(118, 'Halloween Event', 'Normal', '2025-10-31', '18:00', '20:30', '', 'It is halloween!!', 50, 'Fredericksburg, VA', NULL, NULL, 'Public', 'N'),
+(118, 'Halloween Event', 'Normal', '2025-10-31', '18:00', '20:30', '', 'It is halloween!!', 50, 'Fredericksburg, VA', NULL, NULL, 'Public', 'Y'),
 (119, 'party :)', 'Normal', '2026-01-14', '01:00', '01:01', '', 'dancin', 1, 'my house', NULL, NULL, 'Public', 'N'),
 (120, 'SDLFjkafs', 'Normal', '2025-09-10', '12:00', '14:00', '', 'j;aksdfj', 99999, 'asdf;j', NULL, NULL, 'Public', 'N'),
 (121, 'Whikey Valor Tasting', 'Normal', '2025-09-24', '15:00', '18:00', '', 'Come have a taste of fine barrel aged whiskey with fellow Vets.', 25, 'Old Silk Mill', NULL, NULL, 'Public', 'N'),
@@ -221,10 +218,10 @@ INSERT INTO `dbevents` (`id`, `name`, `type`, `startDate`, `startTime`, `endTime
 (123, 'Ethan&#039;s Birthday Party', 'Normal', '2025-10-03', '07:30', '19:30', '', 'Ethan is going to eat my cake.', 2147483647, 'Eagle 225', NULL, NULL, 'Public', 'N'),
 (124, 'Example event', 'Normal', '2025-09-11', '12:00', '14:00', '', 'This is a test event', 42, 'UMW', NULL, NULL, 'Public', 'N'),
 (125, 'Pet Adoption', 'Normal', '2025-09-13', '11:00', '17:00', '', 'Pet Adoption', 50, 'Fredericksburg, Virginia', NULL, NULL, 'Public', 'N'),
-(126, 'Squirrel Watching', 'Normal', '2025-09-22', '06:00', '09:00', '', 'Watch the squirrels to make sure they do not eat the bird seed', 6, '275 Butler Rd, Fredericksburg, VA 22405', NULL, NULL, 'Public', 'N'),
+(126, 'Squirrel Watching', 'Normal', '2025-09-22', '06:00', '09:00', '', 'Watch the squirrels to make sure they do not eat the bird seed', 6, '275 Butler Rd, Fredericksburg, VA 22405', NULL, NULL, 'Public', 'Y'),
 (127, 'Whoosky Volar Tasting', 'Normal', '2025-09-15', '09:00', '13:00', '', 'Test Event', 42, 'House', NULL, NULL, 'Public', 'N'),
 (128, 'Event', 'Normal', '2025-12-01', '13:30', '14:00', '', 'Use Case Event', 77, 'UMW', NULL, NULL, 'Public', 'N'),
-(129, 'Test event Woak', 'Normal', '2025-10-31', '15:00', '18:00', '', 'testing thsi woa', 99, 'required but not listed', NULL, NULL, 'Public', 'N'),
+(129, 'Test event Woak', 'Normal', '2025-10-31', '15:00', '18:00', '', 'testing thsi woa', 99, 'required but not listed', NULL, NULL, 'Public', 'Y'),
 (130, 'Class Example', 'Normal', '2025-09-24', '12:00', '14:00', '', 'This is an example', 10, 'Farmer', NULL, NULL, 'Public', 'N');
 
 -- --------------------------------------------------------
@@ -528,8 +525,8 @@ INSERT INTO `dbmessages` (`id`, `senderID`, `recipientID`, `title`, `body`, `tim
 (423, 'vmsroot', 'maddiev', 'You have been added to a group. View under Groups page.', 'You have been added to test', '2025-05-01-11:32', 0, 0),
 (427, 'vmsroot', 'vmsroot', 'You have been added to a group. View under Groups page.', 'You have been added to cool guys', '2025-09-10-11:35', 1, 0),
 (428, 'vmsroot', 'vmsroot', 'vmsroot has replied to test. View under discussions page.', 'A user has replied to a discussion.', '2025-09-10-11:40', 1, 0),
-(429, 'vmsroot', 'vmsroot', 'test_person has been added as a volunteer', 'New volunteer account has been created', '2025-10-26-22:59', 0, 0),
-(430, 'vmsroot', 'vmsroot', 'test_persona has been added as a volunteer', 'New volunteer account has been created', '2025-10-28-13:53', 0, 0),
+(429, 'vmsroot', 'vmsroot', 'test_person has been added as a volunteer', 'New volunteer account has been created', '2025-10-26-22:59', 1, 0),
+(430, 'vmsroot', 'vmsroot', 'test_persona has been added as a volunteer', 'New volunteer account has been created', '2025-10-28-13:53', 1, 0),
 (431, 'vmsroot', 'test_person', 'You are now signed up for Ethan&#039;s Birthday Party!', 'Thank you for signing up for Ethan&#039;s Birthday Party!', '2025-10-29-12:21', 0, 0);
 
 -- --------------------------------------------------------
@@ -541,20 +538,24 @@ INSERT INTO `dbmessages` (`id`, `senderID`, `recipientID`, `title`, `body`, `tim
 CREATE TABLE `dbpendingsignups` (
   `username` varchar(25) NOT NULL,
   `eventname` varchar(100) NOT NULL,
-  `role` varchar(5) NOT NULL,
-  `aproval_status` TINYINT(1) DEFAULT 0 NOT NULL,
-  `notes` varchar(100) NOT NULL
+  `notes` varchar(100) NOT NULL,
+  `attended` tinyint(1) NOT NULL DEFAULT 0,
+  `role` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dbpendingsignups`
 --
 
-INSERT INTO `dbpendingsignups` (`username`, `eventname`, `role`, `notes`) VALUES
-('vmsroot', '108', 'v', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock'),
-('vmsroot', '101', 'v', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv'),
-('vmsroot', '108', 'v', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock'),
-('vmsroot', '101', 'v', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv');
+INSERT INTO `dbpendingsignups` (`username`, `eventname`, `notes`, `attended`, `role`) VALUES
+('vmsroot', '108', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock', 0, ''),
+('vmsroot', '101', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv', 0, ''),
+('vmsroot', '108', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock', 0, ''),
+('vmsroot', '101', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv', 0, ''),
+('john_doe', '118', '', 0, ''),
+('ameyer123', '126', '', 0, ''),
+('test_persona', '129', '', 0, ''),
+('test_persona', '129', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -680,29 +681,6 @@ INSERT INTO `dbshifts` (`shift_id`, `person_id`, `date`, `startTime`, `endTime`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dbsignups`
---
-
-CREATE TABLE `dbsignups` (
-  `username` varchar(25) NOT NULL,
-  `eventname` varchar(100) NOT NULL,
-  `notes` varchar(100) NOT NULL,
-  `attended` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `dbsignups`
---
-
-INSERT INTO `dbsignups` (`username`, `eventname`, `notes`, `attended`) VALUES
-('vmsroot', '108', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock', 0),
-('vmsroot', '101', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv', 0),
-('vmsroot', '108', 'Skills: non | Dietary restrictions: ojnjo | Disabilities: jonoj | Materials: knock', 0),
-('vmsroot', '101', 'Skills: rvwav | Dietary restrictions: varv | Disabilities: var | Materials: arv', 0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `discussion_replies`
 --
 
@@ -802,6 +780,7 @@ ALTER TABLE `dbdiscussions`
 -- Indexes for table `dbeventpersons`
 --
 ALTER TABLE `dbeventpersons`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `FKeventID` (`eventID`),
   ADD KEY `FKpersonID` (`userID`);
 
@@ -874,6 +853,12 @@ ALTER TABLE `dbapplications`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `dbeventpersons`
+--
+ALTER TABLE `dbeventpersons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `dbevents`
 --
 ALTER TABLE `dbevents`
@@ -883,7 +868,7 @@ ALTER TABLE `dbevents`
 -- AUTO_INCREMENT for table `dbmessages`
 --
 ALTER TABLE `dbmessages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=429;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=432;
 
 --
 -- AUTO_INCREMENT for table `dbshifts`
