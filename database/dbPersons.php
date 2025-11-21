@@ -1171,6 +1171,22 @@ function find_user_names($name) {
         }
     }
 
+    function check_if_attended($eventID, $personID) {
+        $query = "select attended from dbeventpersons
+                  where userID='$personID' and eventID='$eventID'
+                  and attended=1";
+        $connection = connect();
+        $result = mysqli_query($connection, $query);
+        if($result) {
+            $row = mysqli_fetch_row($result);
+            mysqli_close($connection);
+            return $row;
+        } else {
+            mysqli_close($connection);
+            return "Unexpected error with function check_if_attended in dbPersons.php";
+        }
+    }
+
     function get_event_from_id($eventID) {
         // Connect to the database
         $connection = connect();

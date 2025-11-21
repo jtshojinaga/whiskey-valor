@@ -3,6 +3,7 @@ session_cache_expire(30);
 session_start();
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
+date_default_timezone_set("America/New_York");
 
 // Ensure admin authentication
 if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
@@ -32,20 +33,23 @@ $fiscalYearEnd = $fiscalYearStart + 1;
     <?php require_once('database/dbPersons.php');?>
 
     <!-- Hero Section with Title -->
-    <header class="hero-header"> 
         <div class="center-header">
-            <h1>Generate Attendance Report</h1>
+            <h1 style="color:white;">Generate Attendance Report</h1>
         </div>
-    </header>
+                <!-- Info Section -->
+        <section class="section-box">
+            <p style="margin-top: 1rem;text-align:center;">
+                Use this tool to generate monthly or annual reports on volunteer activity. Reports are available in Excel or CSV format.
+            </p>
+        </section>
 
     <main>
         <?php $events = get_all_events_sorted_by_date_not_archived();?>
 
         <div class="main-content-box">
-            <div class="text-center">
-                <h2>Attendance Reports</h2>
+            <!--<div class="text-center">
                 <p style="font-size: 18px; color: #c2c2c2ff; margin-top: 0.5rem; margin-bottom: 0.5rem;">Fiscal Year: <?= $fiscalYearStart ?> - <?= $fiscalYearEnd ?></p>
-            </div>
+            </div>-->
 
             <form method="POST" action="processReport.php">
                 <!-- Event ID -->
@@ -81,20 +85,17 @@ $fiscalYearEnd = $fiscalYearStart + 1;
                 <!-- Content Select -->
 
                     <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--accent-color);">Field Selector</h4>
+                    <p style="font-size: 16px; color: #c2c2c2ff; margin-top: 0.5rem; margin-bottom: 0.5rem;">If any fields are selected, the report will include all users who signed up and whether they attended.</p>
                     <div id="field-picker">
                             <div class="checkbox-grouping">
                                 <label class="checkbox-label">
-                                    <input type="checkbox" value="user" checked> Username</label>
+                                    <input type="checkbox" value="user" name="user" id="user" checked> Username</label>
                                 <label class="checkbox-label">
-                                    <input type="checkbox" value="name" checked> Full Name</label>
+                                    <input type="checkbox" value="name" name="name" id="name" checked> Full Name</label>
                                 <label class="checkbox-label">
-                                    <input type="checkbox" value="branch"> Branch</label>
+                                    <input type="checkbox" value="branch" name="branch" id="branch"> Branch</label>
                                 <label class="checkbox-label">
-                                    <input type="checkbox" value="affiliation"> Affiliation</label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="signedup"> Signed Up</label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="attended" checked> Attended</label>
+                                    <input type="checkbox" value="affiliation" name="affiliation" id="affiliation"> Affiliation</label>
                         </div>
                     </div>
                 </section>
@@ -109,6 +110,8 @@ $fiscalYearEnd = $fiscalYearStart + 1;
                 </div>
 
                 <div style="text-align: center; margin-top: 2rem;">
+                    <input type="hidden" value="<?php echo $_SESSION['_id']; ?>" name="admin" id="admin">
+                    <input type="hidden" value="<?php echo date("d-M-Y H:i:s e") ?>" name="time" id="time">
                     <input type="submit" value="Generate Report" class="button generate-btn">
                 </div>
             </form>
@@ -119,13 +122,6 @@ $fiscalYearEnd = $fiscalYearStart + 1;
             <a href="index.php" class="button" style="display: inline-block; text-decoration: none; width: 41%;">Return to Dashboard</a>
         </div>
 
-        <!-- Info Section -->
-        <section class="section-box" style="margin-top: 2rem;">
-            <div class="blue-div"></div>
-            <p style="margin-top: 1rem;">
-                Use this tool to generate monthly or annual reports on volunteer activity. Reports are available in Excel or CSV format.
-            </p>
-        </section>
     </main>
 
     <script>
