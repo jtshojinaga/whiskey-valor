@@ -1171,6 +1171,41 @@ function find_user_names($name) {
         }
     }
 
+    /* Authored by Blue :) */
+    function log_attendance($userID, $eventID, $value, $note = null) {
+        $conn = connect();
+        // check if attendance record exists
+        $query = "select * from dbeventpersons where 
+                  eventID='$eventID' and userID='$userID'";
+        $result = mysqli_query($conn, $query);
+        if($result) {
+            $query = "update dbeventpersons 
+                      set attended='$value', notes='$note'
+                      where eventID='$eventID' and userID='$userID'";
+            $result = mysqli_query($conn, $query);
+            if($result) {
+                mysqli_close($conn);
+                return $result;
+            } else {
+                mysqli_close($conn);
+                return "Unexpected error 1 with function log_attendance in dbPersons.php";
+            }
+        } else {
+            // no attendence record exists
+            $query = "insert into dbeventpersons (eventID, userID, notes, attended)
+                  VALUES ($eventID, $userID, $note, $value)";
+            $result = mysqli_query($conn, $query);
+            if($result) {
+                $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                mysqli_close($conn);
+                return $row;
+            } else {
+                mysqli_close($conn);
+                return "Unexpected error with function log_attendance in dbPersons.php";
+            }
+        }
+    }
+
     function check_if_attended($eventID, $personID) {
         $query = "select attended from dbeventpersons
                   where userID='$personID' and eventID='$eventID'

@@ -59,6 +59,7 @@
         <?php require_once('header.php') ?>
         <main>
             <h1 style="color: white;">Logging Attendance for <?php echo $event_name; ?></h1>
+            <p style="font-size:16px; text-align: center; margin-bottom: 1rem;">All attendees left unchecked will be marked as absent.</p>
             <div class="attendees-wrapper">
             <form method="POST" id="attendance-form" action="processAttendees.php">
                 <div class="attendees-table-wrapper">
@@ -81,13 +82,15 @@
 
                         echo "<div class='tr'>";
                         // added cb class for js targeting
-                        echo "<span class='td'><input type='checkbox' class='cb' name='attendee[]' value='" . $uid . "'></span>";
+                        echo "<span class='td'><input type='checkbox' class='cb' name='attendee[" . $uid . "]' value='" . $uid . "'></span>";
                         echo "<span class='td' id='data'>" . $name . "</span>";
                         echo "<span class='td' id='data'>" . $uid . "</span>";
                         // key is uid to associate entries with user
                         echo "<span class='td' id='data'><input type='text' class='note' name='attendee_notes[" . $uid . "]' placeholder='Enter note...'></span>";
                         echo "</div>";
-                    } ?>
+                    } 
+                    echo "<input type='hidden' value='" . htmlspecialchars($id) . "' name='eventID' id='eventID'>";
+                    ?>
                     </div>
                 </div>
                 <button type="submit" name="log" id="log">Log Selected Attendees</button>
