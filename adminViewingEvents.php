@@ -66,7 +66,7 @@
                                         echo "
                                         <tr data-event-id='$eventID'>
                                             <td><a href='event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->
-                                            <td>$date</td>
+                                            <td>$startDate</td>
                                             <td><a class='button sign-up' href='eventSignUp.php'>Sign Up</a></td>
                                         </tr>";
                                     } else {
