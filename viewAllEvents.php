@@ -45,12 +45,12 @@
                 
                 // Filter out expired events
                 $upcomingEvents = array_filter($events, function($event) use ($today) {
-                    $eventDate = new DateTime($event->getDate());
+                    $eventDate = new DateTime($event->getStartDate());
                     return $eventDate >= $today; // Only include events on or after today
                 });
 
                 $upcomingArchivedEvents = array_filter($archivedevents, function($event) use ($today) {
-                    $eventDate = new DateTime($event->getDate());
+                    $eventDate = new DateTime($event->getStartDate());
                     return $eventDate >= $today; // Only include events on or after today
                 });
 
@@ -81,18 +81,19 @@
                                 foreach ($upcomingEvents as $event) {
                                     $eventID = $event->getID();
                                     $title = $event->getName();
-                                    $date = $event->getDate();
+                                    $startDate = $event->getStartDate();
                                     $startTime = $event->getStartTime();
+                                    $endDate = $event->getEndDate();
                                     $endTime = $event->getEndTime();
                                     $description = $event->getDescription();
                                     $capacity = $event->getCapacity();
                                     $completed = $event->getCompleted();
-                                    $restricted_signup = $event->getRestrictedSignup();
-                                    $training_level_required = $event->getTrainingLevelRequired();
+                                    $restricted_signup = $event->getAccess();
+                                    //$training_level_required = $event->getTrainingLevelRequired();
                                     $type = $event->getEventType();
-                                     if ($training_level_required == null) {
+                                     /*if ($training_level_required == null) {
                                          $training_level_required = "N/A";
-                                     }
+                                     }*/
 
                                     // Fetch signups for the event
                                     $signups = fetch_event_signups($eventID);
@@ -116,11 +117,12 @@
                                     
                                     if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != 'guest') {
                                     // Display Sign Up or Cancel button based on user sign-up status
-                                        if ($user_training_level != $training_level_required) { //TODO: replace training errors
+                                        /*if ($user_training_level != $training_level_required) { //TODO: replace training errors
                                             echo "
                                             <td><a class='button-signup' style='background-color:#c73d06'>Training Not Met!</a></td>";
                                         }
-                                        elseif ($isSignedUp) {
+                                        else */
+                                        if ($isSignedUp) {
                                             echo "
                                             <td>
                                             <a class='button cancel' href='viewMyUpcomingEvents.php' >Already Signed Up!</a>

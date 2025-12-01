@@ -48,6 +48,7 @@
 
         <?php
 
+        $loggedIn = 0; //Logged in set to 0 change later
         $dayEvents = fetch_events_on_date($selectedDateString, $loggedIn);
         echo "<script> console.log('Events:', " . json_encode($dayEvents) . ");</script>";
         

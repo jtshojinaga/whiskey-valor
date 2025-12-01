@@ -137,7 +137,7 @@ function fetch_my_pending($userid) {
     $connection = connect();
     $query = "SELECT e.id, e.name, e.startDate 
               FROM dbevents e
-              INNER JOIN dbapplications ap ON e.id = ep.eventname
+              INNER JOIN dbapplications ap ON e.id = ap.eventname
               WHERE ap.user_id = '$userid' and ap.status='Pending'";
     $result = mysqli_query($connection, $query);
 

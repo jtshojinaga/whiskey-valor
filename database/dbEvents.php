@@ -853,7 +853,6 @@ function reject_signup($event_id, $account_name, $position, $notes) {
     return $result;
 }
 
-
 function complete_event($id) {
     $event = retrieve_event2($id);
     $animal = get_animal($event["animalID"])[0];

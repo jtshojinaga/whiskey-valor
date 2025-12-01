@@ -25,12 +25,12 @@
                 
                 // Filter out expired events
                 $upcomingEvents = array_filter($events, function($event) use ($today) {
-                    $eventDate = new DateTime($event->getDate());
+                    $eventDate = new DateTime($event->getEndDate());
                     return $eventDate >= $today; // Only include events on or after today
                 });
 
                 $upcomingArchivedEvents = array_filter($archivedevents, function($event) use ($today) {
-                    $eventDate = new DateTime($event->getDate());
+                    $eventDate = new DateTime($event->getEndDate());
                     return $eventDate >= $today; // Only include events on or after today
                 });
 
@@ -59,13 +59,14 @@
                                 foreach ($upcomingEvents as $event) {
                                     $eventID = $event->getID();
                                     $title = $event->getName();
-                                    $date = $event->getDate();
+                                    $date = $event->getStartDate();
                                     $startTime = $event->getStartTime();
                                     $endTime = $event->getEndTime();
                                     $description = $event->getDescription();
                                     $capacity = $event->getCapacity();
                                     $completed = $event->getCompleted();
-                                    $restricted_signup = $event->getRestrictedSignup();
+                                    //$restricted_signup = $event->getRestrictedSignup();
+                                    $restricted_signup = $event->getAccess();
                                     $training_level_required = $event->getTrainingLevelRequired();
                                     $type = $event->getEventType();
                                      if ($training_level_required == null) {
