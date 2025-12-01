@@ -1,0 +1,369 @@
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Testin , body : testiee }" | "C:\xampp\python\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 255
+OUTPUT:
+The system cannot find the path specified.
+Invalid JSON returned
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Email moment , body : Send the email   }" | "C:\xampp\python\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 255
+OUTPUT:
+The system cannot find the path specified.
+Invalid JSON returned
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Email moment , body : Send the email   }" | "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 1
+OUTPUT:
+{"success": false, "sent": [], "failed": [], "error": "Invalid JSON input: string indices must be integers, not 'str'"}
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Work  , body : Will you lease }" | "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 1
+OUTPUT:
+{"success": false, "sent": [], "failed": [], "error": "Invalid JSON input: string indices must be integers, not 'str'"}
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Work  , body : Will you lease }" | "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 1
+OUTPUT:
+{"success": false, "sent": [], "failed": [], "error": "Invalid JSON input: string indices must be integers, not 'str'"}
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Work  , body : Will you lease }" | "C:\xampp\htdocs\public_html/python/python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 1
+OUTPUT:
+Traceback (most recent call last):
+  File "C:\xampp\htdocs\public_html/email/send_email.py", line 6, in <module>
+    from dotenv import load_dotenv
+ModuleNotFoundError: No module named 'dotenv'
+Invalid JSON returned
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Happy , body : Work  }" | "C:\xampp\htdocs\public_html/python/python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 1
+OUTPUT:
+Traceback (most recent call last):
+  File "C:\xampp\htdocs\public_html/email/send_email.py", line 6, in <module>
+    from dotenv import load_dotenv
+ModuleNotFoundError: No module named 'dotenv'
+Invalid JSON returned
+=== START ===
+CMD: echo "{ emails :[ aidanmeyer32@gmail.com , aidanmeyer32@gmail.com , fred54321@gmail.com , example@test.com , jlipinsk@mail.umw.edu , volunteer@volunteer.com , mvanbure@mail.umw.edu , michaelsmith@email.com , michelle.vb@gmail.com , test@gmail.com , example@email.com , volly@gmail.com ], senderName : WhiskeyValorAdmin , subject : Happy , body : Work  }" | "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" 2>&1
+RC: 1
+OUTPUT:
+{"success": false, "sent": [], "failed": [], "error": "Invalid JSON input: string indices must be integers, not 'str'"}
+=== START ===
+RAW JSON: {"emails":["aidanmeyer32@gmail.com","aidanmeyer32@gmail.com","fred54321@gmail.com","example@test.com","jlipinsk@mail.umw.edu","volunteer@volunteer.com","mvanbure@mail.umw.edu","michaelsmith@email.com","michelle.vb@gmail.com","test@gmail.com","example@email.com","volly@gmail.com"],"senderName":"WhiskeyValorAdmin","subject":"Oops","body":"All berries"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\emaA5F5.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+send: 'ehlo [11.22.8.253]\r\n'
+reply: b'250-smtp.gmail.com at your service, [76.78.172.53]\r\n'
+reply: b'250-SIZE 35882577\r\n'
+reply: b'250-8BITMIME\r\n'
+reply: b'250-STARTTLS\r\n'
+reply: b'250-ENHANCEDSTATUSCODES\r\n'
+reply: b'250-PIPELINING\r\n'
+reply: b'250-CHUNKING\r\n'
+reply: b'250 SMTPUTF8\r\n'
+reply: retcode (250); Msg: b'smtp.gmail.com at your service, [76.78.172.53]\nSIZE 35882577\n8BITMIME\nSTARTTLS\nENHANCEDSTATUSCODES\nPIPELINING\nCHUNKING\nSMTPUTF8'
+send: 'STARTTLS\r\n'
+reply: b'220 2.0.0 Ready to start TLS\r\n'
+reply: retcode (220); Msg: b'2.0.0 Ready to start TLS'
+send: 'ehlo [11.22.8.253]\r\n'
+reply: b'250-smtp.gmail.com at your service, [76.78.172.53]\r\n'
+reply: b'250-SIZE 35882577\r\n'
+reply: b'250-8BITMIME\r\n'
+reply: b'250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH\r\n'
+reply: b'250-ENHANCEDSTATUSCODES\r\n'
+reply: b'250-PIPELINING\r\n'
+reply: b'250-CHUNKING\r\n'
+reply: b'250 SMTPUTF8\r\n'
+reply: retcode (250); Msg: b'smtp.gmail.com at your service, [76.78.172.53]\nSIZE 35882577\n8BITMIME\nAUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH\nENHANCEDSTATUSCODES\nPIPELINING\nCHUNKING\nSMTPUTF8'
+send: 'AUTH PLAIN AHh4dGVzdGluYXRlc3Rlcnh4QGdtYWlsLmNvbQBubHpiIHJtdXggaGV5cyBoZGNu\r\n'
+reply: b'235 2.7.0 Accepted\r\n'
+reply: retcode (235); Msg: b'2.7.0 Accepted'
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=199\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<aidanmeyer32@gmail.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: aidanmeyer32@gmail.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531809 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531809 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531809 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=199\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<aidanmeyer32@gmail.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: aidanmeyer32@gmail.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531810 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531810 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531810 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=196\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<fred54321@gmail.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: fred54321@gmail.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531810 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531810 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531810 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=193\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<example@test.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: example@test.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=198\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<jlipinsk@mail.umw.edu>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: jlipinsk@mail.umw.edu\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=200\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<volunteer@volunteer.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: volunteer@volunteer.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531811 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=198\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<mvanbure@mail.umw.edu>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: mvanbure@mail.umw.edu\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531812 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531812 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531812 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=199\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<michaelsmith@email.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: michaelsmith@email.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531812 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531812 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531812 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=198\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<michelle.vb@gmail.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: michelle.vb@gmail.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531813 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531813 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531813 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=191\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<test@gmail.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: test@gmail.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531813 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531813 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531813 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=194\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<example@email.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: example@email.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531814 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531814 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531814 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=192\r\n'
+reply: b'250 2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'rcpt TO:<volly@gmail.com>\r\n'
+reply: b'250 2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (354, b'Go ahead af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: volly@gmail.com\r\nSubject: Oops\r\n\r\nAll berries\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763531814 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763531814 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+data: (250, b'2.0.0 OK  1763531814 af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp')
+send: 'quit\r\n'
+reply: b'221 2.0.0 closing connection af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp\r\n'
+reply: retcode (221); Msg: b'2.0.0 closing connection af79cd13be357-8b2e7f63adfsm728994385a.11 - gsmtp'
+{"success": true, "sent": ["aidanmeyer32@gmail.com", "aidanmeyer32@gmail.com", "fred54321@gmail.com", "example@test.com", "jlipinsk@mail.umw.edu", "volunteer@volunteer.com", "mvanbure@mail.umw.edu", "michaelsmith@email.com", "michelle.vb@gmail.com", "test@gmail.com", "example@email.com", "volly@gmail.com"], "failed": [], "error": ""}
+Invalid JSON returned
+=== START ===
+RAW JSON: {"emails":["aidanmeyer32@gmail.com","aidanmeyer32@gmail.com","fred54321@gmail.com","example@test.com","jlipinsk@mail.umw.edu","volunteer@volunteer.com","mvanbure@mail.umw.edu","michaelsmith@email.com","michelle.vb@gmail.com","test@gmail.com","example@email.com","volly@gmail.com"],"senderName":"WhiskeyValorAdmin","subject":"This is a test","body":"If you're getting this you're still in the software dev database so get upset with Dr.Polack lol"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\emaEC73.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+{"success": true, "sent": ["aidanmeyer32@gmail.com", "aidanmeyer32@gmail.com", "fred54321@gmail.com", "example@test.com", "jlipinsk@mail.umw.edu", "volunteer@volunteer.com", "mvanbure@mail.umw.edu", "michaelsmith@email.com", "michelle.vb@gmail.com", "test@gmail.com", "example@email.com", "volly@gmail.com"], "failed": [], "error": ""}
+=== START ===
+RAW JSON: {"emails":["jlipinsk@mail.umw.edu","example@email.com","volly@gmail.com"],"senderName":"WhiskeyValorAdmin","subject":"Happy","body":"oop"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\ema53C8.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+send: 'ehlo DESKTOP-4I0RV9G.umw.edu\r\n'
+reply: b'250-smtp.gmail.com at your service, [199.111.65.11]\r\n'
+reply: b'250-SIZE 35882577\r\n'
+reply: b'250-8BITMIME\r\n'
+reply: b'250-STARTTLS\r\n'
+reply: b'250-ENHANCEDSTATUSCODES\r\n'
+reply: b'250-PIPELINING\r\n'
+reply: b'250-CHUNKING\r\n'
+reply: b'250 SMTPUTF8\r\n'
+reply: retcode (250); Msg: b'smtp.gmail.com at your service, [199.111.65.11]\nSIZE 35882577\n8BITMIME\nSTARTTLS\nENHANCEDSTATUSCODES\nPIPELINING\nCHUNKING\nSMTPUTF8'
+send: 'STARTTLS\r\n'
+reply: b'220 2.0.0 Ready to start TLS\r\n'
+reply: retcode (220); Msg: b'2.0.0 Ready to start TLS'
+send: 'ehlo DESKTOP-4I0RV9G.umw.edu\r\n'
+reply: b'250-smtp.gmail.com at your service, [199.111.65.11]\r\n'
+reply: b'250-SIZE 35882577\r\n'
+reply: b'250-8BITMIME\r\n'
+reply: b'250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH\r\n'
+reply: b'250-ENHANCEDSTATUSCODES\r\n'
+reply: b'250-PIPELINING\r\n'
+reply: b'250-CHUNKING\r\n'
+reply: b'250 SMTPUTF8\r\n'
+reply: retcode (250); Msg: b'smtp.gmail.com at your service, [199.111.65.11]\nSIZE 35882577\n8BITMIME\nAUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH\nENHANCEDSTATUSCODES\nPIPELINING\nCHUNKING\nSMTPUTF8'
+send: 'AUTH PLAIN AHh4dGVzdGluYXRlc3Rlcnh4QGdtYWlsLmNvbQBubHpiIHJtdXggaGV5cyBoZGNu\r\n'
+reply: b'235 2.7.0 Accepted\r\n'
+reply: retcode (235); Msg: b'2.7.0 Accepted'
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=191\r\n'
+reply: b'250 2.1.0 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+send: 'rcpt TO:<jlipinsk@mail.umw.edu>\r\n'
+reply: b'250 2.1.5 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+data: (354, b'Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: jlipinsk@mail.umw.edu\r\nSubject: Happy\r\n\r\noop\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763571569 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763571569 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+data: (250, b'2.0.0 OK  1763571569 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=187\r\n'
+reply: b'250 2.1.0 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+send: 'rcpt TO:<example@email.com>\r\n'
+reply: b'250 2.1.5 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+data: (354, b'Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: example@email.com\r\nSubject: Happy\r\n\r\noop\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763571569 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763571569 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+data: (250, b'2.0.0 OK  1763571569 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp')
+send: 'mail FROM:<xxtestinatesterxx@gmail.com> size=185\r\n'
+reply: b'250 2.1.0 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.0 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+send: 'rcpt TO:<volly@gmail.com>\r\n'
+reply: b'250 2.1.5 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.1.5 OK 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+send: 'data\r\n'
+reply: b'354 Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (354); Msg: b'Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+data: (354, b'Go ahead 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp')
+send: b'Content-Type: text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nFrom: No Name <xxtestinatesterxx@gmail.com>\r\nTo: volly@gmail.com\r\nSubject: Happy\r\n\r\noop\r\n.\r\n'
+reply: b'250 2.0.0 OK  1763571570 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (250); Msg: b'2.0.0 OK  1763571570 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+data: (250, b'2.0.0 OK  1763571570 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp')
+send: 'quit\r\n'
+reply: b'221 2.0.0 closing connection 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp\r\n'
+reply: retcode (221); Msg: b'2.0.0 closing connection 6a1803df08f44-8828630693bsm137278396d6.14 - gsmtp'
+{"success": true, "sent": ["jlipinsk@mail.umw.edu", "example@email.com", "volly@gmail.com"], "failed": [], "error": ""}
+Invalid JSON returned
+=== START ===
+RAW JSON: {"emails":["jlipinsk@mail.umw.edu","example@email.com","volly@gmail.com"],"senderName":"WhiskeyValorAdmin","subject":"test","body":"testing"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\ema7C77.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+{"success": true, "sent": ["jlipinsk@mail.umw.edu", "example@email.com", "volly@gmail.com"], "failed": [], "error": ""}
+=== START ===
+RAW JSON: {"emails":["jlipinsk@mail.umw.edu","example@email.com","volly@gmail.com"],"senderName":"WhiskeyValorAdmin","subject":"WORK","body":"AHH"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\ema8856.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+{"success": true, "sent": ["jlipinsk@mail.umw.edu", "example@email.com", "volly@gmail.com"], "failed": [], "error": ""}
+=== START ===
+RAW JSON: {"emails":["jlipinsk@mail.umw.edu"],"senderName":"WhiskeyValorAdmin","subject":"Yes","body":"Apples"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\ema9CAF.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+{"success": true, "sent": ["jlipinsk@mail.umw.edu"], "failed": [], "error": ""}
+
+=== START ===
+RAW JSON: {"emails":["jlipinsk@mail.umw.edu"],"senderName":"WhiskeyValorAdmin","subject":"Yes","body":"Apples"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\ema5EC9.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+{"success": true, "sent": ["jlipinsk@mail.umw.edu"], "failed": [], "error": ""}
+=== START ===
+RAW JSON: {"emails":["jlipinsk@mail.umw.edu"],"senderName":"WhiskeyValorAdmin","subject":"Testing","body":"All of this"}
+CMD: "C:\Users\Jakea\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\xampp\htdocs\public_html/email/send_email.py" < "C:\Users\Jakea\AppData\Local\Temp\emaD0BE.tmp.json" 2>&1
+RC: 0
+OUTPUT:
+{"success": true, "sent": ["jlipinsk@mail.umw.edu"], "failed": [], "error": ""}
