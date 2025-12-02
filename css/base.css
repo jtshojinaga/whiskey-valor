@@ -1432,3 +1432,47 @@ SPAN.td input[type=checkbox] {
 .note {
     margin-top: 0.5rem;
 }
+
+div .event-time {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+div .event-date {
+    max-width: 50%;
+    min-width: 25%;
+    margin-right: 3rem;
+    margin-left: 3rem;
+}
+
+div .event-date > input[type=time] {
+    background-color: var(--page-background-color);
+    color: var(--page-font-color);
+    border: 2px solid var(--shadow-and-border-color);
+    padding: 0.5rem;
+    min-width: 80%;
+}
+
+div .dropdown-group {
+    display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+div .dd {
+    min-width: 38%;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+.event-sect {
+    border: 2px solid var(--inactive-font-color);
+    border-radius: 15px;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.15);
+}
