@@ -48,7 +48,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Fredericksburg SPCA | Volunteer Email List</title>
+        <title>Whiskey Valor | Volunteer Email List</title>
   	<link href="css/normal_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->

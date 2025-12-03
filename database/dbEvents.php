@@ -79,7 +79,7 @@ function add_event($event) {
 
 function request_event_signup($eventID, $account_name, $role, $notes) {
     $connection = connect();
-    //Getting access to facilitate the ability for Admin's to approve or dissaprove using dbpendingsignups.
+    //Getting access to facilitate the ability for Admin's to approve or dissaprove using dbapplications.
     $query1 = "SELECT id, access FROM dbevents WHERE name LIKE '$eventID'";
     $result1 = mysqli_query($connection, $query1);
     $row = mysqli_fetch_assoc($result1);
@@ -88,7 +88,7 @@ function request_event_signup($eventID, $account_name, $role, $notes) {
     $query2 = "SELECT userID FROM dbeventpersons WHERE eventID LIKE '$value' AND userID LIKE '$account_name'";
     $result2 = mysqli_query($connection, $query2);
 
-    $query3 = "SELECT username FROM dbpendingsignups WHERE eventname LIKE '$value' AND username LIKE '$account_name'";
+    $query3 = "SELECT user_ID FROM dbapplications WHERE event_ID LIKE '$value' AND username LIKE '$account_name'";
     $result3 = mysqli_query($connection, $query3);
 
     $row2 = null;
@@ -103,37 +103,19 @@ function request_event_signup($eventID, $account_name, $role, $notes) {
                 return null;
         } 
     } else {       
-            $query = "insert into dbpendingsignups (username, eventname, role, notes) values ('$account_name', '$value', '$role', '$notes')";
+            $query = "insert into dbsignups (username, eventname, role, notes) values ('$account_name', '$value', '$role', '$notes')";
             $result = mysqli_query($connection, $query);
             mysqli_commit($connection);
             return $value;
         }
     return $value;
 }
-function sign_up_for_event($eventID, $account_name, $role, $notes) {
+function sign_up_for_event($eventID, $userID, $notes) {
     $connection = connect();
-    $query1 = "SELECT id FROM dbevents WHERE name LIKE '$eventID'";
-    $result1 = mysqli_query($connection, $query1);
-    $row = mysqli_fetch_assoc($result1);
-    $value = $row['id'];
-   
-    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID LIKE '$value' AND userID LIKE '$account_name'";
-    $result2 = mysqli_query($connection, $query2);
-
-    $row2 = null;
-    $row2 = mysqli_fetch_assoc($result2);
-
-    if(!is_null($row2)) {
-            $value2 = $row2['userID'];
-            if($value2 == $account_name){
-                return null;
-        } 
-    } else {       
-            $query = "insert into dbeventpersons (eventID, userID, position, notes) values ('$value', '$account_name', '$role', '$notes')";
-            $result = mysqli_query($connection, $query);
-            mysqli_commit($connection);
-            return $value;
-        }
+    $query = "insert into dbeventpersons (eventID, userID, notes) values ('$eventID', '$userID', '$notes')";
+    $result = mysqli_query($connection, $query);
+    mysqli_commit($connection);
+    mysqli_close($connection);
     return $value;
 }
 
@@ -157,13 +139,14 @@ function check_if_signed_up($eventID, $userID) {
     }
 }
 
+
 /* @@@ Madison's work! */
 /*
  * Check for all users signed up for an event. 
  */
 function fetch_event_signups($eventID) {
     $connection = connect();
-    $query = "SELECT userID, position, notes FROM dbeventpersons WHERE eventID = '$eventID'";
+    $query = "SELECT userID, notes FROM dbeventpersons WHERE eventID = '$eventID'";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -179,86 +162,7 @@ function fetch_event_signups($eventID) {
     return $signups;
 }
 
-function fetch_pending($eventID) {
-    $connection = connect();
-    $query = "SELECT username, role, notes FROM dbpendingsignups WHERE eventname = '$eventID'";
-    $result = mysqli_query($connection, $query);
 
-    if (!$result) {
-        die('Query failed: ' . mysqli_error($connection));
-    }
-    $signups = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $signups[] = $row;
-    }
-
-    mysqli_close($connection);
-    return $signups;
-}
-
-function fetch_all_pending() {
-    $connection = connect();
-    $query = "SELECT eventname, username, role, notes FROM dbpendingsignups";
-    $result = mysqli_query($connection, $query);
-
-    if (!$result) {
-        die('Query failed: ' . mysqli_error($connection));
-    }
-    $signups = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $signups[] = $row;
-    }
-
-    mysqli_close($connection);
-    return $signups;
-}
-
-function all_pending_names() {
-    $connection = connect();
-    $query = "SELECT eventname FROM dbpendingsignups";
-    $result = mysqli_query($connection, $query);
-
-    if (!$result) {
-        die('Query failed: ' . mysqli_error($connection));
-    }
-
-    $signups = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $signups[] = $row;
-    }
-
-    $event_names = [];
-    $length = sizeof($signups);
-    for ($x = 0; $x < $length; $x++) {
-        $val = (int)$signups[$x]['eventname'];
-        $query2 = "SELECT name FROM dbevents WHERE id = $val";
-        $result2 = mysqli_query($connection, $query2);
-        while ($row = mysqli_fetch_assoc($result2)) {
-            $event_names[] = $row;
-        }
-    }
-
-    mysqli_close($connection);
-    return $event_names;
-}
-
-function all_pending_ids() {
-    $connection = connect();
-    $query = "SELECT eventname FROM dbpendingsignups";
-    $result = mysqli_query($connection, $query);
-
-    if (!$result) {
-        die('Query failed: ' . mysqli_error($connection));
-    }
-
-    $signups = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $signups[] = $row;
-    }
-
-    mysqli_close($connection);
-    return $signups;
-}
 
 function remove_user_from_event($event_id, $user_id) {    
     $query = "DELETE FROM dbeventpersons WHERE eventID LIKE '$event_id' AND userID LIKE '$user_id'";
@@ -275,15 +179,7 @@ function remove_user_from_event($event_id, $user_id) {
     return $result;
 }
 
-function remove_user_from_pending_event($event_id, $user_id) {    
-    $query = "DELETE FROM dbpendingsignups WHERE eventname = '$event_id' AND username = '$user_id'";
-    $connection = connect();
-    $result = mysqli_query($connection, $query);
-    $result = boolval($result);
-    mysqli_close($connection);
 
-    return $result;
-}
 
 /* @@@ Thomas's work! */
 /*
@@ -450,7 +346,7 @@ function get_all_events() {
  function get_all_events_sorted_by_date_not_archived() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'no'" .
+            " WHERE completed = 'N'" . // ?
             " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
@@ -465,7 +361,7 @@ function get_all_events() {
  function get_all_events_sorted_by_date_and_archived() {
     $con=connect();
     $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'yes'" .
+            " WHERE completed = 'Y'" .
             " ORDER BY startDate ASC";
     $result = mysqli_query($con,$query);
     $theEvents = array();
@@ -566,10 +462,26 @@ function fetch_event_by_id($id) {
     return null;
 }
 // JUST ADDED
-function fetch_num_attendees($id) {
+function fetch_num_signups($id) {
     $connection = connect();
     $id = mysqli_real_escape_string($connection, $id);
     $query = "select count(*) as RowCount from dbeventpersons where eventID = '$id'";
+    $result = mysqli_query($connection, $query);
+    $event = mysqli_fetch_assoc($result);
+    if ($event) {
+        require_once('include/output.php');
+        $event = hsc($event);
+        mysqli_close($connection);
+        return $event;
+    }
+    mysqli_close($connection);
+    return null;
+}
+
+function fetch_num_attendees($id) {
+    $connection = connect();
+    $id = mysqli_real_escape_string($connection, $id);
+    $query = "select count(*) as RowCount from dbeventpersons where eventID = '$id' and attended=1";
     $result = mysqli_query($connection, $query);
     $event = mysqli_fetch_assoc($result);
     if ($event) {
@@ -1079,3 +991,22 @@ function update_animal2($animal) {
     // Return true/false based on the comparison
     return ($eventStatusRow['access'] == "Approval_Needed");
 }
+
+ function getPAttendance($eventID) {
+    $conn=connect();
+
+    $sql = "SELECT userID FROM dbeventpersons WHERE eventID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $eventID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $userIDs = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $userIDs[] = $row['userID'];
+    }
+
+    return $userIDs;
+}
+

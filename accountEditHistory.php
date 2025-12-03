@@ -1,0 +1,4 @@
+<?php
+
+//Viewing edit logs.
+?>

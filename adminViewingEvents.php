@@ -24,7 +24,7 @@
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/messages.css"></link>
         <script src="js/messages.js"></script>
-        <title>Fredericksburg SPCA Volunteer System | Events</title>
+        <title>Whiskey Valor | Events</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -42,9 +42,8 @@
                     <table class="general">
                         <thead>
                             <tr>
-                                <th style="width:1px">Training Required</th>
                                 <th>Title</th>
-                                <th style="width:1px">Date</th>
+                                <th>Date</th>
                                 <th style="width:1px"></th>
                             </tr>
                         </thead>
@@ -56,31 +55,25 @@
                                 foreach ($events as $event) {
                                     $eventID = $event->getID();
                                     $title = $event->getName();
-                                    $date = $event->getDate();
+                                    $startDate = $event->getStartDate();
                                     $startTime = $event->getStartTime();
                                     $endTime = $event->getEndTime();
                                     $description = $event->getDescription();
                                     $capacity = $event->getCapacity();
                                     $completed = $event->getCompleted();
-                                    $restricted_signup = $event->getRestrictedSignup();
-                                    $training_level_required = $event->getTrainingLevelRequired();
-                                     if ($training_level_required == NULL) {
-                                         $training_level_required = "None";
-                                     }
+
                                     if($accessLevel < 3) {
                                         echo "
                                         <tr data-event-id='$eventID'>
-                                            <td>$training_level_required</td>
                                             <td><a href='event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->
-                                            <td>$date</td>
+                                            <td>$startDate</td>
                                             <td><a class='button sign-up' href='eventSignUp.php'>Sign Up</a></td>
                                         </tr>";
                                     } else {
                                         echo "
                                         <tr data-event-id='$eventID'>
-                                            <td>$training_level_required</td>
                                             <td><a href='event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->
-                                            <td>$date</td>
+                                            <td>$startDate</td>
                                             <td></td>
                                         </tr>";
                                     }

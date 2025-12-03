@@ -24,7 +24,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Fredericksburg SPCA | Volunteer/Participant Search</title>
+    <title>Whiskey Valor | Volunteer/Participant Search</title>
     <link href="css/normal_tw.css" rel="stylesheet">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php

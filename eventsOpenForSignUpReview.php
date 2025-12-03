@@ -22,7 +22,7 @@
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/messages.css"></link>
         <script src="js/messages.js"></script>
-        <title>Fredericksburg SPCA Volunteer System | Events</title>
+        <title>Whiskey Valor | Events</title>
     </head>
     <body>
         <?php require_once('header.php') ?>

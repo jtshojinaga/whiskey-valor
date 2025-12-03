@@ -31,7 +31,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Reports</title>
+        <title>Whiskey Valor | Reports</title>
         <style>
             .report_select{
                 display: flex;

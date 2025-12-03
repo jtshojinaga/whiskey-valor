@@ -159,40 +159,116 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Create Event</title>
+        <title>Whiskey Valor | Create Event</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1>Create Event</h1>
+        <h1 style="color: white;">Create Event</h1>
         <main class="date">
             <h2>New Event Form</h2>
             <form id="new-event-form" method="POST">
+                <div class="event-sect">
                 <label for="name">* Event Name </label>
                 <input type="text" id="name" name="name" required placeholder="Enter name"> 
-                <label for="name">* Date </label>
-                <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
-                <label for="name">* Start Time </label>
-                <input type="text" id="start-time" name="start-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
-                <label for="name">* End Time </label>
-                <input type="text" id="end-time" name="end-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 1:00 PM">
+                </div>
+
+                <div class="event-sect">
+                <div class="event-datetime">
+                    <div class="event-time">
+                        <div class="event-date">
+                        <label for="name">* Start Date </label>
+                        <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
+                        </div>
+                        <div class="event-date">
+                        <label for="name">* Start Time </label>
+                        <input type="time" id="start-time" name="start-time" required step="900">
+                        </div>
+                    </div>
+                    <div class="event-time">
+                        <div class="event-date">
+                        <label for="name">* End Date</label>
+                        <input type="date" id="end-date" name="end-date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
+                        </div>
+                        <div class="event-date">
+                        <label for="name">* End Time </label>
+                        <input type="time" id="end-time" name="end-time" required>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="event-sect">
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
+
                 <label for="name">* Event Type </label>
                 <select id="type" name="type">
                     <option value="Normal">Normal</option>
                     <option value="Retreat">Retreat</option>
                 </select>
+                </div>
+
+                <div class="event-sect">
+                <label for="name">* Event Visibility</label>
+                <p class="sub-text" style="margin-bottom: 1rem;">Visibility controls who can see the event listing on the calendar.</p>
+                <div class="radio-group">
+                    <div class="radio-element">
+                    <label>
+                        <input type="radio" name="visibility" value="public" checked>Public
+                    </label>
+                    </div>
+                    <div class="radio-element">
+                    <label>
+                        <input type="radio" name="visibility" value="private">Private
+                    </label>
+                    </div>
+                </div>
+                </div>
+
+                <div class="event-sect">
+                <label for="name">* Sign-up Restrictions</label>
+                <p class="sub-text">Restrictions control who can sign up for your event.</p>
+                <div class="dropdown-group">
+                    <div class="dd">
+                    <label for="branch">Branch</label>
+                    <select  name="branch">
+                        <option value="all">(any)</option>
+                        <option value="air force">Air Force</option>
+                        <option value="army">Army</option>
+                        <option value="coast guard">Coast Guard</option>
+                        <option value="marine">Marine Corp</option>
+                        <option value="navy">Navy</option>
+                        <option value="space force">Space Force</option>
+                    </select>
+                    </div>
+                    <div class="dd">
+                    <label for="affiliation">Affiliation</label>
+                    <select  name="affiliation">
+                        <option value="all">(any)</option>
+                        <option value="active duty">Active duty</option>
+                        <option value="family">Family member (spouse, child, or parent)</option>
+                        <option value="reserve">Reservist</option>
+                        <option value="veteran">Veteran</option>
+                        <option value="civilian">Civilian</option>
+                    </select>
+                    </div>
+                </div>
+                </div>
+
+                <div class="event-sect">
                 <label for="name">Location </label>
-                <input type="text" id="location" name="location" required placeholder="Enter location">
-                <label for="name">Capacity </label>
+                <input type="text" id="location" name="location" placeholder="Enter location">
+
+                <label for="name">* Capacity </label>
                 <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
-                <label for="training">* Training Type:</label>
+                </div>
+
+                <!--<label for="training">* Training Type:</label>
                 <select id="training_level_required" name="training_level_required">
                     <option value="None">None</option>
                     <option value="Green">Green</option>
                     <option value="Orange">Orange</option>
                     <option value="Pink">Pink</option>
-                </select>
+                </select>-->
 
                 <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
                     <legend>Make this a recurring event</legend>
@@ -220,7 +296,7 @@
                     </div>
                 </fieldset>
                 
-                <input type="submit" value="Create Event">
+                <input type="submit" value="Create Event" style="width:100%;">
                 
             </form>
                 <?php if ($date): ?>

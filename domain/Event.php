@@ -92,5 +92,6 @@ class Event {
     function getAccess(){
         return $this->access;
     }
+    
 
 }

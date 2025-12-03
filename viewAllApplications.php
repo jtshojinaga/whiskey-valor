@@ -71,7 +71,7 @@
                                     $status = $app->getStatus();
                                     $flagged = $app->getFlagged();
                                     $event = retrieve_event($event_id);
-                                    $eventName = $event->getName();
+                                    $eventName = $app->getName();
 
 
                                     //TODO: remove training_level_required and add other necessary fields -Blue
@@ -83,7 +83,7 @@
                                         <td>$eventName</td>
                                         <td>$status</td>";
                                     if ($flagged) {
-                                        echo "<td style='background-color: #e50000ff'></td></tr>";
+                                        echo "<td style='background-color: #ff693cff'></td></tr>";
                                     }
                                     else {
                                         echo "</tr";
