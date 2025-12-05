@@ -23,6 +23,12 @@ but no code was taken from there. All of the code below is original code.
     font-style: italic;
 }
 
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('../fonts/OpenDyslexic-Regular.otf') format("opentype");
+    font-weight: 100 900;
+}
+
 /* Reset rules (spacing, font override) */
 html, body, header, main, footer, div, span, 
 p, h1, h2, h3, h4, h5, h6, ul, ol, li, 
@@ -67,6 +73,13 @@ table, td, tr, th, form, fieldset, em, button, a {
  
     --secondary-accent-color: rgb(175, 141, 92);
 
+    /* Accessibility / WV theme variables */
+    --wv-accent-color: #C9AB81; /* gold */
+    --wv-accent-foreground: #111111;
+    --wv-bg-light: #ffffff;
+    --wv-text-dark: #111111;
+    --wv-muted-text: #6b6b6b;
+
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--accent-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
@@ -88,6 +101,34 @@ table, td, tr, th, form, fieldset, em, button, a {
     font-family: Montserrat;
     font-weight: 300;
 }
+
+/* Utility classes used for accessibility/light mode conversions */
+.bg-wv-accent { background-color: var(--wv-accent-color) !important; }
+.text-wv-accent { color: var(--wv-accent-foreground) !important; }
+.text-white { color: white !important; }
+.text-black { color: black !important; }
+.icon-invert { filter: invert(1); }
+.icon-no-invert { filter: none !important; }
+
+/* (Light-mode support removed) */
+
+/* Accent/content box used in dashboard */
+.content-box-accent { background-color: var(--wv-accent-color); color: var(--wv-accent-foreground); border-radius: 12px; padding: 20px; }
+
+/* Muted text utility */
+.muted-text { color: var(--wv-muted-text) !important; }
+.muted-small { color: var(--wv-muted-text) !important; font-size: 12px; }
+
+/* Legend dots (uses color variables or specific classes) */
+.legend-dot { font-size: 18px; margin-right: 8px; }
+.legend-dot.accent { color: var(--wv-accent-color); }
+.legend-dot.green { color: #4CAF50; }
+.legend-dot.gray { color: #aaaaaa; }
+.legend-label { font-size: 18px; margin-right: 18px; }
+
+/* Muted button style used in calendar/back links */
+.btn-muted { background-color: #6b7280; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; text-decoration: none; display: inline-block; }
+
 
 /* Page Sections */
 

@@ -131,7 +131,7 @@
 
 <body class="bg-gray-100">
   <!-- Hero Section -->
-  <div class="h-48 relative" style="background-color: #1F1F21;">
+  <div class="h-48 relative" style="background-color: var(--page-background-color);">
   </div>
 
   <!-- Profile Content -->

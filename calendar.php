@@ -279,30 +279,18 @@
             ?>
             <!--<center>
             <p></p>
-            <i class="fa-solid fa-circle" style="color: #C9AB81"> </i>
-                <span style="font-size: 25px;">
-                    Open Event
-                </span>
-            <i class="fa-solid fa-circle" style="color: #4CAF50"> </i>
-                <span style="font-size: 25px;">
-                    Signed-Up
-                </span>
-            <i class="fa-solid fa-circle" style="color: #aaaaaa"> </i>
-                <span style="font-size: 25px;">
-                    Archived Event
-                </span>
+            <i class="fa-solid fa-circle legend-dot accent"></i>
+                <span class="legend-label">Open Event</span>
+            <i class="fa-solid fa-circle legend-dot green"></i>
+                <span class="legend-label">Signed-Up</span>
+            <i class="fa-solid fa-circle legend-dot gray"></i>
+                <span class="legend-label">Archived Event</span>
             </center>
                             <p></p>-->
         
 <div style="display: flex; justify-content: center; align-items: center;">
 <div style="margin-top: 1.5rem;">
-  <a href="index.php" style="
-    background-color: #6b7280;  /* bg-gray-500 */
-    color: white;               /* text-white */
-    padding: 0.5rem 1.5rem;     /* py-2 px-6 */
-    border-radius: 0.5rem;      /* rounded-lg */
-    text-decoration: none;      /* default for Tailwind links */
-    display: inline-block;      /* ensures padding applies correctly */
+    <a href="index.php" class="btn-muted">
   "
   onmouseover="this.style.backgroundColor='#4b5563';"
   onmouseout="this.style.backgroundColor='#6b7280';"

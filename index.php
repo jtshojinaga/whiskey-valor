@@ -518,7 +518,7 @@
     ?>
 
     <!-- Calendar -->
-    <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='calendar.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
@@ -529,7 +529,7 @@
     </div>
 
     <!-- Manage Documents -->
-    <div class="content-box-test" onclick="window.location.href='resources.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='resources.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
@@ -540,7 +540,7 @@
     </div>
 
     <!-- System Notifications -->
-    <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='inbox.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
         </div>
@@ -557,7 +557,7 @@
     </div>
 
     <!-- Generate Report -->
-    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='generateReport.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
@@ -568,7 +568,7 @@
     </div>
 
     <!-- Create Email -->
-    <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='createEmail.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
         </div>
@@ -579,7 +579,7 @@
     </div>
 
     <!-- View Drafts -->
-    <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='viewDrafts.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
         </div>
@@ -590,7 +590,7 @@
     </div>
 
     <!-- Generate Email List -->
-    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='generateEmailList.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
         </div>
@@ -601,7 +601,7 @@
     </div>
 
     <!-- Discussions -->
-    <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'" style="background-color: #C9AB81; color: black; border-radius: 12px; padding: 20px;">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='viewDiscussions.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
         </div>
