@@ -1,38 +1,59 @@
 <?php
-    // Template for new VMS pages. Base your new page on this one
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+session_cache_expire(30);
+session_start();
 
-    // Make session information accessible, allowing us to associate
-    // data with the logged-in user.
-    session_cache_expire(30);
-    session_start();
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
+    header('Location: index.php');
+    exit;
+}
 
-    $loggedIn = false;
-    $accessLevel = 0;
-    $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
+require_once('database/dbPersons.php');
+require_once('database/dbEvents.php');
+require_once('include/input-validation.php');
+
+$args = sanitize($_POST);
+
+$eventID = $args['eventID'] ?? null;
+if (empty($eventID)) {
+    header('Location: index.php');
+    exit;
+}
+
+// checkboxes are named attendee[<uid>] and notes are attendee_notes[<uid>]
+$checked = isset($args['attendee']) && is_array($args['attendee']) ? $args['attendee'] : [];
+$notes = isset($args['attendee_notes']) && is_array($args['attendee_notes']) ? $args['attendee_notes'] : [];
+
+$signups = fetch_event_signups($eventID);
+
+// signups may be an array of arrays or Person objs
+foreach ($signups as $s) {
+    // determine user id
+    if (is_array($s)) {
+        $uid = $s['userID'] ?? ($s['id'] ?? null);
+    } elseif (is_object($s) && method_exists($s, 'get_id')) {
+        $uid = $s->get_id();
+    } else {
+        // try common keys
+        $uid = $s->userID ?? $s->id ?? null;
     }
+    if (empty($uid)) continue;
+
+    // checkbox is present in $checked only if it was checked
+    $value = array_key_exists($uid, $checked) ? 1 : 0;
+
+    // get note if any (already sanitized)
+    $note = isset($notes[$uid]) ? $notes[$uid] : '';
+
+    // call db function to log attendance 
+    if (function_exists('log_attendance')) {
+        log_attendance($uid, $eventID, $value, $note);
+    } 
+}
+
+// After processing, redirect back to the event page
+header('Location: event.php?id=' . urlencode($eventID) . '&update=1');
+exit;
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <?php require_once('universal.inc') ?>
-        <title>Whiskey Valor | Template Page</title>
-    </head>
-    <body>
-        <?php require_once('header.php') ?>
-        <main>
-            <!-- Your code goes here. Be sure to wrap any form elements in a <form> tag -->
-            <p>Here's an example paragraph tag!</p>
-            <p>You are <?php if (!$loggedIn) echo 'not '; ?>logged in.</p>
-            <?php
-                if ($userID) {
-                    echo '<p>Your user ID is ' . $userID . '.</p>';
-                }
-            ?>
-        </main>
-    </body>
-</html>

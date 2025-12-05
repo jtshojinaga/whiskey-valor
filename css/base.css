@@ -1214,6 +1214,7 @@ img.profile-pic {
     margin-right: 1rem;
     color: var(--page-font-color);
     font-weight: 300;
+    cursor: pointer;
 }
 
 @media print {

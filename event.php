@@ -17,6 +17,10 @@
         header('Location: calendar.php');
         die();
   	}
+
+    if (isset($args["update"])) {
+        $displayUpdateMessage = true;
+    }
   	
   	include_once('database/dbEvents.php');
   	
@@ -212,6 +216,9 @@
         <?php endif ?>
         <?php if (isset($_GET['cancelSuccess'])): ?>
             <div class="happy-toast">Sign-up canceled successfully!</div>
+        <?php endif ?>
+        <?php if ($displayUpdateMessage): ?>
+            <div class="happy-toast">Attendance information updated successfully!</div>
         <?php endif ?>
         <!-- Facebook share button -->
         <div id="fb-root"></div>
