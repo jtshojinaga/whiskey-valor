@@ -1,8 +1,9 @@
 <?php
+// approve_encrypted_image.php
 session_cache_expire(30);
 session_start();
 require_once('security_config.php');
-require_once('database/dbinfo.php'); // Include your DB connection file
+require_once('database/dbinfo.php'); // Required for DB connection
 
 // 1. Security Check
 if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 2) {
@@ -20,31 +21,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['file'])) {
     
     // Parse UserID from filename (Format: USERID___FILENAME.enc)
     $parts = explode("___", $filename, 2);
-    $fileOwnerID = (count($parts) > 1) ? $parts[0] : "Unknown";
+    $fileOwnerID = (count($parts) > 1) ? $parts[0] : null;
+
+    if (!$fileOwnerID) {
+        // If we can't find the user ID, we can't insert into DB
+        header("Location: view_encrypted_gallery.php?msg=error");
+        exit;
+    }
     
     // ---------------------------------------------------------
-    // MYSQL COMMAND SHELL
+    // DATABASE INSERTION LOGIC
     // ---------------------------------------------------------
-    $con = connect();
+    $con = connect(); 
     if ($con) {
         $safeOwnerID = mysqli_real_escape_string($con, $fileOwnerID);
         $safeIdType = mysqli_real_escape_string($con, $idType);
 
-        // TOODO:Make query
-        // $query = "UPDATE dbpersons SET status='Verified', id_type='$safeIdType' WHERE id='$safeOwnerID'";
-        
+        // Insert or Update the timestamp if they already have this ID type
+        $query = "INSERT INTO user_verified_ids (user_id, id_type, approved_at) 
+                  VALUES ('$safeOwnerID', '$safeIdType', NOW())
+                  ON DUPLICATE KEY UPDATE approved_at = NOW()";
 
-        // $query = "INSERT INTO user_documents (user_id, doc_type, uploaded_at) VALUES ('$safeOwnerID', '$safeIdType', NOW())";
-
- 
-        // if (isset($query)) {
-        //     mysqli_query($con, $query);
-        // }
-        
+        mysqli_query($con, $query);
         mysqli_close($con);
     }
     // ---------------------------------------------------------
-
 
     // 3. Move/Rename File Logic
     $approvedDir = SECURE_UPLOAD_DIR . 'approved/';
@@ -54,7 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['file'])) {
     }
 
     // Rename to: IDTYPE_USERID_FILENAME.enc
-    $newFilename = $idType . "_" . $filename; 
+    // We add a timestamp to the filename to prevent overwriting if they upload a new DL later
+    $timestamp = time();
+    $newFilename = $safeIdType . "_" . $fileOwnerID . "_" . $timestamp . ".enc"; 
     $destination = $approvedDir . $newFilename;
 
     if (file_exists($source) && is_file($source)) {

@@ -4,7 +4,7 @@ session_start();
 require_once('security_config.php');
 
 // Security Check
-if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 2) { // Assuming uploads are internal or admin-only
+if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 1) { // Assuming uploads are internal or admin-only
     // If this is a public upload form, change access_level check accordingly
     die("Access Denied");
 }
