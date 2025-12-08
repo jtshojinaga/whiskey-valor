@@ -32,14 +32,19 @@
             echo 'bad form data';
             die();
         } else {
-            $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
-            if (!$validated) {
-                echo 'bad time range';
-                die();
+            // Accept either HTML5 24h time (HH:MM) or 12h times with am/pm
+            if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
+                $startTime = $args['start-time'];
+                $endTime = $args['end-time'];
+            } else {
+                $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
+                if (!$validated) {
+                    echo 'bad time range';
+                    die();
+                }
+                $startTime = $args['start-time'] = $validated[0];
+                $endTime = $args['end-time'] = $validated[1];
             }
-
-            $startTime = $args['start-time'] = $validated[0];
-            $endTime = $args['end-time'] = $validated[1];
             $date = $args['date'] = validateDate($args["date"]);
             $args["training_level_required"] = $_POST['training_level_required'];
     
@@ -230,7 +235,7 @@
                 <div class="dropdown-group">
                     <div class="dd">
                     <label for="branch">Branch</label>
-                    <select  name="branch">
+                    <select  name="branch" id="branch">
                         <option value="all">(any)</option>
                         <option value="air force">Air Force</option>
                         <option value="army">Army</option>
@@ -242,7 +247,7 @@
                     </div>
                     <div class="dd">
                     <label for="affiliation">Affiliation</label>
-                    <select  name="affiliation">
+                    <select  name="affiliation" id="affiliation">
                         <option value="all">(any)</option>
                         <option value="active duty">Active duty</option>
                         <option value="family">Family member (spouse, child, or parent)</option>
@@ -299,6 +304,31 @@
                 <input type="submit" value="Create Event" style="width:100%;">
                 
             </form>
+                <script>
+                    // Debug: log submit attempts and list invalid fields
+                    (function(){
+                        const form = document.getElementById('new-event-form');
+                        if(!form) return;
+                        form.addEventListener('submit', function(e){
+                            try{
+                                console.log('addEvent form submit event', e);
+                                const ok = form.checkValidity();
+                                console.log('form.checkValidity()', ok);
+                                if(!ok){
+                                    e.preventDefault();
+                                    const invalids = [];
+                                    form.querySelectorAll(':invalid').forEach(function(el){ invalids.push({name: el.name, type: el.type, value: el.value}); });
+                                    console.error('Form invalid fields:', invalids);
+                                    alert('Form validation failed for: ' + invalids.map(i=>i.name).join(', '));
+                                } else {
+                                    console.log('Form appears valid; letting submit proceed');
+                                }
+                            }catch(err){
+                                console.error('Error in submit debug handler', err);
+                            }
+                        }, false);
+                    })();
+                </script>
                 <?php if ($date): ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
                 <?php else: ?>

@@ -249,11 +249,21 @@ $(function() {
             event.preventDefault();
         }
     });
-    // Update form submit logic
+    // Update form submit logic: accept either 12h (with am/pm) or 24h HTML5 time inputs
+    function isAcceptableTimeRange(start, end) {
+        if (!start || !end) return false;
+        // If either value contains am/pm, validate as 12h
+        if (/[ap]m$/i.test(start) || /[ap]m$/i.test(end)) {
+            return validate12hTimeRange(start, end);
+        }
+        // Otherwise assume 24h HH:MM and compare lexicographically
+        return validateTimeRange(start, end);
+    }
+
     $('form#new-event-form').submit(function (e) {
         const start = $('#start-time').val();
         const end = $('#end-time').val();
-        if (!validate12hTimeRange(start, end)) {
+        if (!isAcceptableTimeRange(start, end)) {
             scrollIntoView($('#start-time'));
             $('#date-range-error').removeClass('hidden');
             e.preventDefault();
