@@ -35,14 +35,14 @@
     else {
         if ($action=='approve') {
             $status = 'Approved';
-            update_app_note($appID, '');
+            update_app_note($app_id, '');
             $result = update_app_status($app_id, $status);
         }
         else if ($action=='deny') {
             $status = 'Denied';
             if ($note) {
                 $result = update_app_status($app_id, $status);
-                update_app_note($appID, $note);
+                update_app_note($app_id, $note);
             }
             else {
                 header("Location: denyApplication.php?app_id=$app_id&user_id=$user_id");
