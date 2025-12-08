@@ -11,6 +11,7 @@
 
     require_once('include/input-validation.php');
     $args = sanitize($_GET);
+    $displayUpdateMessage = false;
     if (isset($args["id"])) {
         $id = $args["id"];
     } else {
