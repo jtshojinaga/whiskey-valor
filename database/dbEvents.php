@@ -77,46 +77,91 @@ function add_event($event) {
     return null;
 }*/
 
-function request_event_signup($eventID, $account_name, $role, $notes) {
+function request_event_signup($event_name_str, $account_name, $role, $notes) {
     $connection = connect();
-    //Getting access to facilitate the ability for Admin's to approve or dissaprove using dbapplications.
-    $query1 = "SELECT id, access FROM dbevents WHERE name LIKE '$eventID'";
+    
+    // 1. Get Event ID
+    $safe_name = mysqli_real_escape_string($connection, $event_name_str);
+    $query1 = "SELECT id, access FROM dbevents WHERE name = '$safe_name'";
     $result1 = mysqli_query($connection, $query1);
-    $row = mysqli_fetch_assoc($result1);
-    $value = $row['id'];
-    $accessControl =$row['access'];   
-    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID LIKE '$value' AND userID LIKE '$account_name'";
-    $result2 = mysqli_query($connection, $query2);
+    
+    if (!$result1 || mysqli_num_rows($result1) === 0) {
+        mysqli_close($connection);
+        return null; // Event not found
+    }
 
-    $query3 = "SELECT user_ID FROM dbapplications WHERE event_ID LIKE '$value' AND username LIKE '$account_name'";
+    $row = mysqli_fetch_assoc($result1);
+    $eventID = $row['id'];
+
+    // 2. Check for Existing Signup (In active OR pending)
+    $safe_user = mysqli_real_escape_string($connection, $account_name);
+    
+    // Check Active
+    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID = '$eventID' AND userID = '$safe_user'";
+    $result2 = mysqli_query($connection, $query2);
+    
+    // Check Pending (UPDATED to use userID)
+    $query3 = "SELECT userID FROM dbpendingsignups WHERE eventname = '$eventID' AND userID = '$safe_user'";
     $result3 = mysqli_query($connection, $query3);
 
-    $row2 = null;
-    $row2 = mysqli_fetch_assoc($result2);
-    $row3 = null;
-    $row3 = mysqli_fetch_assoc($result3);
+    if (mysqli_num_rows($result2) > 0 || mysqli_num_rows($result3) > 0) {
+        mysqli_close($connection);
+        return null; // Already signed up or pending
+    } 
 
-    if(!is_null($row2) || !is_null($row3)) {
-            $value2 = $row2['userID'];
-            $value3 = $row3['username'];
-            if($value2 == $account_name || $value3 == $account_name){
-                return null;
-        } 
-    } else {       
-            $query = "insert into dbsignups (username, eventname, role, notes) values ('$account_name', '$value', '$role', '$notes')";
-            $result = mysqli_query($connection, $query);
-            mysqli_commit($connection);
-            return $value;
-        }
-    return $value;
-}
-function sign_up_for_event($eventID, $userID, $notes) {
-    $connection = connect();
-    $query = "insert into dbeventpersons (eventID, userID, notes) values ('$eventID', '$userID', '$notes')";
+    // 3. Insert Request (UPDATED to use userID)
+    $safe_role = mysqli_real_escape_string($connection, $role);
+    $safe_notes = mysqli_real_escape_string($connection, $notes);
+    
+    $query = "INSERT INTO dbpendingsignups (userID, eventname, role, notes) VALUES ('$safe_user', '$eventID', '$safe_role', '$safe_notes')";
     $result = mysqli_query($connection, $query);
+    
     mysqli_commit($connection);
     mysqli_close($connection);
-    return $value;
+    return $eventID;
+}
+function sign_up_for_event($eventID, $account_name, $role, $notes) {
+    $connection = connect();
+    
+    // 1. ESCAPE INPUTS (Crucial for names like "Gwyneth's Gift")
+    // This prevents the SQL query from breaking on apostrophes
+    $safe_name = mysqli_real_escape_string($connection, $eventID);
+    $safe_account = mysqli_real_escape_string($connection, $account_name);
+    $safe_role = mysqli_real_escape_string($connection, $role);
+    $safe_notes = mysqli_real_escape_string($connection, $notes);
+
+    // 2. FETCH EVENT ID
+    // We use the 'safe_name' here.
+    $query1 = "SELECT id FROM dbevents WHERE name = '$safe_name'";
+    $result1 = mysqli_query($connection, $query1);
+    
+    // 3. CHECK IF EVENT EXISTS
+    // This check prevents the "Undefined variable" error by stopping if no event is found.
+    if (!$result1 || mysqli_num_rows($result1) === 0) {
+        mysqli_close($connection);
+        return null; // Return failure safely
+    }
+
+    $row = mysqli_fetch_assoc($result1);
+    $value = $row['id']; // Now it is safe to get the ID
+   
+    // 4. CHECK FOR DUPLICATE SIGNUP
+    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID = '$value' AND userID = '$safe_account'";
+    $result2 = mysqli_query($connection, $query2);
+    $row2 = mysqli_fetch_assoc($result2);
+
+    if ($row2) {
+        // User already signed up
+        mysqli_close($connection);
+        return null;
+    } else {       
+        // 5. INSERT SIGNUP
+        $query = "INSERT INTO dbeventpersons (eventID, userID, notes) VALUES ('$value', '$safe_account', '$safe_notes')";
+        $result = mysqli_query($connection, $query);
+        mysqli_commit($connection);
+        mysqli_close($connection);
+        return $value;
+    }
 }
 
 /* @@@ Thomas's work! */
@@ -800,23 +845,27 @@ function cancel_event($event_id, $account_name) {
  * @return bool|mysqli_result
  */
 function approve_signup($event_id, $account_name, $position, $notes) {
-    $query = "DELETE from dbpendingsignups where username = '$account_name' AND eventname = $event_id";
     $connection = connect();
-    //echo "username " . $account_name . " eventname " . $event_id;
-    $result = mysqli_query($connection, $query);
-    $result = boolval($result);
+    $safe_event = mysqli_real_escape_string($connection, $event_id);
+    $safe_user = mysqli_real_escape_string($connection, $account_name);
+    $safe_pos = mysqli_real_escape_string($connection, $position);
+    $safe_notes = mysqli_real_escape_string($connection, $notes);
 
-    //echo "hello" . $account_name;
+    // 1. Delete from Pending (Using userID)
+    $query = "DELETE FROM dbpendingsignups WHERE userID = '$safe_user' AND eventname = '$safe_event'";
+    mysqli_query($connection, $query);
 
-    $query2 = "insert into dbeventpersons (eventID, userID, position, notes) values ('$event_id', '$account_name',  '$position', '$notes')";
+    // 2. Add to Active
+    $query2 = "INSERT INTO dbeventpersons (eventID, userID, position, notes) VALUES ('$safe_event', '$safe_user', '$safe_pos', '$safe_notes')";
     $result2 = mysqli_query($connection, $query2);
-    //$result2 = boolval($result2);
-    //mysqli_close($connection);
+    
     mysqli_commit($connection);
-    if ($result2 == true)
-    {
-         emailHandler($event_id, $account_name, 2, "Sign-up Approved TEST TEST.");
+    
+    if ($result2) {
+         emailHandler($event_id, $account_name, 2, "Sign-up Approved.");
     }
+    
+    // mysqli_close($connection); // Optional, depending on if you reuse connection
     return $result2;
 }
 

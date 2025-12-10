@@ -601,13 +601,13 @@
     </div>
 
     <!-- Discussions -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='viewDiscussions.php'">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='viewSuggestions.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
         </div>
         <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">Discussions</div>
-        <div class="graph-text">See the latest.</div>
+        <div class="large-text-sub">User Suggestions</div>
+        <div class="graph-text">View user submitted suggestions.</div>
         <button class="arrow-button">→</button>
     </div>
 

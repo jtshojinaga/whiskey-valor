@@ -46,7 +46,7 @@
                 $endTime = $args['end-time'] = $validated[1];
             }
             $date = $args['date'] = validateDate($args["date"]);
-            $args["training_level_required"] = $_POST['training_level_required'];
+            $args["training_level_required"] = $_POST['training_level_required'] ?? 'None';
     
             $args['startDate'] = $date;
             $args['endDate']   = $date;   
@@ -79,7 +79,8 @@
             }
             //1. Start of use case #8 recurring, etc
 
-            if (!$startTime || !$endTime || !$date > 11){
+            // FIXED: Replaced the broken check "if (!$date > 11)"
+            if (!$startTime || !$endTime || !$date){
                 echo 'bad args';
                 die();
             }
@@ -87,64 +88,52 @@
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
 
             $id = create_event($args);
-                if (!$id) {
-              die();
+            if (!$id) {
+                die();
             } else {
     
-    $isRecurring    = isset($_POST['recurring']);
-    $recurrenceType = $_POST['recurrence_type'] ?? '';
-    $customDays     = isset($_POST['custom_days']) ? (int)$_POST['custom_days'] : 0;
+                $counts = [
+                    'daily'   => 30,  // next 30 days
+                    'weekly'  => 12,  // next 12 weeks
+                    'monthly' => 6,   // next 6 months
+                    'custom'  => 12,  // 12 custom intervals
+                ];
+                
+                $intervalMap = [
+                    'daily'   => 'P1D',
+                    'weekly'  => 'P1W',
+                    'monthly' => 'P1M',
+                ];
+                if ($recurrenceType === 'custom') {
+                    $customDays = max(1, $customDays);
+                    $intervalSpec = 'P' . $customDays . 'D';
+                } else {
+                    $intervalSpec = $intervalMap[$recurrenceType] ?? null;
+                }
 
-    
-    $counts = [
-        'daily'   => 30,  // next 30 days
-        'weekly'  => 12,  // next 12 weeks
-        'monthly' => 6,   // next 6 months
-        'custom'  => 12,  // 12 custom intervals
-    ];
-    
-    $intervalMap = [
-        'daily'   => 'P1D',
-        'weekly'  => 'P1W',
-        'monthly' => 'P1M',
-    ];
-    if ($recurrenceType === 'custom') {
-        $customDays = max(1, $customDays);
-        $intervalSpec = 'P' . $customDays . 'D';
-    } else {
-        $intervalSpec = $intervalMap[$recurrenceType] ?? null;
-    }
+                if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
+                    $current = new DateTime($args['startDate']);  
+                    $step    = new DateInterval($intervalSpec);
+                    $times   = $counts[$recurrenceType];
 
-    if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
-        $current = new DateTime($args['startDate']);  
-        $step    = new DateInterval($intervalSpec);
-        $times   = $counts[$recurrenceType];
+                    for ($i = 0; $i < $times; $i++) {
+                        $current->add($step);
+                        $ymd = $current->format('Y-m-d');
 
-        for ($i = 0; $i < $times; $i++) {
-            $current->add($step);
-            $ymd = $current->format('Y-m-d');
+                        $dup = $args;                 
+                        $dup['startDate'] = $ymd;
+                        $dup['endDate']   = $ymd;
+                        $dup['date']      = $ymd;    
 
-            $dup = $args;                 
-            $dup['startDate'] = $ymd;
-            $dup['endDate']   = $ymd;
-            $dup['date']      = $ymd;    
-
-            create_event($dup);
-
-            
-        }
-    }
-    
-    header('Location: eventSuccess.php');
-    exit();
-}
-
+                        create_event($dup);
+                    }
+                }
                 
                 header('Location: eventSuccess.php');
                 exit();
             }
-            
         }
+    }
     
     $date = null;
     if (isset($_GET['date'])) {
@@ -267,14 +256,6 @@
                 <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
                 </div>
 
-                <!--<label for="training">* Training Type:</label>
-                <select id="training_level_required" name="training_level_required">
-                    <option value="None">None</option>
-                    <option value="Green">Green</option>
-                    <option value="Orange">Orange</option>
-                    <option value="Pink">Pink</option>
-                </select>-->
-
                 <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
                     <legend>Make this a recurring event</legend>
 
@@ -335,7 +316,6 @@
                     <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
                 <?php endif ?>
 
-                <!-- Require at least one checkbox be checked -->
                 <script type="text/javascript">
                     $(document).ready(function(){
                         var checkboxes = $('.checkboxes');
@@ -366,6 +346,7 @@
                         }
                         function toggleCustom(){
                             if (!recurrenceType || !customBlock) return;
+                            customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
                             customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
                         }
 
