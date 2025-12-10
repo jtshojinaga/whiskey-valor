@@ -100,8 +100,8 @@ function request_event_signup($event_name_str, $account_name, $role, $notes) {
     $query2 = "SELECT userID FROM dbeventpersons WHERE eventID = '$eventID' AND userID = '$safe_user'";
     $result2 = mysqli_query($connection, $query2);
     
-    // Check Pending (UPDATED to use userID)
-    $query3 = "SELECT userID FROM dbpendingsignups WHERE eventname = '$eventID' AND userID = '$safe_user'";
+    // Check Pending (dbpendingsignups stores submitter in column `username`)
+    $query3 = "SELECT username FROM dbpendingsignups WHERE eventname = '$eventID' AND username = '$safe_user'";
     $result3 = mysqli_query($connection, $query3);
 
     if (mysqli_num_rows($result2) > 0 || mysqli_num_rows($result3) > 0) {
@@ -113,7 +113,7 @@ function request_event_signup($event_name_str, $account_name, $role, $notes) {
     $safe_role = mysqli_real_escape_string($connection, $role);
     $safe_notes = mysqli_real_escape_string($connection, $notes);
     
-    $query = "INSERT INTO dbpendingsignups (userID, eventname, role, notes) VALUES ('$safe_user', '$eventID', '$safe_role', '$safe_notes')";
+    $query = "INSERT INTO dbpendingsignups (username, eventname, role, notes) VALUES ('$safe_user', '$eventID', '$safe_role', '$safe_notes')";
     $result = mysqli_query($connection, $query);
     
     mysqli_commit($connection);
@@ -192,6 +192,28 @@ function check_if_signed_up($eventID, $userID) {
 function fetch_event_signups($eventID) {
     $connection = connect();
     $query = "SELECT userID, notes FROM dbeventpersons WHERE eventID = '$eventID'";
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        die('Query failed: ' . mysqli_error($connection));
+    }
+
+    $signups = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $signups[] = $row;
+    }
+
+    mysqli_close($connection);
+    return $signups;
+}
+
+/*
+ * Fetch pending signups for an event (rows in `dbpendingsignups`)
+ * Returns array of rows with keys: username, role, notes
+ */
+function fetch_pending($eventID) {
+    $connection = connect();
+    $query = "SELECT username, role, notes FROM dbpendingsignups WHERE eventname = '$eventID'";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
