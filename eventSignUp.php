@@ -80,8 +80,14 @@
     include_once('database/dbinfo.php'); 
     $con = connect();  
 
-    // Get event info from GET parameters
-    $event_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    // Get event info from GET parameters (accept either `id` or `event_id`)
+    if (isset($_GET['id'])) {
+        $event_id = intval($_GET['id']);
+    } elseif (isset($_GET['event_id'])) {
+        $event_id = intval($_GET['event_id']);
+    } else {
+        $event_id = 0;
+    }
     $event_name = isset($_GET['event_name']) ? htmlspecialchars($_GET['event_name']) : '';
     $type = isset($_GET['type']) ? htmlspecialchars($_GET['type']) : '';
 
