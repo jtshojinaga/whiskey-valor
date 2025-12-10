@@ -22,6 +22,8 @@
 
 include_once('dbinfo.php');
 include_once(dirname(__FILE__).'/../domain/Event.php');
+//Added to send emails to users when they are removed or signed up to an event.
+include_once(dirname(__FILE__).'/../email.php');
 
 /*
  * add an event to dbEvents table: if already there, return false
@@ -37,19 +39,19 @@ function add_event($event) {
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con,'INSERT INTO dbevents VALUES("' .
                 $event->getID() . '","' .
-                $event->getName() . '","' .
-                $event->getEventType() . '","' .  
+                $event->getName() . '","' . 
+                $event->getType() . '","' . 
                 $event->getStartDate() . '","' .
-                $event->getStartTime() . '","' .
-                $event->getEndTime() . '","' . 
-                $event->getEndDate() . '","' .
+                $event->getStartTime() . "," .
+                $event->getEndTime() . "," .
+                $event->getEndDate() . "," .
                 $event->getDescription() . '","' .
-                $event->getCapacity() . '","' . 
-                $event->getLocation() . '","' .
-                $event->getAffiliation() . '","' .
-                $event->getBranch() . '","' .
-                $event->getAccess() . '","' .
-                $event->getCompleted() . '","' .
+                $event->getCapacity() . "," .
+                $event->getLocation() . "," .
+                $event->getAffiliation() . "," .
+                $event->getBranch() . '","' . 
+                $event->Access() . '","' . 
+                $event->getCompleted() . "," .
                 #$event->getID() .            
                 '");');							
         mysqli_close($con);
@@ -75,63 +77,67 @@ function add_event($event) {
     return null;
 }*/
 
-function request_event_signup($eventID, $account_name, $role, $notes) {
+function request_event_signup($event_name_str, $account_name, $role, $notes) {
+    // This function is deprecated. Use create_app() in dbApplications.php for Retreat signups.
+    // Kept for backwards compatibility only.
     $connection = connect();
-    $query1 = "SELECT id FROM dbevents WHERE name LIKE '$eventID'";
+    
+    $safe_name = mysqli_real_escape_string($connection, $event_name_str);
+    $query1 = "SELECT id FROM dbevents WHERE name = '$safe_name'";
     $result1 = mysqli_query($connection, $query1);
+    
+    if (!$result1 || mysqli_num_rows($result1) === 0) {
+        mysqli_close($connection);
+        return null;
+    }
+
     $row = mysqli_fetch_assoc($result1);
-    $value = $row['id'];
-   
-    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID LIKE '$value' AND userID LIKE '$account_name'";
-    $result2 = mysqli_query($connection, $query2);
-
-    $query3 = "SELECT username FROM dbpendingsignups WHERE eventname LIKE '$value' AND username LIKE '$account_name'";
-    $result3 = mysqli_query($connection, $query3);
-
-    $row2 = null;
-    $row2 = mysqli_fetch_assoc($result2);
-    $row3 = null;
-    $row3 = mysqli_fetch_assoc($result3);
-
-    if(!is_null($row2) || !is_null($row3)) {
-            $value2 = $row2['userID'];
-            $value3 = $row3['username'];
-            if($value2 == $account_name || $value3 == $account_name){
-                return null;
-        } 
-    } else {       
-            $query = "insert into dbpendingsignups (username, eventname, role, notes) values ('$account_name', '$value', '$role', '$notes')";
-            $result = mysqli_query($connection, $query);
-            mysqli_commit($connection);
-            return $value;
-        }
-    return $value;
+    $eventID = $row['id'];
+    mysqli_close($connection);
+    return $eventID;
 }
 function sign_up_for_event($eventID, $account_name, $role, $notes) {
     $connection = connect();
-    $query1 = "SELECT id FROM dbevents WHERE name LIKE '$eventID'";
-    $result1 = mysqli_query($connection, $query1);
-    $row = mysqli_fetch_assoc($result1);
-    $value = $row['id'];
-   
-    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID LIKE '$value' AND userID LIKE '$account_name'";
-    $result2 = mysqli_query($connection, $query2);
+    
+    // 1. ESCAPE INPUTS (Crucial for names like "Gwyneth's Gift")
+    // This prevents the SQL query from breaking on apostrophes
+    $safe_name = mysqli_real_escape_string($connection, $eventID);
+    $safe_account = mysqli_real_escape_string($connection, $account_name);
+    $safe_role = mysqli_real_escape_string($connection, $role);
+    $safe_notes = mysqli_real_escape_string($connection, $notes);
 
-    $row2 = null;
+    // 2. FETCH EVENT ID
+    // We use the 'safe_name' here.
+    $query1 = "SELECT id FROM dbevents WHERE name = '$safe_name'";
+    $result1 = mysqli_query($connection, $query1);
+    
+    // 3. CHECK IF EVENT EXISTS
+    // This check prevents the "Undefined variable" error by stopping if no event is found.
+    if (!$result1 || mysqli_num_rows($result1) === 0) {
+        mysqli_close($connection);
+        return null; // Return failure safely
+    }
+
+    $row = mysqli_fetch_assoc($result1);
+    $value = $row['id']; // Now it is safe to get the ID
+   
+    // 4. CHECK FOR DUPLICATE SIGNUP
+    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID = '$value' AND userID = '$safe_account'";
+    $result2 = mysqli_query($connection, $query2);
     $row2 = mysqli_fetch_assoc($result2);
 
-    if(!is_null($row2)) {
-            $value2 = $row2['userID'];
-            if($value2 == $account_name){
-                return null;
-        } 
+    if ($row2) {
+        // User already signed up
+        mysqli_close($connection);
+        return null;
     } else {       
-            $query = "insert into dbeventpersons (eventID, userID, position, notes) values ('$value', '$account_name', '$role', '$notes')";
-            $result = mysqli_query($connection, $query);
-            mysqli_commit($connection);
-            return $value;
-        }
-    return $value;
+        // 5. INSERT SIGNUP
+        $query = "INSERT INTO dbeventpersons (eventID, userID, notes) VALUES ('$value', '$safe_account', '$safe_notes')";
+        $result = mysqli_query($connection, $query);
+        mysqli_commit($connection);
+        mysqli_close($connection);
+        return $value;
+    }
 }
 
 /* @@@ Thomas's work! */
@@ -154,13 +160,14 @@ function check_if_signed_up($eventID, $userID) {
     }
 }
 
+
 /* @@@ Madison's work! */
 /*
  * Check for all users signed up for an event. 
  */
 function fetch_event_signups($eventID) {
     $connection = connect();
-    $query = "SELECT userID, position, notes FROM dbeventpersons WHERE eventID = '$eventID'";
+    $query = "SELECT userID, notes FROM dbeventpersons WHERE eventID = '$eventID'";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -176,6 +183,10 @@ function fetch_event_signups($eventID) {
     return $signups;
 }
 
+/*
+ * Fetch pending signups for an event (rows in `dbpendingsignups`)
+ * Returns array of rows with keys: username, role, notes
+ */
 function fetch_pending($eventID) {
     $connection = connect();
     $query = "SELECT username, role, notes FROM dbpendingsignups WHERE eventname = '$eventID'";
@@ -184,69 +195,6 @@ function fetch_pending($eventID) {
     if (!$result) {
         die('Query failed: ' . mysqli_error($connection));
     }
-    $signups = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $signups[] = $row;
-    }
-
-    mysqli_close($connection);
-    return $signups;
-}
-
-function fetch_all_pending() {
-    $connection = connect();
-    $query = "SELECT eventname, username, role, notes FROM dbpendingsignups";
-    $result = mysqli_query($connection, $query);
-
-    if (!$result) {
-        die('Query failed: ' . mysqli_error($connection));
-    }
-    $signups = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $signups[] = $row;
-    }
-
-    mysqli_close($connection);
-    return $signups;
-}
-
-function all_pending_names() {
-    $connection = connect();
-    $query = "SELECT eventname FROM dbpendingsignups";
-    $result = mysqli_query($connection, $query);
-
-    if (!$result) {
-        die('Query failed: ' . mysqli_error($connection));
-    }
-
-    $signups = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $signups[] = $row;
-    }
-
-    $event_names = [];
-    $length = sizeof($signups);
-    for ($x = 0; $x < $length; $x++) {
-        $val = (int)$signups[$x]['eventname'];
-        $query2 = "SELECT name FROM dbevents WHERE id = $val";
-        $result2 = mysqli_query($connection, $query2);
-        while ($row = mysqli_fetch_assoc($result2)) {
-            $event_names[] = $row;
-        }
-    }
-
-    mysqli_close($connection);
-    return $event_names;
-}
-
-function all_pending_ids() {
-    $connection = connect();
-    $query = "SELECT eventname FROM dbpendingsignups";
-    $result = mysqli_query($connection, $query);
-
-    if (!$result) {
-        die('Query failed: ' . mysqli_error($connection));
-    }
 
     $signups = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -256,6 +204,8 @@ function all_pending_ids() {
     mysqli_close($connection);
     return $signups;
 }
+
+
 
 function remove_user_from_event($event_id, $user_id) {    
     $query = "DELETE FROM dbeventpersons WHERE eventID LIKE '$event_id' AND userID LIKE '$user_id'";
@@ -263,17 +213,16 @@ function remove_user_from_event($event_id, $user_id) {
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
     mysqli_close($connection);
+    //If true email user 
+    if ($result == TRUE)
+    {
+        emailHandler($event_id, $user_id, 1, "Removed from event because TEST");
+        
+    }
     return $result;
 }
 
-function remove_user_from_pending_event($event_id, $user_id) {    
-    $query = "DELETE FROM dbpendingsignups WHERE eventname = '$event_id' AND username = '$user_id'";
-    $connection = connect();
-    $result = mysqli_query($connection, $query);
-    $result = boolval($result);
-    mysqli_close($connection);
-    return $result;
-}
+
 
 /* @@@ Thomas's work! */
 /*
@@ -289,7 +238,7 @@ function is_archived($id) {
 
     if ($row == NULL) return False; // no match for that event ID
 
-    if ($row['completed'] == 'Y') {
+    if ($row['completed'] == 'yes') {
         // event is archived
         return True;
     } else {
@@ -302,7 +251,7 @@ function is_archived($id) {
  */
 function archive_event($id) {
     $con=connect();
-    $query = "UPDATE dbevents SET completed = 'Y' WHERE id = '" .$id. "'";
+    $query = "UPDATE dbevents SET completed = 'yes' WHERE id = '" .$id. "'";
     $result = mysqli_query($con, $query);
     mysqli_close($con);
     return $result;
@@ -313,7 +262,7 @@ function archive_event($id) {
  */
 function unarchive_event($id) {
     $con=connect();
-    $query = "UPDATE dbevents SET completed = 'N' WHERE id = '" .$id. "'";
+    $query = "UPDATE dbevents SET completed = 'no' WHERE id = '" .$id. "'";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;
@@ -337,6 +286,21 @@ function remove_event($id) {
     }
     $query = 'DELETE FROM dbevents WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
+
+
+    /* WIP writing code to remove event registrations for events that are cancelled. 
+    (Cleans up database from un-needed entries)
+
+    $query = 'SELECT * FROM dbeventpersons WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+
+    if ($result != null || mysqli_num_rows($result) != 0){
+        $query = 'DELETE FROM dbeventpersons WHERE id = "' . $id . '"';
+        $result = mysqli_query($con,$query);
+    }
+    
+    */
+
     mysqli_close($con);
     return true;
 }
@@ -376,9 +340,9 @@ function retrieve_event2($id) {
 }
 
 // not in use, may be useful for future iterations in changing how events are edited (i.e. change the remove and create new event process)
-function update_event_start_date($id, $new_event_date) {
+function update_event_date($id, $new_event_date) {
 	$con=connect();
-	$query = 'UPDATE dbevents SET startDate = "' . $new_event_date . '" WHERE id = "' . $id . '"';
+	$query = 'UPDATE dbevents SET event_date = "' . $new_event_date . '" WHERE id = "' . $id . '"';
 	$result = mysqli_query($con,$query);
 	mysqli_close($con);
 	return $result;
@@ -391,7 +355,7 @@ function make_an_event($result_row) {
     $theEvent = new Event(
                     $result_row['id'],
                     $result_row['name'],       
-                    type: $result_row['type'],         
+                    type: $result_row['type'],            
                     startDate: $result_row['startDate'],
                     startTime: $result_row['startTime'],
                     endTime: $result_row['endTime'],
@@ -401,8 +365,9 @@ function make_an_event($result_row) {
                     location: $result_row['location'],
                     affiliation: $result_row['affiliation'],
                     branch: $result_row['branch'],
-                    completed: $result_row['completed'],
-                    access: $result_row['access']
+                    access: $result_row['access'],
+                    completed: $result_row['completed']
+                    
                 ); 
     return $theEvent;
 }
@@ -421,19 +386,11 @@ function get_all_events() {
     return $theEvents;
  }
  
- function get_all_events_sorted_by_date_not_archived($loggedIn) {
+ function get_all_events_sorted_by_date_not_archived() {
     $con=connect();
-    if ($loggedIn) {
-        $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'N'" .
+    $query = "SELECT * FROM dbevents" .
+            " WHERE completed = 'N'" . // ?
             " ORDER BY startDate ASC";
-    }
-    else {
-        $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'N'" .
-            "and access = 'Public'" .
-            " ORDER BY startDate ASC";
-    }
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -443,23 +400,12 @@ function get_all_events() {
     mysqli_close($con);
     return $theEvents;
  }
-// if logged in, all events. otherwise only public
- function get_all_events_sorted_by_date_and_archived($loggedIn) {
+
+ function get_all_events_sorted_by_date_and_archived() {
     $con=connect();
-    if ($loggedIn) {
-        $query = "SELECT * FROM dbevents" .
+    $query = "SELECT * FROM dbevents" .
             " WHERE completed = 'Y'" .
             " ORDER BY startDate ASC";
-
-    }
-    else {
-        $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'Y'" .
-            "and access = 'Public'" .
-            " ORDER BY startDate ASC";
-
-    }
-    
     $result = mysqli_query($con,$query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -487,24 +433,13 @@ function getonlythose_dbEvents($name, $day, $venue) {
    return $theEvents;
 }
 
-function fetch_events_in_date_range($start_date, $end_date, $loggedIn) {
+function fetch_events_in_date_range($start_date, $end_date) {
     $connection = connect();
     $start_date = mysqli_real_escape_string($connection, $start_date);
     $end_date = mysqli_real_escape_string($connection, $end_date);
-    if ($loggedIn) {
-        $query = "select * from dbevents
-              where startDate >= '$start_date' and startDate <= '$end_date'
+    $query = "select * from dbevents
+              where startDate >= '$start_date' and endDate <= '$end_date'
               order by startTime asc";
-    }
-    else {
-        $query = "select * from dbevents
-              where startDate >= '$start_date' and startDate <= '$end_date'
-              and access = 'Public'
-              order by startTime asc";
-    }
-    // $query = "select * from dbevents
-    //           where startDate >= '$start_date' and startDate <= '$end_date'
-    //           order by startTime asc";
     $result = mysqli_query($connection, $query);
     if (!$result) {
         mysqli_close($connection);
@@ -524,12 +459,22 @@ function fetch_events_in_date_range($start_date, $end_date, $loggedIn) {
     return $events;
 }
 
-function fetch_events_on_date($startDate) {
+function fetch_events_on_date($startDate, $loggedIn) {
     echo "<script> console.log('fetch_events_on_date IN:', '\" . $startDate . \"');</script>";
     $connection = connect();
     $date = mysqli_real_escape_string($connection, $startDate);
-    $query = "select * from dbevents
+    if ($loggedIn) {
+        $query = "select * from dbevents
               where startDate = '$startDate' order by startTime asc";
+
+    }
+    else {
+        $query = "select * from dbevents
+              where startDate = '$startDate'
+              and access = 'Public'
+              order by startTime asc";
+    }
+
     $results = mysqli_query($connection, $query);
     if (!$results) {
         mysqli_close($connection);
@@ -559,45 +504,85 @@ function fetch_event_by_id($id) {
     mysqli_close($connection);
     return null;
 }
+// JUST ADDED
+function fetch_num_signups($id) {
+    $connection = connect();
+    $id = mysqli_real_escape_string($connection, $id);
+    $query = "select count(*) as RowCount from dbeventpersons where eventID = '$id'";
+    $result = mysqli_query($connection, $query);
+    $event = mysqli_fetch_assoc($result);
+    if ($event) {
+        require_once('include/output.php');
+        $event = hsc($event);
+        mysqli_close($connection);
+        return $event;
+    }
+    mysqli_close($connection);
+    return null;
+}
+
+function fetch_num_attendees($id) {
+    $connection = connect();
+    $id = mysqli_real_escape_string($connection, $id);
+    $query = "select count(*) as RowCount from dbeventpersons where eventID = '$id' and attended=1";
+    $result = mysqli_query($connection, $query);
+    $event = mysqli_fetch_assoc($result);
+    if ($event) {
+        require_once('include/output.php');
+        $event = hsc($event);
+        mysqli_close($connection);
+        return $event;
+    }
+    mysqli_close($connection);
+    return null;
+}
 
 function create_event($event) {
     $connection = connect();
     $name = $event["name"];
-    $type = $event['type'];
-    $startDate = $event["start-date"];
+    //$abbrevName = $event["abbrev-name"];
+    // $date = $event["date"];
+    $date    = $event["startDate"] ?? $event["date"];
+    $endDate = $event["endDate"]   ?? $date; // default single-day
     $startTime = $event["start-time"];    
     $endTime = $event["end-time"];
-    $endDate = $event["end-date"];
     $description = $event["description"];
+    $type = $event['type'];
     if (isset($event["capacity"])) {
         $capacity = $event["capacity"];
     } else {
         $capacity = 999;
     }
-
     if (isset($event["location"])) {
         $location = $event["location"];
     } else {
         $location = "";
     }
-
-    if (isset($event["affiliation"])) {
-        $affiliation = $event["affiliation"];
+    //$completed = $event["completed"];
+    /*
+    $restricted_signup = $event["role"];
+    if ($restricted_signup == "r") {
+        $restricted = 1;
     } else {
-        $affiliation = 0;
+        $restricted = 0;
     }
+        */
+    $access = 'Public';
+    $description = $event["description"];
+    //$branch = $event["branch"];
+    //$location = $event["location"];
+    //$services = $event["service"];
 
-    if (isset($event["branch"])) {
-        $branch = $event["branch"];
-    } else {
-        $branch = 0;
-    }
-    
-    $access = $event["access"];
-    $completed = "N";
+    //$animal = $event["animal"];
+    $completed = 'N';
+
+    $series_id = isset($event['series_id'])
+        ? mysqli_real_escape_string($connection, $event['series_id'])
+        : null;
+
     $query = "
-        insert into dbevents (name, type, startDate, startTime, endTime, endDate, description, capacity, location, affiliation, branch, access, completed)
-        values ('$name', '$type', '$startDate', '$startTime', '$endTime', '$endDate','$description', $capacity, '$location', '$affiliation', '$branch', '$access', '$completed')
+        insert into dbevents (name, startDate, startTime, endTime, endDate, access, description, capacity, completed, location, type, series_id)
+        values ('$name', '$date', '$startTime', '$endTime', '$endDate', '$access', '$description', $capacity, '$completed', '$location', '$type', " .($series_id ? "'$series_id'" : "NULL") . ")
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -650,7 +635,7 @@ function update_event($eventID, $eventDetails) {
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
+        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);
@@ -849,30 +834,69 @@ function cancel_event($event_id, $account_name) {
     mysqli_close($connection);
     return $result;
 }
-
+/**
+ * Approve a signup given a single event and a username
+ * @param mixed $event_id The ID for the associated event
+ * @param mixed $account_name The username for the associated account
+ * @param mixed $position The position that the user applied for(DEPRECIATED)
+ * @param mixed $notes Any notes for why the application was approved.
+ * @return bool|mysqli_result
+ */
 function approve_signup($event_id, $account_name, $position, $notes) {
-    $query = "DELETE from dbpendingsignups where username = '$account_name' AND eventname = $event_id";
     $connection = connect();
-    //echo "username " . $account_name . " eventname " . $event_id;
-    $result = mysqli_query($connection, $query);
-    $result = boolval($result);
+    $safe_event = mysqli_real_escape_string($connection, $event_id);
+    $safe_user = mysqli_real_escape_string($connection, $account_name);
+    $safe_pos = mysqli_real_escape_string($connection, $position);
+    $safe_notes = mysqli_real_escape_string($connection, $notes);
 
-    //echo "hello" . $account_name;
+    // 1. Delete from Pending (Using userID)
+    $query = "DELETE FROM dbpendingsignups WHERE userID = '$safe_user' AND eventname = '$safe_event'";
+    mysqli_query($connection, $query);
 
-    $query2 = "insert into dbeventpersons (eventID, userID, position, notes) values ('$event_id', '$account_name',  '$position', '$notes')";
+    // 2. Add to Active
+    $query2 = "INSERT INTO dbeventpersons (eventID, userID, position, notes) VALUES ('$safe_event', '$safe_user', '$safe_pos', '$safe_notes')";
     $result2 = mysqli_query($connection, $query2);
-    //$result2 = boolval($result2);
-    //mysqli_close($connection);
+    
     mysqli_commit($connection);
+    
+    if ($result2) {
+         emailHandler($event_id, $account_name, 2, "Sign-up Approved.");
+    }
+    
+    // mysqli_close($connection); // Optional, depending on if you reuse connection
     return $result2;
 }
 
+function approve_multiple_signups($event_id, $account_names, $notes = '') {
+    $approved = 0;
+    if (!is_array($account_names) || empty($account_names)) return 0;
+
+    foreach ($account_names as $account_name) {
+        $ok = approve_signup($event_id, $account_name, 'Volunteer', $notes);
+        if ($ok) {
+            $approved++;
+        }
+    }
+    return $approved;
+}
+
+/**
+ * Reject a single sign up
+ * @param mixed $event_id The Event ID
+ * @param mixed $account_name The Account ID/Username
+ * @param mixed $position The position or 'account type' of the user who applied.
+ * @param mixed $notes Any notes on the rejection.
+ * @return bool True if successfull, false if the rejection failed
+ */
 function reject_signup($event_id, $account_name, $position, $notes) {
     $query = "DELETE from dbpendingsignups where username = '$account_name' AND eventname = '$event_id'";
     $connection = connect();
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
-    
+    /*if ($result == true) Wrong number for email
+    {
+        emailHandler($event_id, $account_name, 2, "Sign-up DENIED.");
+    }*/
     return $result;
 }
 
@@ -995,3 +1019,41 @@ function update_animal2($animal) {
 }
 
 //There was a question mark followed by a > here
+
+/** 
+ * Gets the access level for each event to see if sign-up needs approval or not.
+ * @param $event_id The id what we're querying. 
+ * @return bool if true then the event requires approval for sign-up. if false then it does not.
+ */
+    function fetch_signup_status(int $event_id): bool
+{
+    $connection = connect();
+    
+    $query = "SELECT access FROM dbevents WHERE id = $event_id";
+    $result = mysqli_query($connection, $query);
+    
+    // Fetch the row
+    $eventStatusRow = mysqli_fetch_assoc($result);
+    
+    // Return true/false based on the comparison
+    return ($eventStatusRow['access'] == "Approval_Needed");
+}
+
+ function getPAttendance($eventID) {
+    $conn=connect();
+
+    $sql = "SELECT userID FROM dbeventpersons WHERE eventID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $eventID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $userIDs = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $userIDs[] = $row['userID'];
+    }
+
+    return $userIDs;
+}
+

@@ -3,6 +3,7 @@ session_cache_expire(30);
 session_start();
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
+date_default_timezone_set("America/New_York");
 
 // Ensure admin authentication
 if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
@@ -22,59 +23,49 @@ $fiscalYearEnd = $fiscalYearStart + 1;
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fredericksburg SPCA | Volunteer Reports</title>
-  <link href="css/normal_tw.css" rel="stylesheet">
-
-<!-- BANDAID FIX FOR HEADER BEING WEIRD -->
-<?php
-$tailwind_mode = true;
-require_once('header.php');
-?>
-<style>
-        .date-box {
-            background: #C9AB81;
-            padding: 7px 30px;
-            border-radius: 50px;
-            box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-        }
-        .dropdown {
-            padding-right: 50px;
-        }
-
-</style>
-<!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
+    <title>Whiskey Valor | Attendance Reports</title>
+    <!--<script src="js/data-filters.js" defer></script>-->
+    <link href="css/base.css" rel="stylesheet">
+    <?php require_once('header.php'); ?>
 </head>
 <body>
+    <?php require_once('database/dbEvents.php');?>
+    <?php require_once('database/dbPersons.php');?>
 
     <!-- Hero Section with Title -->
-    <header class="hero-header"> 
         <div class="center-header">
-            <h1>Generate Volunteer Document</h1>
+            <h1 style="color:white;">Generate Attendance Report</h1>
         </div>
-    </header>
+                <!-- Info Section -->
+        <section class="section-box">
+            <p style="margin-top: 1rem;text-align:center;">
+                Use this tool to generate monthly or annual reports on volunteer activity. Reports are available in Excel or CSV format.
+            </p>
+        </section>
 
     <main>
-        <div class="main-content-box w-full max-w-3xl p-8">
-            <div class="text-center mb-8">
-                <h2>Volunteer Reports</h2>
-                <p class="sub-text">Fiscal Year: <?= $fiscalYearStart ?> - <?= $fiscalYearEnd ?></p>
-            </div>
+        <?php $events = get_all_events_sorted_by_date_not_archived();?>
 
-            <form method="POST" action="processReport.php" class="space-y-6">
-                <!-- Report Type -->
-                <div>
-                    <label for="reportType" class="font-semibold">Select Report Type:</label>
-                    <select name="reportType" id="reportType" onchange="toggleDateFields()">
-                        <option value="monthly">Monthly</option>
-                        <option value="annually">Annually</option>
+        <div class="main-content-box">
+            <!--<div class="text-center">
+                <p class="muted-text" style="font-size: 18px; margin-top: 0.5rem; margin-bottom: 0.5rem;">Fiscal Year: <?= $fiscalYearStart ?> - <?= $fiscalYearEnd ?></p>
+            </div>-->
+
+            <form method="POST" action="processReport.php">
+                <!-- Event ID -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="eventID" style="font-weight: 600;">Select Event</label>
+                    <select name="eventID" id="eventID">
+                        <?php foreach ($events as $event) {
+                            $eventID = $event->getID();
+                            $eventName = $event->getName();
+                            echo "<option value='$eventID'>$eventName (ID: $eventID)</option>";
+                        }
+                        ?>
                     </select>
                 </div>
 
-                <!-- Month (conditionally hidden) -->
+                <!-- Month (conditionally hidden)
                 <div id="monthField">
                     <label for="month" class="font-semibold">Select Month:</label>
                     <select name="month" id="month">
@@ -89,42 +80,55 @@ require_once('header.php');
                         }
                         ?>
                     </select>
-                </div>
+                </div> -->
+
+                <!-- Content Select -->
+
+                    <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--accent-color);">Field Selector</h4>
+                    <p class="muted-text" style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem;">If any fields are selected, the report will include all users who signed up and whether they attended.</p>
+                    <div id="field-picker">
+                            <div class="checkbox-grouping">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="user" name="user" id="user" checked> Username</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="name" name="name" id="name" checked> Full Name</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="branch" name="branch" id="branch"> Branch</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="affiliation" name="affiliation" id="affiliation"> Affiliation</label>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- Format -->
-                <div>
-                    <label for="format" class="font-semibold">Select File Format:</label>
+                <div style="margin-bottom: 1.5rem; margin-top: 1.5rem;">
+                    <label for="format" style="font-weight: 600;">File Format</label>
                     <select name="format" id="format">
                         <option value="excel">Excel (.xls)</option>
                         <option value="csv">CSV (.csv)</option>
                     </select>
                 </div>
 
-                <div class="text-center">
-                    <input type="submit" value="Generate Report" class="blue-button">
+                <div style="text-align: center; margin-top: 2rem;">
+                    <input type="hidden" value="<?php echo $_SESSION['_id']; ?>" name="admin" id="admin">
+                    <input type="hidden" value="<?php echo date("d-M-Y H:i:s e") ?>" name="time" id="time">
+                    <input type="submit" value="Generate Report" class="button generate-btn">
                 </div>
             </form>
 
         <!-- Return Button -->
         </div>
-            <div class="text-center mt-6">
-                <a href="index.php" class="return-button">Return to Dashboard</a>
-            </div>
-
-        <!-- Info Section -->
-        <div class="info-section">
-            <div class="blue-div"></div>
-            <p class="info-text">
-                Use this tool to generate monthly or annual reports on volunteer activity. Reports are available in Excel or CSV format.
-            </p>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="index.php" class="button" style="display: inline-block; text-decoration: none; width: 41%;">Return to Dashboard</a>
         </div>
+
     </main>
 
     <script>
         function toggleDateFields() {
-            const reportType = document.getElementById("reportType").value;
-            const monthField = document.getElementById("monthField");
-            monthField.style.display = reportType === "annually" ? "none" : "block";
+            const eventID = document.getElementById("eventID").value;
+            // const monthField = document.getElementById("monthField");
+            // monthField.style.display = reportType === "annually" ? "none" : "block";
         }
         document.addEventListener("DOMContentLoaded", toggleDateFields);
     </script>

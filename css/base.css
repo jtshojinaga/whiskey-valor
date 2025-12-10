@@ -23,6 +23,12 @@ but no code was taken from there. All of the code below is original code.
     font-style: italic;
 }
 
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('../fonts/OpenDyslexic-Regular.otf') format("opentype");
+    font-weight: 100 900;
+}
+
 /* Reset rules (spacing, font override) */
 html, body, header, main, footer, div, span, 
 p, h1, h2, h3, h4, h5, h6, ul, ol, li, 
@@ -49,29 +55,36 @@ table, td, tr, th, form, fieldset, em, button, a {
     --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
 
-    --happy-toast-background-color: #1a7024;
-    --happy-toast-font-color: white;
+    --happy-toast-background-color: #5D7E61;
+    --happy-toast-font-color: rgb(255, 255, 255);
 
     --info-toast-background-color: #2f2f2f;
     --info-toast-font-color: white;
 
-    --error-toast-background-color: #f0858e;
-    --error-toast-font-color: white;
+    --error-toast-background-color: #A66654;
+    --error-toast-font-color: rgb(255, 255, 255);
 
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: rgb(184, 184, 184); /* Changed to Fred SPCA Navy */
+    --main-color: #2A435A; 
 
     --accent-color: rgb(201, 171, 129);
  
-    --secondary-accent-color: rgb(201, 171, 129);
+    --secondary-accent-color: rgb(175, 141, 92);
+
+    /* Accessibility / WV theme variables */
+    --wv-accent-color: #C9AB81; /* gold */
+    --wv-accent-foreground: #111111;
+    --wv-bg-light: #ffffff;
+    --wv-text-dark: #111111;
+    --wv-muted-text: #6b6b6b;
 
     --calendar-event-color: #808080;
-    --calendar-event-color-hover: var(--main-color);
+    --calendar-event-color-hover: var(--accent-color);
     --calendar-today-border: 2px solid var(--secondary-accent-color);
 
-    --button-font-color: rgb(31,31,33);
+    --button-font-color: rgb(255, 255, 255);
     --button-padding: 0.5rem 1.5rem;
     --button-border-radius: 0.25rem;
 
@@ -79,15 +92,43 @@ table, td, tr, th, form, fieldset, em, button, a {
     --light-border: 1px solid var(--shadow-and-border-color);
     --text-field-border: 2px solid #e8e8e8;
 
-    --cancel-button-background-color: #dd3737;
+    --cancel-button-background-color: #A66654;
 
-    --error-color: red;
+    --error-color: #A66654;
 
     /* Global rules */
     font-size: 18px;
     font-family: Montserrat;
     font-weight: 300;
-} 
+}
+
+/* Utility classes used for accessibility/light mode conversions */
+.bg-wv-accent { background-color: var(--wv-accent-color) !important; }
+.text-wv-accent { color: var(--wv-accent-foreground) !important; }
+.text-white { color: white !important; }
+.text-black { color: black !important; }
+.icon-invert { filter: invert(1); }
+.icon-no-invert { filter: none !important; }
+
+/* (Light-mode support removed) */
+
+/* Accent/content box used in dashboard */
+.content-box-accent { background-color: var(--wv-accent-color); color: var(--wv-accent-foreground); border-radius: 12px; padding: 20px; }
+
+/* Muted text utility */
+.muted-text { color: var(--wv-muted-text) !important; }
+.muted-small { color: var(--wv-muted-text) !important; font-size: 12px; }
+
+/* Legend dots (uses color variables or specific classes) */
+.legend-dot { font-size: 18px; margin-right: 8px; }
+.legend-dot.accent { color: var(--wv-accent-color); }
+.legend-dot.green { color: #4CAF50; }
+.legend-dot.gray { color: #aaaaaa; }
+.legend-label { font-size: 18px; margin-right: 18px; }
+
+/* Muted button style used in calendar/back links */
+.btn-muted { background-color: #6b7280; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; text-decoration: none; display: inline-block; }
+
 
 /* Page Sections */
 
@@ -173,6 +214,18 @@ nav {
     max-width: 100vw;
 }
 
+a {
+    color: white;
+}
+
+a:visited {
+    color: rgb(226, 226, 226);
+}
+
+a:hover {
+    color: hsl(from var(--accent-color) h s calc(l+.2));
+}
+
 #vms-logo {
     color: var(--main-color);
     font-weight: 300;
@@ -242,7 +295,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-    color: var(--main-color);
+    color: white;
 
 }
 
@@ -261,7 +314,7 @@ input[type=submit], button, .button, a.button-signup {
     color: var(--button-font-color);
     background-color: var(--main-color);
     padding: var(--button-padding);
-    border: none;
+    border: 3px solid rgba(255, 255, 255, 0.295);
     border-radius: var(--button-border-radius);
     font-weight: 500;
     width: 94%;
@@ -272,6 +325,15 @@ input[type=submit], button, .button, a.button-signup {
 
 input[type=submit]:hover, button:hover, .button:hover, a.button-signup:hover {
     background-color: var(--accent-color);
+}
+
+/* Disabled submit/button appearance for attendance logging */
+.disabled-btn,
+button.disabled-btn,
+input[type="submit"].disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(30%);
 }
 
 /* input.visited:invalid {
@@ -351,6 +413,7 @@ h3:not(:first-of-type) {
 .error {
     color: var(--error-color);
     font-size: .75rem;
+    color: white;
 }
 
 .hidden {
@@ -550,6 +613,7 @@ h1.calendar-header a {
     margin-left: 6%;
     display: flex;
     z-index:9;
+    opacity: 1 !important;
 }
 
 .filter-menu-icon {
@@ -569,13 +633,15 @@ h1.calendar-header a {
     background-color: var(--accent-color);
     box-shadow: 0px 5px 20px black;
     z-index:5;
-    transform:scaleX(0);
-    transition: all 0.2s ease-in-out;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
 }
 /* Expands the filter menu out */
 .filter-wrapper input:checked ~ .calendar-filter {
     transform:scaleX(1);
 }
+
 
 /* currently unused ~Blue
 .time-filter {
@@ -671,6 +737,7 @@ img.filter-button {
 
 button.cancel, a.cancel {
     background-color: var(--cancel-button-background-color);
+    color: white;
 }
 
 button.cancel:hover, a.cancel:hover {
@@ -722,7 +789,7 @@ main.dashboard > p {
 .dashboard-item:hover {
     background-color: var(--accent-color);
     cursor: pointer;
-    text-shadow: rgb(52, 138, 12);
+    text-shadow: var(--accent-color);
 }
 
 .dashboard-item > img {
@@ -763,11 +830,11 @@ form.signup-form {
 
 /* thomas added this */
 form.signup-form .section-box {
-    border: 1px solid #ddd;
+    border: 1px solid var(--accent-color);
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #e0f7fa;
+    background-color: var(--page-background-color);
 }
 
 form.signup-form > fieldset {
@@ -786,7 +853,7 @@ form.signup-form textarea {
 }
 
 form.signup-form em {
-    color: var(--secondary-accent-color);
+    color: var(--error-color);
 }
 
 .radio-group {
@@ -801,6 +868,121 @@ form.signup-form em {
     width: fit-content;
     margin-left: -.75rem;
     color: var(--page-font-color);
+}
+
+/* Replacing normal_tw.css to simplify editing */
+/* Component Styles */
+.main-content-box {
+    width: 100%;
+    max-width: 48rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--page-background-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.info-box {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 0;
+    background-color: var(--page-background-color);
+    border: 2px solid var(--light-border);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.spacing-bottom {
+    margin-bottom: 2rem;
+}
+
+/* Form Layout */
+.section-box {
+    background-color: var(--page-background-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--light-border);
+}
+
+.blue-div {
+    height: 2px;
+    background-color: var(--accent-color);
+    margin: 1rem 0;
+}
+
+.median-div {
+    height: 1px;
+    margin: 0.5rem 2rem;
+    background-color: var(--inactive-font-color);
+}
+
+form.signup-form a {
+    color: var(--error-color);
+}
+
+form.signup-form a:hover {
+    color: var(--error-toast-background-color);
+}
+/* end normal_tw conversion ~Blue*/
+
+.sidebar-wrapper {
+    position:sticky;
+    float: left;
+    top: 8rem;
+    height:300px;
+    width: 250px;
+    border-radius: var(--button-border-radius);
+}
+
+.sidebar {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: calc(var(--button-border-radius) + 5px);
+    background: var(--info-toast-background-color);
+    position: sticky;
+    width: 100%;
+    padding: 5px;
+}
+
+.sidebar-item {
+    display: flex;
+    color: var(--inactive-font-color);
+    align-items: flex-start;
+    justify-content: left;
+    border-radius: var(--button-border-radius);
+    background-color: transparent;
+    border: 1px solid var(--light-border);
+    padding: 5px;
+    width: 100%;
+}
+
+.sidebar-item a {
+    color: var(--accent-color);
+}
+
+.sidebar-item:hover {
+    background-color: rgba(255,255,255,0.10);
+    color: hsl(from var(--accent-color) h s calc(l+3));
+}
+
+.sidebar-item img {
+    margin-right: 5px;
+    filter: invert(1);
+    min-height: 20px;
+    max-height: 25px;
+    height: 20px;
 }
 
 .availability-container {
@@ -1074,6 +1256,7 @@ img.profile-pic {
     margin-right: 1rem;
     color: var(--page-font-color);
     font-weight: 300;
+    cursor: pointer;
 }
 
 @media print {
@@ -1104,4 +1287,234 @@ a.event-link:hover {
 .full-capacity::after {
     color: var(--error-color);
     content: ' Full! ';
+}
+
+.application-view-container {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    margin: 2rem auto;
+    min-height: 80%;
+    min-width: 80%;
+    max-width: 90%;
+    max-height: 90%;
+    padding: 1rem;
+    justify-content: space-between;
+}
+
+.application-view {
+    border-radius: 15px;
+    background-color: var(--page-background-color);
+    color: var(--page-font-color);
+    margin-left: 1rem;
+    padding: 1rem;
+    min-width: 50%;
+    max-width: 75%;
+    height: 100%;
+}
+
+.application-title {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--page-font-color);
+}
+
+.application-sidebar {
+    max-width: 50%;
+    min-width: 40%;
+    background-color: transparent;
+    margin: auto 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.application-comment {
+    background-color: var(--page-background-color);
+    border-radius: 15px;
+    max-height: 25%;
+    padding: 1rem;
+    max-width: 100%;
+}
+
+.application-control-buttons {
+    background-color: var(--page-background-color);
+    border-radius: 15px;
+    max-height: 15%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    padding: 0.5rem 1rem;
+}
+
+.application-control-buttons button {
+    max-width: 10%;
+    max-height: 10%;
+    padding: 0.5rem 1rem;
+}
+
+.application-control-buttons img {
+    cursor: pointer;
+    filter: invert(1);
+    width: 100%;
+    height: 100%;
+}
+
+.application-nav-button {
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 15px;
+    padding: 15px;
+    cursor: pointer;
+}
+.application-nav-button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.posted-app-comment {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 15px;
+}
+
+.app-comment-user {
+    font-weight: bold;
+
+}
+
+.app-link {
+    display: inline-block;
+    background-color: var(--main-color);
+    color: white;
+    border-radius: var(--button-border-radius);
+    border: 3px solid rgba(255,255,255,0.295);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: background-color .3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.app-link:hover {
+    background-color: #3B5D7D;
+}
+
+/* used for logAttendees.php */
+.attendees-wrapper {
+    background-color: rgba(0, 0, 0, .25);
+    margin: auto;
+    padding: 1.5rem;
+    border-radius: 15px;
+    max-width: 75%;
+    align-content: center;
+}
+
+DIV.attendees-table-wrapper {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+DIV.thead {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-weight: bold;
+    min-width: 100%;
+    align-items: center;
+}
+
+DIV.tbody {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    max-width: 100%;
+    align-items: center;
+}
+
+DIV.tr {
+    display: table-row;
+    width: 100% !important;
+    margin-bottom: 0.5rem;
+}
+
+SPAN.td {
+    display: table-cell;
+    min-width: 9rem;
+}
+
+.tbody SPAN.td {
+    border-top: 1px solid white;
+}
+
+SPAN.td#data {
+    min-width: 21rem;
+}
+
+button#log {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+SPAN.td input[type=checkbox] {
+    margin: 6px;
+}
+
+.note {
+    margin-top: 0.5rem;
+}
+
+div .event-time {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+div .event-date {
+    max-width: 50%;
+    min-width: 25%;
+    margin-right: 3rem;
+    margin-left: 3rem;
+}
+
+div .event-date > input[type=time] {
+    background-color: var(--page-background-color);
+    color: var(--page-font-color);
+    border: 2px solid var(--shadow-and-border-color);
+    padding: 0.5rem;
+    min-width: 80%;
+}
+
+div .dropdown-group {
+    display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+div .dd {
+    min-width: 38%;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+.event-sect {
+    border: 2px solid var(--inactive-font-color);
+    border-radius: 15px;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.15);
 }

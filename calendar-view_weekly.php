@@ -5,25 +5,18 @@ session_start();
 date_default_timezone_set("America/New_York");
 
 
-if (isset($_GET['month'])) {
-    $dayStr = $_GET['month']; // Get the parameter (e.g., "2025-11-15" or "2025-11")
-
-    // Check if it's just YYYY-MM and append '-01' if it is
-    if (preg_match('/^(\d{4}-\d{2})$/', $dayStr, $matches)) {
-        $dayStr = $matches[1] . '-01'; // Becomes "2025-11-01"
-    } 
-    // If it's YYYY-MM-DD, it's already correct.
-
+if (isset($_GET['month']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $_GET['month'])) {
+    $dayStr = $_GET['month']; // string like "2025-10-18"
 } else {
-     $dayStr = date('Y-m-d'); // Default to today if ?month is not set
+    $dayStr = date('Y-m-d'); // Default to today
 }
 
 // Get the timestamp for the day we are viewing
 $dayEpoch = strtotime($dayStr);
 if (!$dayEpoch) {
-    // This catches invalid formats (like "test") and defaults to today.
-    $dayStr = date('Y-m-d');
-    $dayEpoch = strtotime($dayStr);
+
+    header('Location: calendar.php?month=' . date("Y-m-d"));
+    exit;
 }
 
 $today = strtotime(date("Y-m-d"));
@@ -70,7 +63,8 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
         echo "<script> console.log('PHP variable end:', '\" . $end. \"');</script>";
 
         require_once('database/dbEvents.php');
-        $events = fetch_events_in_date_range($start, $end);
+        $loggedIn = 0; //Logged in set to 0 change later
+        $events = fetch_events_in_date_range($start, $end, $loggedIn);
         echo "<script> console.log('Events:', " . json_encode($events) . ");</script>";
         
         echo '<tr class="calendar-week">';
@@ -93,7 +87,7 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
                         $dayEvents = $events[$e];
                         foreach ($dayEvents as $info) {
 
-                            $backgroundCol = '#996d49ff'; // default color
+                            $backgroundCol = '#294877'; // default color
 
                            if(isset($_SESSION['access_level'])) { 
     

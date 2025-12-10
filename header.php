@@ -21,7 +21,7 @@ if (date("H:i:s") > "18:19:59") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
 <?php if (empty($tailwind_mode)): ?>
         * {
@@ -31,8 +31,9 @@ if (date("H:i:s") > "18:19:59") {
         }
 <?php endif; ?>
         body {
-            font-family: Quicksand, sans-serif;
+            font-family: Nunito, Quicksand, sans-serif;
             padding-top: 96px;
+            font-size: 14pt;
         }
         h2 {
         	font-weight: normal;
@@ -165,6 +166,7 @@ if (date("H:i:s") > "18:19:59") {
             font-weight: 700;
             color: #712977ff;
             max-width: 90%;
+            margin-bottom: 80px;
         }
 
         /* Navbar Container */
@@ -192,7 +194,7 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: #C9AB81;
+            background: rgb(31,31,33);
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -213,7 +215,7 @@ if (date("H:i:s") > "18:19:59") {
         .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: #C9AB81;
+            color: white;
             cursor: pointer;
         }
 
@@ -257,8 +259,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .nav-item:hover, .nav-item.active {
-            color: #C9AB81;
-            outline: 1px solid #C9AB81;
+            color: #f5ce7aff;
+            outline: 1px solid #f5d07aff;
             outline-offset: 7px;
         }
 
@@ -276,7 +278,7 @@ if (date("H:i:s") > "18:19:59") {
         .icon {
             width: 47px;
             height: 47px;
-            background: #C9AB81;
+            /*background: #292D32;*/
             border-radius: 50%;
 
         }
@@ -343,17 +345,21 @@ if (date("H:i:s") > "18:19:59") {
        /* Button Control */
         .arrow-button {
             position: absolute;
-            bottom: 30px;
-            right: 30px;
+            bottom: 24px;
+            right: 16px;
             background: transparent;
             border: none;
-            font-size: 20px;
+            font-size: 23px;
+            font-weight: bold;
+            color: black;
             cursor: pointer;
             transition: transform 0.3s ease;
+            padding: 0;
         }
 
         .arrow-button:hover {
             transform: translateX(5px); /* Moves the arrow slightly on hover */
+            background: transparent;
         }
 
         /* Footer */
@@ -463,7 +469,6 @@ if (date("H:i:s") > "18:19:59") {
 
         .nav-item:hover img, .nav-item.active img {
             filter: none;
-            background-color: rgb(31,31,33);
         }
        
         .icon .dropdown{
@@ -485,7 +490,7 @@ if (date("H:i:s") > "18:19:59") {
             height: 40px;
             border-radius: 5px;
             border-bottom-right-radius: 20px;
-            filter: invert(1);
+            filter: invert(1) !important;
         }
 
 /* for calendar */
@@ -504,6 +509,67 @@ if (date("H:i:s") > "18:19:59") {
 	font-family: Quicksand;
     color: white;
     }
+
+        /* Accessibility menu styles */
+        .accessibility-btn {
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            width: 70px;
+            height: 70px;
+            border-radius: 80px;
+            background: var(--main-color);
+            border: 3px solid var(--main-color);
+            cursor: pointer;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+        .accessibility-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: invert(1);
+        }
+
+        /* Modal */
+        .accessibility-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .accessibility-modal {
+            background: #1f1f21;
+            color: white;
+            max-width: 520px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        }
+        .accessibility-modal h3 { margin-bottom: 8px; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; }
+        .nav-link { color: white; text-decoration: none; }
+        .dropdown-link { color: inherit; text-decoration: none; display:block; }
+        .icon-img { filter: invert(1); }
+        .modal-close { background:transparent;border:none;color:white;font-size:30px;cursor:pointer; }
+        .modal-desc { color: rgba(255,255,255,0.7); }
+        .accessibility-row { display:flex; gap:12px; align-items:center; margin:10px 0; }
+        .accessibility-row label { min-width: 120px; font-weight:600; }
+        .accessibility-modal select, .accessibility-modal input[type="radio"]{ font-size:16px; }
+        .accessibility-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:16px; }
+        .accessibility-actions button { padding:8px 12px; border-radius:8px; cursor:pointer; border:none; }
+        .accessibility-actions .save { background:var(--wv-accent-color); color:var(--wv-accent-foreground); }
+        .accessibility-actions .reset { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.12); }
+
+        /* Bigger base font sizes applied by class toggles via JS */
 
 
 
@@ -576,11 +642,11 @@ if (date("H:i:s") > "18:19:59") {
                 <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
             </div>
             <div class="nav-links">
-                <div class="nav-item" style="outline: none;">
-                    <a href="index.php" style="color:white; text-decoration: none;">Home</a>
+                <div class="nav-item">
+                    <a href="index.php" class="nav-link">Home</a>
                 </div>
-                <div class="nav-item" style="outline: none;">
-                    <a href="calendar.php" style="color:white; text-decoration: none;">Events Calendar</a>
+                <div class="nav-item">
+                    <a href="calendar.php" class="nav-link">Events Calendar</a>
                 </div>
             </div>
         </div>
@@ -588,12 +654,12 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
             <div class="nav-links">
-                <div class="nav-item" style="outline:none;">
+                <div class="nav-item">
                     <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon" style="filter: invert(1) brightness(100%) saturate(0%);">
+                        <img src="images/usaicon.png" alt="User Icon" class="icon-img in-nav-img">
                         <div class="dropdown">
-                            <a href="signup.php" style="text-decoration: none;"><div>Create Account</div></a>
-                            <a href="login.php" style="text-decoration: none;"><div>Log in</div></a>
+                            <a href="signup.php" class="dropdown-link"><div>Create Account</div></a>
+                            <a href="login.php" class="dropdown-link"><div>Log in</div></a>
                         </div>
                     </div>
                 </div>
@@ -675,7 +741,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['eventsuccess.php'] = 2;
         $permission_array['viewsignuplist.php'] = 2;
         $permission_array['vieweventsignups.php'] = 2;
-        $permission_array['viewalleventsignups.php'] = 2;
+        $permission_array['viewpendingapps.php'] = 2;
         $permission_array['resources.php'] = 2;
         $permission_array['uploadresources.php'] = 2;        
         $permission_array['deleteresources.php'] = 2;
@@ -701,11 +767,28 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['signupsuccess.php'] = 1;
         $permission_array['edittimes.php'] = 1;
         $permission_array['adminviewingevents.php'] = 2;
-        $permission_array['signuppending.php'] = 1;
+        $permission_array['pendingApp.php'] = 1;
         $permission_array['requestfailed.php'] = 1;
         $permission_array['settimes.php'] = 1;
         $permission_array['eventfailurebaddeparturetime.php'] = 1;
-        
+        $permission_array['viewretreatapplications.php'] = 2;
+        $permission_array['viewapplication.php'] = 2;
+        $permission_array['createemail.php'] = 2;
+        $permission_array['viewallapplications.php'] = 2;
+        $permission_array['applicationsuccess.php'] = 2;
+        $permission_array['denyapplication.php'] = 2;
+        $permission_array['createemail.php'] = 2;
+        $permission_array['viewdrafts.php'] = 2;  // Not sure if we want normal users to be able to send emails
+        $permission_array['editdrafts.php'] = 2;
+        $permission_array['logattendees.php'] = 2;
+        $permission_array['processattendees.php'] = 2;
+        $permission_array['viewdata.php'] = 2;
+        $permission_array['deleteusersearch.php'] = 2;
+        $permission_array['noshows.php'] = 2;
+        $permission_array["view_encrypted_gallery.php"] = 2;
+        $permission_array['upload_encrypted_image.php'] = 1;
+        $permission_array['createsuggestion.php'] = 1;
+        $permission_array['viewsuggestion.php'] = 2;
         // LOWERCASE
 
 
@@ -759,10 +842,10 @@ if (date("H:i:s") > "18:19:59") {
     <span>Change Event Hours</span>
   </div>
 </a>
-<a href="viewAllEventSignUps.php" style="text-decoration: none;">
+<a href="viewPendingApps.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/users-solid.svg">
-    <span>Pending Sign-Ups</span>
+    <span>Pending Applications</span>
   </div>
 </a>
 <a href="adminViewingEvents.php" style="text-decoration: none;">
@@ -792,6 +875,13 @@ if (date("H:i:s") > "18:19:59") {
   </div>
 </a>
 
+<a href="noShows.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/group.svg">
+    <span>No Shows</span>
+  </div>
+</a>
+
                     </div>
                </div>
             </div>
@@ -807,12 +897,12 @@ if (date("H:i:s") > "18:19:59") {
 </div>
 </a>-->
             <div class="nav-links">
-                <div class="nav-item" style="outline:none;">
+                <div class="nav-item">
                     <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon" style="filter: invert(1);">
+                        <img src="images/usaicon.png" alt="User Icon" class="icon-img in-nav-img">
                         <div class="dropdown">
-                            <a href="changePassword.php" style="text-decoration: none;"><div>Change Password</div></a>
-                            <a href="logout.php" style="text-decoration: none;"><div>Log Out</div></a>
+                            <a href="changePassword.php" class="dropdown-link"><div>Change Password</div></a>
+                            <a href="logout.php" class="dropdown-link"><div>Log Out</div></a>
                         </div>
                     </div>
                 </div>
@@ -827,7 +917,7 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+                <a href="index.php"><img src="images/whiskeyLogo.png" alt="Logo"></a>
             </div>
             <div class="nav-links">
                 <div class="nav-item">Events
@@ -958,5 +1048,144 @@ document.querySelectorAll(".icon-butt").forEach(el => {
   // Run on load and resize
   window.addEventListener("resize", updateDateAndCheckBoxes);
   window.addEventListener("load", updateDateAndCheckBoxes);
+</script>
+<!-- Accessibility Button + Modal -->
+<button class="accessibility-btn" id="accessibilityBtn" aria-haspopup="dialog" aria-controls="accessibilityModal" title="Accessibility settings">
+    <img src="images/accessibility-menu.png" alt="Accessibility Menu">
+</button>
+
+<div class="accessibility-modal-backdrop" id="accessibilityBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="accessibility-modal" id="accessibilityModal">
+        <div class="modal-header">
+            <h3>Accessibility Settings</h3>
+            <button id="accessibilityClose" class="modal-close" style="max-width: 22%;">&times;</button>
+        </div>
+        <p class="modal-desc">Adjust font size, font style, and color scheme. Settings persist across pages and visits.</p>
+
+        <div class="accessibility-row">
+            <label for="acc-font-size">Font size</label>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <input id="acc-font-size" type="range" min="12" max="24" step="1" value="14">
+                <span id="acc-font-size-value">14pt</span>
+            </div>
+        </div>
+
+        <div class="accessibility-row">
+            <label for="acc-font-family">Font style</label>
+            <select id="acc-font-family">
+                <option value="nunito">Nunito (default)</option>
+                <option value="quicksand">Quicksand</option>
+                <option value="comic">Comic Sans</option>
+                <option value="opendyslexic">OpenDyslexic</option>
+                <option value="times">Times New Roman</option>
+            </select>
+        </div>
+
+        <!-- Color scheme removed; keeping font controls only -->
+
+        <div class="accessibility-actions">
+            <button class="reset" id="accReset">Reset</button>
+            <button class="save" id="accSave">Save</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function(){
+        const KEY = 'wv_accessibility_settings';
+        const defaults = { fontSize: 14, fontFamily: 'nunito' };
+
+        function getSettings(){
+            try{
+                const raw = localStorage.getItem(KEY);
+                return raw ? JSON.parse(raw) : Object.assign({}, defaults);
+            }catch(e){ return Object.assign({}, defaults); }
+        }
+
+        function saveSettings(s){
+            try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){}
+        }
+
+        function applySettings(s){
+            // font size in points
+            var size = Number(s.fontSize) || defaults.fontSize;
+            if(size < 12) size = 12; if(size > 24) size = 24;
+            document.documentElement.style.fontSize = size + 'pt';
+            // update visible slider value if present
+            var sizeDisplay = document.getElementById('acc-font-size-value'); if(sizeDisplay) sizeDisplay.textContent = size + 'pt';
+
+            // font family mapping
+            if(s.fontFamily === 'nunito'){
+                document.body.style.fontFamily = 'Nunito, Quicksand, sans-serif';
+            } else if (s.fontFamily === 'quicksand'){
+                document.body.style.fontFamily = 'Quicksand, sans-serif';
+            } else if (s.fontFamily === 'comic'){
+                document.body.style.fontFamily = '"Comic Sans MS", "Comic Sans", cursive';
+            } else if (s.fontFamily === 'opendyslexic'){
+                document.body.style.fontFamily = 'OpenDyslexic, "Arial", sans-serif';
+            } else if (s.fontFamily === 'times'){
+                document.body.style.fontFamily = '"Times New Roman", Times, serif';
+            }
+
+            // color scheme support removed; icons keep their default CSS filters
+        }
+
+        // Initialize UI values from settings
+        function populateUI(s){
+            const size = document.getElementById('acc-font-size');
+            const sizeVal = document.getElementById('acc-font-size-value');
+            const ff = document.getElementById('acc-font-family');
+            if(size) size.value = (s.fontSize !== undefined ? s.fontSize : defaults.fontSize);
+            if(sizeVal) sizeVal.textContent = (s.fontSize !== undefined ? s.fontSize : defaults.fontSize) + 'pt';
+            if(ff) ff.value = s.fontFamily || defaults.fontFamily;
+        }
+
+        // DOM elements
+        const btn = document.getElementById('accessibilityBtn');
+        const backdrop = document.getElementById('accessibilityBackdrop');
+        const closeBtn = document.getElementById('accessibilityClose');
+        const saveBtn = document.getElementById('accSave');
+        const resetBtn = document.getElementById('accReset');
+
+        // open/close helpers
+        function openModal(){ backdrop.style.display = 'flex'; backdrop.setAttribute('aria-hidden','false'); document.getElementById('acc-font-size').focus(); }
+        function closeModal(){ backdrop.style.display = 'none'; backdrop.setAttribute('aria-hidden','true'); btn.focus(); }
+
+        btn.addEventListener('click', function(e){
+            e.stopPropagation();
+            const s = getSettings();
+            populateUI(s);
+            openModal();
+        });
+        closeBtn.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeModal(); });
+
+        saveBtn.addEventListener('click', function(){
+            const s = {
+                fontSize: Number(document.getElementById('acc-font-size').value),
+                fontFamily: document.getElementById('acc-font-family').value
+            };
+            applySettings(s);
+            saveSettings(s);
+            closeModal();
+        });
+
+        // live update when moving slider
+        const slider = document.getElementById('acc-font-size');
+        if(slider){ slider.addEventListener('input', function(){ document.getElementById('acc-font-size-value').textContent = this.value + 'pt'; }); }
+
+        resetBtn.addEventListener('click', function(){
+            localStorage.removeItem(KEY);
+            const s = Object.assign({}, defaults);
+            applySettings(s);
+            populateUI(s);
+        });
+
+        // apply on load
+        document.addEventListener('DOMContentLoaded', function(){
+            const s = getSettings();
+            applySettings(s);
+        });
+    })();
 </script>
 </header>

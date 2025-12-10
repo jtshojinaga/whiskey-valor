@@ -38,12 +38,21 @@
 
         $notes = "Skills: $skills | Dietary restrictions: $restrictions | Disabilities: $disabilities | Materials: $materials";
 
-        // 🔹 FIXED: read restricted flag from POST, not GET
-        $restricted = isset($args['restricted']) ? $args['restricted'] : '';
-
-        if ($restricted === "Yes") {
-            $id = request_event_signup($name, $account_name, $role, $notes);
-            if (!$id) {
+        // Route based on event type: Retreat uses applications, Normal uses direct signup
+        $type = isset($args['type']) ? $args['type'] : '';
+        if ($type === "Retreat") {
+            // For Retreat events: create an application (insert into dbapplications with status='Pending')
+            require_once('database/dbApplications.php');
+            $event_id = isset($_GET['id']) ? intval($_GET['id']) : (isset($_GET['event_id']) ? intval($_GET['event_id']) : 0);
+            $app_data = [
+                'user_id' => $account_name,
+                'event_id' => $event_id,
+                'status' => 'Pending',
+                'flagged' => 0,
+                'notes' => $notes
+            ];
+            $app_id = create_app($app_data);
+            if (!$app_id) {
                 header('Location: requestFailed.php');
                 die();
             }
@@ -81,10 +90,21 @@
     include_once('database/dbinfo.php'); 
     $con = connect();  
 
-    // Get event info from GET parameters
-    $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
+    // Get event info from GET parameters (accept either `id` or `event_id`)
+    if (isset($_GET['id'])) {
+        $event_id = intval($_GET['id']);
+    } elseif (isset($_GET['event_id'])) {
+        $event_id = intval($_GET['event_id']);
+    } else {
+        $event_id = 0;
+    }
     $event_name = isset($_GET['event_name']) ? htmlspecialchars($_GET['event_name']) : '';
-    $restricted = isset($_GET['restricted']) ? htmlspecialchars($_GET['restricted']) : '';
+    $type = isset($_GET['type']) ? htmlspecialchars($_GET['type']) : '';
+
+    if ($event_id === 0){
+        header('Location: requestFailed.php');
+                die();
+    }
 
     // Retrieve user info from session
     $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
@@ -94,7 +114,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Sign-Up for Event</title>
+        <title>Whiskey Valor | Sign-Up for Event</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -137,8 +157,8 @@
                     </div>
                 </fieldset>
 
-                <!-- 🔹 Preserve restricted flag across POST -->
-                <input type="hidden" name="restricted" value="<?php echo $restricted; ?>">
+                <!-- 🔹 Preserve type flag across POST -->
+                <input type="hidden" name="type" value="<?php echo $type; ?>">
 
                 <br/>
                 <input type="submit" value="Sign up for Event">

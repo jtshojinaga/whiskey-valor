@@ -15,13 +15,9 @@ class Event {
     private $location;
     private $affiliation;
     private $branch;
-    private $access;
     private $completed;
-    #private $trainingMedia;
-    #private $postMedia;
-    #private $animalId;
+    private $access;
 
-    # TODO: need to edit this
 
     function __construct($id, $name, $type, $startDate, $startTime, $endTime, $endDate, $description, $capacity, $location, $affiliation, $branch, $access, $completed) {
         $this->id = $id;
@@ -38,6 +34,7 @@ class Event {
         $this->branch = $branch;
         $this->access = $access;
         $this->completed = $completed;
+        
     }
 
     function getID() {
@@ -48,10 +45,6 @@ class Event {
         return $this->name;
     }
 
-    #function getAbbreviatedName() {
-    #    return $this->abbrevName;
-    #}
-    // new Event
     function getStartDate() {
         return $this->startDate;
     }
@@ -67,6 +60,7 @@ class Event {
     function getEndDate() {
         return $this->endDate;
     }
+
     function getDescription() {
         return $this->description;
     }
@@ -83,31 +77,21 @@ class Event {
         return $this->completed;
     }
 
-    function getAffiliation() {
-        return $this->affiliation;
-    }
-
-    function getBranch() {
-        return $this->branch;
-    }
-    function getEventType() {
+    function getEventType(){
         return $this->type;
     }
 
-    function getAccess() {
-        return $this->access;
+    function getBranch(){
+        return $this->branch;
     }
 
-    //TODO DELETE
-    #function getTrainingMedia() {
-    #    return $trainingMedia;
-    #}
+    function getAffiliation(){
+        return $this->affiliation;
+    }
 
-    #function getPostMedia() {
-    #    return $postMedia;
-    #}
+    function getAccess(){
+        return $this->access;
+    }
+    
 
-    #function getAnimalId() {
-    #    return $animalId;
-    #}
 }

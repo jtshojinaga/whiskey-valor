@@ -49,7 +49,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Report Result</title>
+        <title>Whiskey Valor | Report Result</title>
         <style>
             table {
                 margin-top: 1rem;

@@ -21,7 +21,7 @@ include_once "database/dbShifts.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Fredericksburg SPCA | Checked In Volunteers</title>
+    <title>Whiskey Valor | Checked In Volunteers</title>
   	<link href="css/normal_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
@@ -81,7 +81,7 @@ require_once('header.php');
                         <?php
                         $date = date('Y-m-d');
                         $checkedInPersons = [];
-                        $all_volunteers = getall_volunteers();
+                        $all_volunteers = getall_persons();
 
                         foreach ($all_volunteers as $volunteer) {
                             $volunteer_id = $volunteer->get_id();

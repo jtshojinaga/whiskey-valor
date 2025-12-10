@@ -11,12 +11,17 @@
 
     require_once('include/input-validation.php');
     $args = sanitize($_GET);
+    $displayUpdateMessage = false;
     if (isset($args["id"])) {
         $id = $args["id"];
     } else {
         header('Location: calendar.php');
         die();
   	}
+
+    if (isset($args["update"])) {
+        $displayUpdateMessage = true;
+    }
   	
   	include_once('database/dbEvents.php');
   	
@@ -31,18 +36,27 @@
         echo 'bad event ID';
         die();
     }
+    //Is if this event is part of a recurring series
+    $isRecurring = !empty($event_info['series_id']);
+    $confirmText = $isRecurring
+    ? "This is a recurring event. Deleting it will remove all occurrences. Are you sure you want to delete this recurring event?"
+    : "Are you sure you want to delete this event?";
+
+    // Get number of signups to display on event page
+    $event_num_signups = fetch_num_signups($id);
 
     include_once('database/dbPersons.php');
     if(isset($_SESSION['access_level'])) {
         $access_level = $_SESSION['access_level'];
     }
-    // guests should still see the calendar page
-    if($args['user_id'] == 'guest') {
-        
-    } else {
-        $user = retrieve_person($_SESSION['_id']);
-        $active = $user->get_status() == 'Active';
-    }
+
+    //if($args['user_id'] == 'guest') {
+    /*if($args['user_id'] == 'guest') {
+
+    } else {*/
+    $user = retrieve_person($_SESSION['_id']);
+    $active = $user->get_status() == 'Active';
+    //}
 
 
     ini_set("display_errors",1);
@@ -204,6 +218,9 @@
         <?php if (isset($_GET['cancelSuccess'])): ?>
             <div class="happy-toast">Sign-up canceled successfully!</div>
         <?php endif ?>
+        <?php if ($displayUpdateMessage): ?>
+            <div class="happy-toast">Attendance information updated successfully!</div>
+        <?php endif ?>
         <!-- Facebook share button -->
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v22.0"></script>
@@ -241,14 +258,14 @@
         <?php
             require_once('include/output.php');
             $event_name = $event_info['name'];
-            $event_startDate = date('l, F j, Y', strtotime($event_info['startDate']));
+            $event_date = date('l, F j, Y', strtotime($event_info['startDate']));
             $event_startTime = time24hto12h($event_info['startTime']);
             $event_endTime = time24hto12h($event_info['endTime']);
-            $event_endDate = date('l, F j, Y', strtotime($event_info['endDate']));
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            
+            $event_training_level = $event_info['affiliation'];
+            $num_signups = $event_num_signups['RowCount'];
             require_once('include/time.php');
         ?>
 
@@ -258,21 +275,23 @@
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
-                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
-                    onclick="return confirmDelete(<?= htmlspecialchars($id) ?>);">
-                        <i class="fas fa-trash"></i>
                 </a>
-            <?php endif; ?>
+                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon"
+                    onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">
+                    <i class="fas fa-trash"></i>
+                </a>
+        <?php endif; ?>
+
         </h2>
 
-        <script>
-            function confirmDelete() {
-                if (confirm("Are you sure you want to delete this event?")) {
-                    // If the user clicks "OK", navigate to the link
-                    window.location.href = 'deleteEvent.php?eventID=' + eventID;
-                }
-            }
-        </script>
+        
+
+
+
+
+
+
+        
 
                 <div id="table-wrapper">
             <table>
@@ -302,11 +321,8 @@
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
                 </tr>
                 <tr>
-                    <td class="label">Training Required</td>
-                    <td><?php if($event_training_level == null) {
-                        $event_training_level = "N/A";
-                    }
-                    echo $event_training_level; ?></td>
+                    <td class="label">Attendees</td>
+                    <td id="description-cell"><?php echo $num_signups; ?></td>
                 </tr>
             </table>
         </div>
@@ -348,6 +364,7 @@
             <form action="eventSignUp.php" method="get">
                 <input type="hidden" name="event_name" value="<?php echo htmlspecialchars($event_info['name']); ?>">
                 <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event_info['id']); ?>">
+                <input type="hidden" name="type" value="<?php echo htmlspecialchars($event_info['type']); ?>">
                 <button type="submit" class="button primary">Sign Up!</button>
             </form>
             <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
@@ -376,25 +393,27 @@
 
                 <!-- end of Thomas's work -->
 
+                <a href="logAttendees.php?id=<?php echo urlencode($id); ?>" class="button signup">Log Event Attendees</a>
+
 
                 <!-- <a href="editEvent.php?id=<?= $id ?>" class="button cancel">Edit Event Details</a> -->
                 
 
             <?php endif ?>
 
-            <a href="calendar.php?month=<?= substr($event_info['date'], 0, 7) ?>" class="button cancel">Return to Calendar</a>
+            <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Back to Calendar</a>
 
         </div>
 
          <!-- Share Event on Facebook Button -->
-            <?php
+            <!--<?php
                 $page_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             ?>
             <meta property="og:image" content="https://jenniferp160.sg-host.com/images/FredSPCAlogo.png">
             <div class="fb-share-button" data-href= $page_link data-layout="" data-size=""><a target="_blank" 
                 href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2FfredSPCA%2FviewAllEvents.php&amp;src=sdkpreparse" 
                 class="fb-xfbml-parse-ignore">Share</a>
-            </div>
+            </div>-->
 
         <!-- Confirmation Modals -->
         <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>

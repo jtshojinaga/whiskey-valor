@@ -101,7 +101,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Fredericksburg SPCA | Create Training</title>
+        <title>Whiskey Valor | Create Training</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
