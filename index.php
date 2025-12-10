@@ -529,13 +529,13 @@
     </div>
 
     <!-- Manage Documents -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='resources.php'">
+    <div class="content-box-test content-box-accent" onclick="window.location.href='view_encrypted_gallery.php'">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
         <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">Manage Documents</div>
-        <div class="graph-text">Resources for volunteers.</div>
+        <div class="large-text-sub">View Pending IDs </div>
+        <div class="graph-text">View pending and arbitrate user submitted IDs.</div>
         <button class="arrow-button">→</button>
     </div>
 
@@ -761,23 +761,23 @@
                     }   
                 ?>  
 
-        <div class="content-box-test" onclick="window.location.href='viewResources.php'">
+        <div class="content-box-test" onclick="window.location.href='upload_encrypted_image.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
             </div>
             <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">Documents</div>
-            <div class="graph-text">View documents & the volunteer handbook.</div>
+            <div class="large-text-sub">Documentation Upload</div>
+            <div class="graph-text">Upload an ID for verification.</div>
             <button class="arrow-button">→</button>
         </div>
 
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+        <div class="content-box-test" onclick="window.location.href='createSuggestion.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
             <img class="background-image" src="images/blank-white-background.jpg" />
-            <div class="large-text-sub">Discussions</div>
-            <div class="graph-text">See the latest.</div>
+            <div class="large-text-sub">Suggestions</div>
+            <div class="graph-text">Suggest opportunities for charity events.</div>
             <button class="arrow-button">→</button>
         </div>
 

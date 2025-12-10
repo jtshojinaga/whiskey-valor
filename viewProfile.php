@@ -37,6 +37,8 @@
     //}
 
    $user = retrieve_person($id);
+  $verified_ids = get_verified_ids($user->get_id());
+
    if ($isAdmin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_hours'])) {
     require_once('database/dbPersons.php'); // already required, so you can just remove the duplicate
     $con = connect();
@@ -112,6 +114,19 @@
     require_once('include/output.php');
   ?>
 
+    <script>
+
+      function openModal(modalID) {
+          document.getElementById(modalID).classList.remove('hidden');
+      }
+
+      function closeModal(modalID) {
+          document.getElementById(modalID).classList.add('hidden');
+      }
+
+      window.onload = () => showSection('personal');
+  </script>
+
 </head>
             <?php if ($id == 'vmsroot'): ?>
 		<div class="absolute left-[40%] top-[20%] bg-red-800 p-4 text-white rounded-xl text-xl">The root user does not have a profile.</div>
@@ -160,6 +175,9 @@
         </div>
       </div>
       <div class="mt-6 space-y-2">
+        <button type="button" class="text-lg font-medium w-full px-4 py-2 bg-[#C9AB81] text-[#1F1F21] rounded-md hover:bg-[#1F1F21] hover:text-[#C9AB81] cursor-pointer" onclick="openModal('verifiedIdsModal')">
+          View Verified IDs
+        </button>
         <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>';" class="text-lg font-medium w-full px-4 py-2 bg-[#C9AB81] text-[#1F1F21] rounded-md hover:bg-[#1F1F21] hover:text-[#C9AB81] cursor-pointer">Edit Profile</button>
         <button onclick="window.location.href='index.php';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-[#1F1F21] cursor-pointer">Return to Dashboard</button>
       </div>
@@ -249,6 +267,52 @@
 
 	      
       </div>
+    </div>
+  </div>
+
+  <div id="verifiedIdsModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full hidden" style="z-index: 1000;">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+        
+        <div class="flex justify-between items-center pb-3 border-b">
+            <h3 class="text-xl font-medium text-gray-900">Verified IDs for <?php echo htmlspecialchars($user->get_first_name()); ?></h3>
+            <button class="text-black close-modal cursor-pointer font-bold text-2xl" onclick="closeModal('verifiedIdsModal')">&times;</button>
+        </div>
+
+        <div class="mt-4">
+            <?php if (empty($verified_ids)): ?>
+                <p class="text-gray-600 italic">No verified IDs found for this user.</p>
+            <?php else: ?>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-left text-sm font-light">
+                        <thead class="border-b font-medium">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">ID Type</th>
+                                <th scope="col" class="px-6 py-4">Date Verified</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($verified_ids as $vid): ?>
+                                <tr class="border-b hover:bg-gray-100">
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium text-green-700">
+                                        ✓ <?php echo htmlspecialchars($vid['id_type']); ?>
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4 text-gray-700">
+                                        <?php echo date("M j, Y", strtotime($vid['approved_at'])); ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="mt-6 flex justify-end">
+            <button class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-auto shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300" onclick="closeModal('verifiedIdsModal')">
+                Close
+            </button>
+        </div>
+        
     </div>
   </div>
 </body>

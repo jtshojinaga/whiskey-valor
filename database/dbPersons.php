@@ -1481,6 +1481,36 @@ function get_total_vol_hours($dateFrom, $dateTo) {
         return $members;
     }
     
+    /**
+     * Retrieves a list of verified IDs for a specific user.
+     * @param string $user_id The user's ID (username)
+     * @return array List of associative arrays ['id_type', 'approved_at']
+     */
+    function get_verified_ids($user_id) {
+        $con = connect();
+        if (!$con) return [];
+
+        $query = "SELECT id_type, approved_at FROM user_verified_ids WHERE user_id = ? ORDER BY approved_at DESC";
+        $stmt = $con->prepare($query);
+        
+        if ($stmt) {
+            $stmt->bind_param("s", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $ids = [];
+            while ($row = $result->fetch_assoc()) {
+                $ids[] = $row;
+            }
+            
+            $stmt->close();
+            mysqli_close($con);
+            return $ids;
+        }
+        
+        mysqli_close($con);
+        return [];
+    }
 
     /*
     function get_tot_vol_hours($type,$stats,$dateFrom,$dateTo,$lastFrom,$lastTo){
