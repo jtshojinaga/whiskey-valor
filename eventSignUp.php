@@ -38,11 +38,21 @@
 
         $notes = "Skills: $skills | Dietary restrictions: $restrictions | Disabilities: $disabilities | Materials: $materials";
 
-        // 🔹 FIXED: read restricted flag from POST, not GET
+        // Route based on event type: Retreat uses applications, Normal uses direct signup
         $type = isset($args['type']) ? $args['type'] : '';
         if ($type === "Retreat") {
-            $id = request_event_signup($name, $account_name, $role, $notes);
-            if (!$id) {
+            // For Retreat events: create an application (insert into dbapplications with status='Pending')
+            require_once('database/dbApplications.php');
+            $event_id = isset($_GET['id']) ? intval($_GET['id']) : (isset($_GET['event_id']) ? intval($_GET['event_id']) : 0);
+            $app_data = [
+                'user_id' => $account_name,
+                'event_id' => $event_id,
+                'status' => 'Pending',
+                'flagged' => 0,
+                'notes' => $notes
+            ];
+            $app_id = create_app($app_data);
+            if (!$app_id) {
                 header('Location: requestFailed.php');
                 die();
             }

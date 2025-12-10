@@ -78,45 +78,21 @@ function add_event($event) {
 }*/
 
 function request_event_signup($event_name_str, $account_name, $role, $notes) {
+    // This function is deprecated. Use create_app() in dbApplications.php for Retreat signups.
+    // Kept for backwards compatibility only.
     $connection = connect();
     
-    // 1. Get Event ID
     $safe_name = mysqli_real_escape_string($connection, $event_name_str);
-    $query1 = "SELECT id, access FROM dbevents WHERE name = '$safe_name'";
+    $query1 = "SELECT id FROM dbevents WHERE name = '$safe_name'";
     $result1 = mysqli_query($connection, $query1);
     
     if (!$result1 || mysqli_num_rows($result1) === 0) {
         mysqli_close($connection);
-        return null; // Event not found
+        return null;
     }
 
     $row = mysqli_fetch_assoc($result1);
     $eventID = $row['id'];
-
-    // 2. Check for Existing Signup (In active OR pending)
-    $safe_user = mysqli_real_escape_string($connection, $account_name);
-    
-    // Check Active
-    $query2 = "SELECT userID FROM dbeventpersons WHERE eventID = '$eventID' AND userID = '$safe_user'";
-    $result2 = mysqli_query($connection, $query2);
-    
-    // Check Pending (dbpendingsignups stores submitter in column `username`)
-    $query3 = "SELECT username FROM dbpendingsignups WHERE eventname = '$eventID' AND username = '$safe_user'";
-    $result3 = mysqli_query($connection, $query3);
-
-    if (mysqli_num_rows($result2) > 0 || mysqli_num_rows($result3) > 0) {
-        mysqli_close($connection);
-        return null; // Already signed up or pending
-    } 
-
-    // 3. Insert Request (UPDATED to use userID)
-    $safe_role = mysqli_real_escape_string($connection, $role);
-    $safe_notes = mysqli_real_escape_string($connection, $notes);
-    
-    $query = "INSERT INTO dbpendingsignups (username, eventname, role, notes) VALUES ('$safe_user', '$eventID', '$safe_role', '$safe_notes')";
-    $result = mysqli_query($connection, $query);
-    
-    mysqli_commit($connection);
     mysqli_close($connection);
     return $eventID;
 }
