@@ -56,7 +56,6 @@
 
                 if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != 'guest') {
                     $user = retrieve_person($userID);
-                    $user_training_level = $user->get_training_level();
                 }
 
                 if (sizeof($upcomingEvents) > 0): ?>
@@ -210,7 +209,7 @@
                                 foreach ($upcomingArchivedEvents as $event) {
                                     $eventID = $event->getID();
                                     $title = $event->getName();
-                                    $date = $event->getDate();
+                                    $date = $event->getStartDate();
                                     $startTime = $event->getStartTime();
                                     $endTime = $event->getEndTime();
                                     $description = $event->getDescription();

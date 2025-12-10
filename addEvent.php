@@ -32,16 +32,21 @@
             echo 'bad form data';
             die();
         } else {
-            $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
-            if (!$validated) {
-                echo 'bad time range';
-                die();
+            // Accept either HTML5 24h time (HH:MM) or 12h times with am/pm
+            if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
+                $startTime = $args['start-time'];
+                $endTime = $args['end-time'];
+            } else {
+                $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
+                if (!$validated) {
+                    echo 'bad time range';
+                    die();
+                }
+                $startTime = $args['start-time'] = $validated[0];
+                $endTime = $args['end-time'] = $validated[1];
             }
-
-            $startTime = $args['start-time'] = $validated[0];
-            $endTime = $args['end-time'] = $validated[1];
             $date = $args['date'] = validateDate($args["date"]);
-            $args["training_level_required"] = $_POST['training_level_required'];
+            $args["training_level_required"] = $_POST['training_level_required'] ?? 'None';
     
             $args['startDate'] = $date;
             $args['endDate']   = $date;   
@@ -74,7 +79,8 @@
             }
             //1. Start of use case #8 recurring, etc
 
-            if (!$startTime || !$endTime || !$date > 11){
+            // FIXED: Replaced the broken check "if (!$date > 11)"
+            if (!$startTime || !$endTime || !$date){
                 echo 'bad args';
                 die();
             }
@@ -82,64 +88,52 @@
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
 
             $id = create_event($args);
-                if (!$id) {
-              die();
+            if (!$id) {
+                die();
             } else {
     
-    $isRecurring    = isset($_POST['recurring']);
-    $recurrenceType = $_POST['recurrence_type'] ?? '';
-    $customDays     = isset($_POST['custom_days']) ? (int)$_POST['custom_days'] : 0;
+                $counts = [
+                    'daily'   => 30,  // next 30 days
+                    'weekly'  => 12,  // next 12 weeks
+                    'monthly' => 6,   // next 6 months
+                    'custom'  => 12,  // 12 custom intervals
+                ];
+                
+                $intervalMap = [
+                    'daily'   => 'P1D',
+                    'weekly'  => 'P1W',
+                    'monthly' => 'P1M',
+                ];
+                if ($recurrenceType === 'custom') {
+                    $customDays = max(1, $customDays);
+                    $intervalSpec = 'P' . $customDays . 'D';
+                } else {
+                    $intervalSpec = $intervalMap[$recurrenceType] ?? null;
+                }
 
-    
-    $counts = [
-        'daily'   => 30,  // next 30 days
-        'weekly'  => 12,  // next 12 weeks
-        'monthly' => 6,   // next 6 months
-        'custom'  => 12,  // 12 custom intervals
-    ];
-    
-    $intervalMap = [
-        'daily'   => 'P1D',
-        'weekly'  => 'P1W',
-        'monthly' => 'P1M',
-    ];
-    if ($recurrenceType === 'custom') {
-        $customDays = max(1, $customDays);
-        $intervalSpec = 'P' . $customDays . 'D';
-    } else {
-        $intervalSpec = $intervalMap[$recurrenceType] ?? null;
-    }
+                if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
+                    $current = new DateTime($args['startDate']);  
+                    $step    = new DateInterval($intervalSpec);
+                    $times   = $counts[$recurrenceType];
 
-    if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
-        $current = new DateTime($args['startDate']);  
-        $step    = new DateInterval($intervalSpec);
-        $times   = $counts[$recurrenceType];
+                    for ($i = 0; $i < $times; $i++) {
+                        $current->add($step);
+                        $ymd = $current->format('Y-m-d');
 
-        for ($i = 0; $i < $times; $i++) {
-            $current->add($step);
-            $ymd = $current->format('Y-m-d');
+                        $dup = $args;                 
+                        $dup['startDate'] = $ymd;
+                        $dup['endDate']   = $ymd;
+                        $dup['date']      = $ymd;    
 
-            $dup = $args;                 
-            $dup['startDate'] = $ymd;
-            $dup['endDate']   = $ymd;
-            $dup['date']      = $ymd;    
-
-            create_event($dup);
-
-            
-        }
-    }
-    
-    header('Location: eventSuccess.php');
-    exit();
-}
-
+                        create_event($dup);
+                    }
+                }
                 
                 header('Location: eventSuccess.php');
                 exit();
             }
-            
         }
+    }
     
     $date = null;
     if (isset($_GET['date'])) {
@@ -230,7 +224,7 @@
                 <div class="dropdown-group">
                     <div class="dd">
                     <label for="branch">Branch</label>
-                    <select  name="branch">
+                    <select  name="branch" id="branch">
                         <option value="all">(any)</option>
                         <option value="air force">Air Force</option>
                         <option value="army">Army</option>
@@ -242,7 +236,7 @@
                     </div>
                     <div class="dd">
                     <label for="affiliation">Affiliation</label>
-                    <select  name="affiliation">
+                    <select  name="affiliation" id="affiliation">
                         <option value="all">(any)</option>
                         <option value="active duty">Active duty</option>
                         <option value="family">Family member (spouse, child, or parent)</option>
@@ -261,14 +255,6 @@
                 <label for="name">* Capacity </label>
                 <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
                 </div>
-
-                <!--<label for="training">* Training Type:</label>
-                <select id="training_level_required" name="training_level_required">
-                    <option value="None">None</option>
-                    <option value="Green">Green</option>
-                    <option value="Orange">Orange</option>
-                    <option value="Pink">Pink</option>
-                </select>-->
 
                 <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
                     <legend>Make this a recurring event</legend>
@@ -299,13 +285,37 @@
                 <input type="submit" value="Create Event" style="width:100%;">
                 
             </form>
+                <script>
+                    // Debug: log submit attempts and list invalid fields
+                    (function(){
+                        const form = document.getElementById('new-event-form');
+                        if(!form) return;
+                        form.addEventListener('submit', function(e){
+                            try{
+                                console.log('addEvent form submit event', e);
+                                const ok = form.checkValidity();
+                                console.log('form.checkValidity()', ok);
+                                if(!ok){
+                                    e.preventDefault();
+                                    const invalids = [];
+                                    form.querySelectorAll(':invalid').forEach(function(el){ invalids.push({name: el.name, type: el.type, value: el.value}); });
+                                    console.error('Form invalid fields:', invalids);
+                                    alert('Form validation failed for: ' + invalids.map(i=>i.name).join(', '));
+                                } else {
+                                    console.log('Form appears valid; letting submit proceed');
+                                }
+                            }catch(err){
+                                console.error('Error in submit debug handler', err);
+                            }
+                        }, false);
+                    })();
+                </script>
                 <?php if ($date): ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
                 <?php else: ?>
                     <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
                 <?php endif ?>
 
-                <!-- Require at least one checkbox be checked -->
                 <script type="text/javascript">
                     $(document).ready(function(){
                         var checkboxes = $('.checkboxes');
@@ -336,6 +346,7 @@
                         }
                         function toggleCustom(){
                             if (!recurrenceType || !customBlock) return;
+                            customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
                             customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
                         }
 

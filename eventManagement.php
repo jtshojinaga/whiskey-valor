@@ -49,6 +49,20 @@ require_once('header.php');
 	    padding-right: 50px;
 	}
 
+  .top-bar {
+      background-color: #C9AB81;   /* gold color */
+      height: calc(var(--spacing) * 40);
+      width: 100%;              /* full width */
+      position: relative;
+      z-index: 0;
+      height: calc(var(--spacing) * 40);
+      width: 100%;
+      background-size: auto;
+      background-position: center;
+  }
+
+
+
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 
@@ -58,7 +72,7 @@ require_once('header.php');
 
 
   <!-- Larger Hero Section -->
-  <header class="hero-header"></header>
+  <header class="top-bar"></header>
 
 
   <!-- Main Content -->
@@ -91,7 +105,7 @@ require_once('header.php');
 	  <div>Pending Applications <?php 
                         require_once('database/dbEvents.php');
                         require_once('database/dbPersons.php');
-                        require_once('database/dbapplications.php');
+                        require_once('database/dbApplications.php');
                         $pendingapps = all_pending_names();
                         
                         if (sizeof($pendingapps) > 0) {
