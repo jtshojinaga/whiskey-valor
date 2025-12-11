@@ -63,7 +63,6 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
         echo "<script> console.log('PHP variable end:', '\" . $end. \"');</script>";
 
         require_once('database/dbEvents.php');
-        $loggedIn = 0; //Logged in set to 0 change later
         $events = fetch_events_in_date_range($start, $end, $loggedIn);
         echo "<script> console.log('Events:', " . json_encode($events) . ");</script>";
         

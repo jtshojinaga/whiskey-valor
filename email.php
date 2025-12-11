@@ -4,163 +4,104 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-function retrieveAllEmails(array $names) {
+
+function retrieveAllEmails(array $ids = []): array {
     $conn = connect();
-
-    error_log("retrieveAllEmails called with: " . json_encode($names));
-
-    // Sending to ALL members
-    if (count($names) === 1 && $names[0] === "All Whiskey Valor Members") {
-        $query = "SELECT email FROM dbpersons WHERE email IS NOT NULL AND email != ''";
-        $result = $conn->query($query);
-
-        $emails = [];
-        while ($row = $result->fetch_assoc()) {
-            $emails[] = $row['email'];
-        }
-
-        error_log("retrieveAllEmails found " . count($emails) . " emails for ALL members");
-        return array_values(array_unique($emails));
-    }
-
     $emails = [];
-    foreach ($names as $raw) {
-        // Normalize whitespace and trim
-        $fullName = preg_replace('/\s+/', ' ', trim($raw));
 
-        if ($fullName === '') {
-            continue;
-        }
-
-        // If user provided an email address directly, use it
-        if (strpos($fullName, '@') !== false) {
-            $stmt = $conn->prepare("SELECT email FROM dbpersons WHERE email = ? LIMIT 1");
-            $stmt->bind_param("s", $fullName);
-            $stmt->execute();
-            $res = $stmt->get_result();
-            if ($row = $res->fetch_assoc()) {
-                $emails[] = $row['email'];
-            } else {
-                // If the email isn't in dbpersons, still include it (optional)
-                // $emails[] = $fullName;
-                error_log("Email not found in dbpersons: $fullName");
-            }
-            $stmt->close();
-            continue;
-        }
-
-        // Split into parts — handle single-word names as well
-        $parts = explode(' ', $fullName);
-        if (count($parts) >= 2) {
-            $firstName = $parts[0];
-            $lastName = array_pop($parts);
-            // try exact first+last
-            $stmt = $conn->prepare(
-                "SELECT email FROM dbpersons WHERE first_name = ? AND last_name = ? AND email IS NOT NULL AND email != ''"
-            );
-            $stmt->bind_param("ss", $firstName, $lastName);
-            $stmt->execute();
-            $res = $stmt->get_result();
-            while ($row = $res->fetch_assoc()) {
-                $emails[] = $row['email'];
-            }
-            $stmt->close();
-
-            // fallback: try full name concatenation (handles middle names, different spacing)
-            if (empty($emails)) {
-                $likeName = '%' . $conn->real_escape_string($fullName) . '%';
-                $stmt2 = $conn->prepare(
-                    "SELECT email FROM dbpersons WHERE CONCAT(first_name,' ',last_name) LIKE ? AND email IS NOT NULL AND email != ''"
-                );
-                $stmt2->bind_param("s", $likeName);
-                $stmt2->execute();
-                $res2 = $stmt2->get_result();
-                while ($row = $res2->fetch_assoc()) {
-                    $emails[] = $row['email'];
-                }
-                $stmt2->close();
-            }
-        } else {
-            // single token — try first_name or last_name
-            $token = $parts[0];
-            $stmt = $conn->prepare(
-                "SELECT email FROM dbpersons WHERE (first_name = ? OR last_name = ?) AND email IS NOT NULL AND email != ''"
-            );
-            $stmt->bind_param("ss", $token, $token);
-            $stmt->execute();
-            $res = $stmt->get_result();
-            while ($row = $res->fetch_assoc()) {
-                $emails[] = $row['email'];
-            }
-            $stmt->close();
-        }
-
-        if (empty($emails)) {
-            error_log("No email found for input: '$fullName'");
-        }
+    // Ensure NULL → empty array
+    if (!is_array($ids)) {
+        $ids = [];
     }
 
-    // Deduplicate and return
-    $emails = array_values(array_unique($emails));
-    error_log("retrieveAllEmails returning: " . json_encode($emails));
-    return $emails;
-}
+    // --- ALL members ---
+    if (empty($ids)) {
+        $query = "SELECT id, email FROM dbpersons WHERE email IS NOT NULL AND email != ''";
+        $res = $conn->query($query);
+        while ($row = $res->fetch_assoc()) {
+            $emails[$row['id']] = $row['email'];
+        }
+        return $emails;
+    }
 
+    // --- SPECIFIC members ---
+    // DO NOT convert to int — IDs are VARCHAR
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $types = str_repeat('s', count($ids));  // <-- string params!
 
-function sendEmails(array $emails, string $senderName, string $subject, string $body): array
-{
-    $python = "C:\\Users\\Jakea\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe";
-    $script = __DIR__ . "/email/send_email.py";
-    $log = __DIR__ . "/email/email_errors.log";
+    $sql = "SELECT id, email 
+            FROM dbpersons 
+            WHERE id IN ($placeholders) 
+            AND email IS NOT NULL 
+            AND email != ''";
 
-    file_put_contents($log, "=== START ===\n", FILE_APPEND);
-
-    // Build proper JSON
-    $payload = json_encode([
-        "emails" => array_values($emails),
-        "senderName" => $senderName,
-        "subject" => $subject,
-        "body" => $body
-    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-    file_put_contents($log, "RAW JSON: $payload\n", FILE_APPEND);
-
-    // Use temporary file to avoid escaping issues on Windows
-    $tmpFile = tempnam(sys_get_temp_dir(), "email_payload_") . ".json";
-    file_put_contents($tmpFile, $payload);
-
-    // Build command: pass JSON file as stdin
-    $cmd = "\"$python\" \"$script\" < \"$tmpFile\" 2>&1";
-    file_put_contents($log, "CMD: $cmd\n", FILE_APPEND);
-
-    exec($cmd, $output, $resultCode);
-
-    file_put_contents($log, "RC: $resultCode\n", FILE_APPEND);
-    file_put_contents($log, "OUTPUT:\n" . implode("\n", $output) . "\n", FILE_APPEND);
-
-    unlink($tmpFile); // clean up temp file
-
-    // Parse Python result
-    $json = json_decode(implode("\n", $output), true);
-
-    if (!$json) {
-        file_put_contents($log, "Invalid JSON returned\n", FILE_APPEND);
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
         return [];
     }
 
-    $results = [];
-
-    if (isset($json["sent"])) {
-        foreach ($json["sent"] as $email) {
-            $results[$email] = true;
-        }
+    // Prepare binding references
+    $params = [ &$types ];
+    foreach ($ids as $k => $v) {
+        $params[] = &$ids[$k];
     }
 
-    if (isset($json["failed"])) {
-        foreach ($json["failed"] as $fail) {
-            $results[$fail["email"]] = false;
-        }
+    call_user_func_array([$stmt, 'bind_param'], $params);
+
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    while ($row = $res->fetch_assoc()) {
+        $emails[$row['id']] = $row['email'];
     }
 
-    return $results;
+    $stmt->close();
+    return $emails;
 }
+
+function sendEmails(array $emails, string $senderName, string $subject, string $body): array {
+    $url = "https://jenniferp217.sg-host.com/email/send_email.php";
+
+    $payload = [
+        "emails" => $emails,
+        "subject" => $subject,
+        "body" => $body,
+        "senderName" => $senderName
+    ];
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
+    $response = curl_exec($ch);
+    $curlError = curl_error($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    // Log raw response and HTTP status for debugging
+    $log = "[sendEmails] HTTP $httpCode | cURL Error: $curlError | Response: $response\n";
+    file_put_contents(__DIR__ . '/email_debug.log', $log, FILE_APPEND);
+
+    $decoded = json_decode($response, true);
+
+    if (!is_array($decoded)) {
+        return [
+            "success" => false,
+            "results" => [[
+                "email" => "all",
+                "success" => false,
+                "error" => $curlError ?: "Invalid JSON response",
+                "raw_output" => $response
+            ]]
+        ];
+    }
+
+    return $decoded;
+}
+
+
+
+
+

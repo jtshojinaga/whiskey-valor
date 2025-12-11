@@ -4,11 +4,12 @@ Blue Shojinaga
 Jake Lipinski
 Kassandra Williams
 Alia Carmicheal 
+Evan Darnell
 
-# Fredericksburg SPCA Volunteer Management Web Application 
+# Whiskey Valor Foundation Event Management Project
 
 ## Purpose
-This project is the result of a semester's worth of collaboration among UMW students. The goal of the project was to create a web application that better suits the needs of Fredericksburg SPCA, specifically as a system to manage their volunteers. The system allows volunteers to check-in and out of shifts on site, view their hours volunteered and sign up for events. For the Fred SPCA staff the system allows them to keep track of volunteer hours, create events, share announcements, and managed volunteer accounts.
+This project is the result of a semester's worth of collaboration among UMW students. The goal of the project was to create a web application that better suits the needs of the Whiskey Valor Foundation, specifically as a system to manage events and community outreach. The system allows users to: sign-up for, and apply for events and retreats; view their registered events; and suggest further collaborations. This system allows administrators to: create events and retreats; manage the information of registered users; create, schedule, and send emails to their users.
 
 ## Authors
 The ODHS Medicine Tracker is based on an old open source project named "Homebase". [Homebase](https://a.link.will.go.here/) was originally developed for the Ronald McDonald Houses in Maine and Rhode Island by Oliver Radwan, Maxwell Palmer, Nolan McNair, Taylor Talmage, and Allen Tucker.
@@ -23,14 +24,17 @@ The ODHS Medicine Tracker code was modified in the Fall of 2024, changing the co
 
 In Spring 2025, the Step VA Volunteer Management code was adapted to develop the Fredericksburg SCPA Volunteer Management Web Application. Numerous existing database tables were retained with modifications or renamed, while new tables were introduced as needed. Certain files and functionalities from the original system were integrated, while additional features were designed specifically for the Fredericksburg SCPA Volunteer Management system. The team responsible for these updates and enhancements included Yalda Alemy, Luke Blair, Madison Van Buren, Sean Foley, Luke Gibson, Aiden Meyer, and Israel Ortiz.
 
+In Fall 2025 the codebase for Fredericksburg SCPA Volunteer Management codebase was adapted to serve the uses of the Whiskey Valor Foundation. certain files and functionalities of the original project, predominantly for the foundation of the backend, has been incorporated and integrated into the Whiskey Valor Foundation Event Management Project. The team responsible for this adaptation are: Michael Glanzmann, Blue Shojinaga, Evan Darnell, Jake Lipinski, Kassandra Williams, and Alia Carmicheal 
+
 ## User Types
-There are two types of users (also referred to as 'roles') within FredSPCA.
+There are three of users (also referred to as 'roles') within Whiskey Valor Foundation Project(WVFP).
+* Unregistered Users
+* Registered Users
 * Admins
-* Volunteers
 
-Admins can create and edit events, view and approve sign-ups, and view sign-ups and volunteer hours.
+Admins can create and edit events, view and approve retreat applications, create and send emails, view suggestions, and verify submitted IDs.
 
-Volunteers can create and edit their profile, sign up for events, check-in and check-out of events, and view their hours. Volunteer accounts can be archived by the Admin if the account is no longer in use.
+Volunteers can create and edit their profile, sign up for events, submit suggestions, and submit IDs. Volunteer accounts can be archived by the Admin if the account is no longer in use or deleted outright.
 
 There is also a root admin account with username 'vmsroot'. The default password for this account is 'vmsroot'. This account has hardcoded Admin privileges. It is crucial that this account be given a strong password and that the password be easily remembered, as it cannot easily be reset. This account should be used for system administration purposes only.
 
@@ -40,11 +44,12 @@ Below is an in-depth list of features that were implemented within the system
 * Dashboard
 * Volunteer Management
   * Change own password
-  * View volunteer hours (print-friendly)
-  * Change hours
+  * View verified Identifications
   * Modify profile
   * Reset password
   * User Search
+  * Submit Identification
+  * Verify Identification
 * Events and Event Management
   * Calendar with event listings
   * Calendar day view with event listings
@@ -52,21 +57,32 @@ Below is an in-depth list of features that were implemented within the system
   * Event details page
   * Volunteer event sign up
   * View Upcoming Events
-  * View Volunteer Event Roster
+  * View users who are registered to go to an event.
   * Modify event details
   * Create new event
   * Delete event
   * Complete event
-  * Check-in and check-out for event
+  * Apply for retreat
+  * Deny retreat application
+  * Approve retreat application
+  * Flag retreat application
 * Reports (print-friendly)
-  * Volunteer Hour Reports
+  * No-show totals for events
 * Notification system, with notifications generated when
   * A volunteer has requested sign-up
-  * A user has canceled their sign-up
-  * Approved sign-up
+* Email Management
+  * Create Email
+  * Save Email as a Draft
+  * Send Email to individual
+  * Send Email to Organization
+  * Schedule Email to send
+* Suggestions
+ * Submitt suggestions
+ * View suggestions
+* 
 
 ## Design Documentation
-Several types of diagrams describing the design of the Step VA, including sequence diagrams and use case diagrams, are available. Please contact Dr. Polack for access.
+Several types of diagrams describing the design of the WVFP, including sequence diagrams and use case diagrams, are available. Please contact Dr. Polack for access.
 
 ## "localhost" Installation
 Below are the steps required to run the project on your local machine for development and/or testing purposes.
@@ -75,18 +91,18 @@ Below are the steps required to run the project on your local machine for develo
   * For Mac, the htdocs path is `/Applications/XAMPP/xamppfiles/htdocs`
   * For Ubuntu, the htdocs path is `/opt/lampp/htdocs/`
   * For Windows, the htdocs path is `C:\xampp\htdocs`
-3. Clone the Step VA repo by running the following command: 'https://github.com/aidanmeyer32/FredSPCA.git'
+3. Clone the WVFP repo by running the following command: 'https://github.com/jtshojinaga/whiskey-valor'
 4. Start the XAMPP MySQL server and Apache server
 5. Open the PHPMyAdmin console by navigating to [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
-6. Create a new database named `stepvadb`. With the database created, navigate to it by clicking on it in the lefthand pane
-7. Import the `FredSPCA.sql` file located in `FredSPCA/sql` into this new database
+6. Create a new database named `whiskeydb`. With the database created, navigate to it by clicking on it in the lefthand pane
+7. Import the `whiskeydb.sql` file located in `whiskey-valor/sql` into this new database
 8. Create a new user by navigating to `Privileges -> New -> Add user account`
 9. Enter the following credentials for the new user:
-  * Name: `stepvadb`
+  * Name: `whiskeydb`
   * Hostname: `Local`
-  * Password: `stepvadb`
+  * Password: `whiskeydb`
   * Leave everything else untouched
-10. Navigate to [http://localhost/ODHS-Animal/](http://localhost/ODHS-Animal/) 
+10. Navigate to [http://localhost/whiskey-valor/](http://localhost/whiskey-valor/) 
 11. Log into the root user account using the username `vmsroot` with password `vmsroot`
 
 Installation is now complete.
@@ -117,6 +133,18 @@ Follow these steps to transfter your localhost version of the Step VA code to Si
   - Ensure that you're keeping your .sql file up to date in order to reduce errors in your Siteground code. Keep in mind that Siteground is case-sensitive, and your database names in the Siteground files must be identical to the database names in the database.
 6. Navigate to the 'dbInfo.php' page in your Siteground files. Inside the connect() function, you will see a series of PHP variables. ($host, $database, $user, $pass) Change the server name in the 'if' statement to the name of your server, and change the $database, $user, and $pass variables to the database name, user name, and password that you created in step 3. 
 
+### Setting up cron jobs
+The scheduled emails functionality utilizes chron jobs to run a PHP Files at specific intervals. To set up this cron job on Siteground you 
+1. Navigate to your website's "SITE TOOLS" from your Siteground websites page.
+2. Click on the 'Devs' button on the left side.
+3. Click 'Cron Jobs'.
+4. Enter the following into the 'Command' section:"php /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php"
+5. Click the interval dropdown and select "Twice Per Day (0 0,12 * * *)"
+6. Finish by clicking 'CREATE'
+
+
+
+
 ### Clearing the SiteGround cache
 #### Chrome
 1. Open Chrome and click on the three-dot menu icon in the top-right corner.
@@ -134,28 +162,10 @@ Follow these steps to transfter your localhost version of the Step VA code to Si
 
 Clearing your cache will help ensure that you're seeing the latest updates to the application. If you continue experiencing issues, consider reaching out for further support.
 
-# TODO just tailwind?
 ### External Libraries and APIs
-The only outside library utilized by the Step VA is the jQuery library. The version of jQuery used by the system is stored locally within the repo, within the lib folder. jQuery was used to implement form validation and the hiding/showing of certain page elements. Additionally, the Font Awesome library was used for some of the icon pictures. This library is linked in the headers of some files "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css".
+The only outside library utilized by the WVFP is the jQuery library. The version of jQuery used by the system is stored locally within the repo, within the lib folder. jQuery was used to implement form validation and the hiding/showing of certain page elements. Additionally, the Font Awesome library was used for some of the icon pictures. This library is linked in the headers of some files "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css".
 
-# TODO make sure we didn't already fix any of these, add any new
-### Potential Improvements
-Below is a list of improvements that could be made to the system in subsequent semesters.
-* Rename the database
-* Adding special buttons across pages (e.g. ‘View and Change Hours’ may have a ‘Return to My Hours’ option rather than only ‘Return to Dashboard’)
-* Added functionality for users who are participants, some participant functionality code exists within the current code, only it is commented out
-* Link calendar to Google calendar, add links to Google forms
-* Edits so screen size may no longer affect alignment of headers and tables
-* Remove the admin's ability to sign up admin account for an event
-* Increase password security
-* Ensure volunteers cannot sign up for events during time frames in which they will be signed up for another event
-* If an admin creates conflicting events, bring it to their attention while allowing the option to continue
-* If an admin exceeds the occupancy limit, bring it to their attention while allowing the option to continue
-* Notifications: add delete functionality to the button, add a ‘view message’ functionality when a message is selected
-* Additonal items related to volunteer training
 
 ## License
 The project remains under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl.txt).
 
-## Acknowledgements
-Thank you to Dr. Polack and Fredericksburg SPCA for the opportunity to work on this project.

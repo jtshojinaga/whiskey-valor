@@ -858,7 +858,7 @@ if (date("H:i:s") > "18:19:59") {
 
                     </div>
                 </div>
-                <div class="nav-item">Groups
+                <div class="nav-item">
                     <div class="dropdown">
 
 <a href="createGroup.php" style="text-decoration: none;">
@@ -942,7 +942,7 @@ if (date("H:i:s") > "18:19:59") {
 </a>
                    </div>
                 </div>
-                <div class="nav-item">Groups
+                <div class="nav-item">
                     <div class="dropdown">
 <a href="volunteerViewGroup.php" style="text-decoration: none;">
   <div class="in-nav">
@@ -972,8 +972,6 @@ if (date("H:i:s") > "18:19:59") {
                         <div class="dropdown">
                             <a href="viewProfile.php" style="text-decoration: none;"><div>View Profile</div></a>
                             <a href="editProfile.php" style="text-decoration: none;"><div>Edit Profile</div></a>
-                            <a href="volunteerReport.php" style="text-decoration: none;"><div>View Hours</div></a>
-                            <a href="inbox.php" style="text-decoration: none;"><div>Notifications</div></a>
                             <a href="changePassword.php" style="text-decoration: none;"><div>Change Password</div></a>
                             <a href="logout.php" style="text-decoration: none;"><div>Log Out</div></a>
                         </div>

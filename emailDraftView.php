@@ -14,106 +14,93 @@ if ($_SESSION['access_level'] < 1) {
 }
 
 require_once('include/input-validation.php');
-require_once('database/dbConnect.php'); // connection helper
+require_once('database/dbConnect.php');
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 $user_id = $_SESSION['_id'];
+$draft_id = $_GET['id'] ?? null;
 
-// Database connection
-$connection = connect();
-
-// Handle delete draft action
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
-    $delete_id = mysqli_real_escape_string($connection, $_POST['delete_id']);
-    $query = "DELETE FROM dbdrafts WHERE id = '$delete_id' AND userID = '$user_id'";
-    if (mysqli_query($connection, $query)) {
-        $message = "Draft deleted successfully.";
-    } else {
-        $error = "Failed to delete draft: " . mysqli_error($connection);
-    }
+if (!$draft_id) {
+    die("No draft selected.");
 }
 
-// Fetch drafts for this user
-$query = "SELECT id, recipientID, subject, body, scheduledSend 
+$connection = connect();
+$draft_id = mysqli_real_escape_string($connection, $draft_id);
+
+// Fetch the selected draft
+$query = "SELECT id, recipientID, subject, body, scheduledSend
           FROM dbdrafts 
-          WHERE userID = '$user_id'
-          ORDER BY scheduledSend DESC";
+          WHERE id = '$draft_id' AND userID = '$user_id'";
 
 $result = mysqli_query($connection, $query);
 
 if (!$result) {
-    die('Query failed: ' . mysqli_error($connection));
+    die("Query failed: " . mysqli_error($connection));
 }
 
-$drafts = [];
-while ($row = mysqli_fetch_assoc($result)) {
-    $drafts[] = $row;
-}
-
+$draft = mysqli_fetch_assoc($result);
 mysqli_close($connection);
+
+if (!$draft) {
+    die("Draft not found or access denied.");
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>My Email Drafts</title>
+    <title>View Draft - <?php echo htmlspecialchars($draft['subject']); ?></title>
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .draft-container {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        .draft-header {
+            margin-bottom: 1rem;
+        }
+        .draft-body {
+            white-space: pre-wrap;
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+        .label {
+            font-weight: bold;
+        }
+        .button-bar {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+    </style>
 </head>
 <body>
     <?php require_once('header.php'); ?>
 
-    <h1>My Email Drafts</h1>
-    <main class="general">
-        <?php if (isset($message)): ?>
-            <p class="success"><?php echo htmlspecialchars($message); ?></p>
-        <?php elseif (isset($error)): ?>
-            <p class="error"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
+    <h1>View Email Draft</h1>
 
-        <?php if (count($drafts) > 0): ?>
-            <div class="table-wrapper">
-                <table class="general">
-                    <thead>
-                        <tr>
-                            <th>Recipient Group</th>
-                            <th>Subject</th>
-                            <th>Scheduled Send</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($drafts as $draft): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($draft['recipientID']); ?></td>
-                                <td>
-                                    <a href="viewSingleDraft.php?id=<?php echo htmlspecialchars($draft['id']); ?>">
-                                        <?php echo htmlspecialchars($draft['subject']); ?>
-                                    </a>
-                                </td>
-                                <td><?php echo htmlspecialchars($draft['scheduledSend']); ?></td>
-                                <td>
-                                    <form method="POST" style="display:inline;">
-                                        <input type="hidden" name="delete_id" value="<?php echo htmlspecialchars($draft['id']); ?>">
-                                        <button type="submit" class="button danger" onclick="return confirm('Delete this draft?');">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        <?php else: ?>
-            <p>You have no saved email drafts.</p>
-        <?php endif; ?>
+    <div class="draft-container">
+        <div class="draft-header">
+            <p><span class="label">Recipient Group:</span> <?php echo htmlspecialchars($draft['recipientID']); ?></p>
+            <p><span class="label">Subject:</span> <?php echo htmlspecialchars($draft['subject']); ?></p>
+            <p><span class="label">Scheduled Send:</span> <?php echo htmlspecialchars($draft['scheduledSend']); ?></p>
+        </div>
+        <div class="draft-body">
+            <?php echo nl2br(htmlspecialchars($draft['body'])); ?>
+        </div>
 
-        <a class="button" href="createEmailDraft.php">Create New Draft</a>
-        <a class="button cancel" href="index.php">Return to Dashboard</a>
-    </main>
+        <div class="button-bar">
+            <a class="button" href="viewEmailDrafts.php">Back to Drafts</a>
+            <a class="button" href="editEmailDraft.php?id=<?php echo htmlspecialchars($draft['id']); ?>">Edit</a>
+        </div>
+    </div>
 </body>
 </html>
-

@@ -45,11 +45,27 @@ require_once('header.php');
             font-weight: 700;
             text-align: center;
         }
-	.dropdown {
+	    
+        .dropdown {
 	    padding-right: 50px;
-	}
+	    }
+        
+        body{
+        background-color: #1F1F21;
+        }
+        .button-section button{
+        background-color: #C9AB81;
+        color: black !important;
+        }
 
-  .top-bar {
+        .button-left-gray{
+        background-color: #C9AB81;
+        }
+
+        .button-section .button-icon{
+        filter: none
+        }
+    .top-bar {
       background-color: #C9AB81;   /* gold color */
       height: calc(var(--spacing) * 40);
       width: 100%;              /* full width */
@@ -60,9 +76,6 @@ require_once('header.php');
       background-size: auto;
       background-position: center;
   }
-
-
-
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 
@@ -100,7 +113,7 @@ require_once('header.php');
 	  <img class="button-icon h-10 w-10 left-5" src="images/list-solid.svg" alt="Calendar Icon">
         </button>
 
-        <button onclick="window.location.href='viewAllApplications.php';">
+        <button onclick="window.location.href='viewPendingApps.php';">
 	  <div class="button-left-gray"></div>
 	  <div>Pending Applications <?php 
                         require_once('database/dbEvents.php');

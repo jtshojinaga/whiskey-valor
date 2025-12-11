@@ -43,6 +43,7 @@
 
         body {
             font-family: Quicksand, sans-serif;
+            background-color: #1F1F21;
         }
 
         h2 {
@@ -61,7 +62,7 @@
         }
         .full-width-bar-sub {
             width: 100%;
-            background: white;
+            background: #1F1F21;
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -115,7 +116,7 @@
             left: 30px;
             font-size: 14px;
             font-weight: 700;
-            color: #C9AB81;
+            color: #3A3A3A;
         }
 
         .large-text {
@@ -395,9 +396,36 @@
             transition: transform 0.5s ease, fill 0.5s ease;
         }
 
+        
+        
+
+    
+        .content-box-test {
+            position: relative;
+            background-color: #C9AB81;   /* tan background */
+            border-radius: 12px;
+            padding: 20px;
+            color: black;                 /* default text color */
+            flex: 1 1 280px;
+            max-width: 375px;
+            min-height: 250px;            /* keeps all boxes same height even without bg image */
+            }
 
 
+        .content-box-test .large-text-sub,
+        .content-box-test .graph-text {
+            color: black;
+            }
 
+
+        .background-image {
+        display: none;
+        }
+
+        
+        .full-width-bar-sub{
+            background-color: #1F1F21 !important;
+            }
 
 
         /* Responsive Design */
@@ -446,8 +474,8 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-        <img src="images/VolM.png" />
-        <div class="small-text">Make a difference.</div>
+        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
+        <div class="small-text" style="color: #3A3A3A;">Make a difference.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
     <span class="button-text">Go</span>
@@ -468,14 +496,14 @@
     </div>
 
     <div class="content-box">
-        <img src="images/EvM.png" />
-        <div class="small-text">Let’s have some fun!</div>
+        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
+        <div class="small-text" style="color: #3A3A3A;">Let’s have some fun!</div>
         <div class="large-text">Event Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
     <span class="button-text"><?php 
                         require_once('database/dbEvents.php');
                         require_once('database/dbPersons.php');
-                        require_once('database/dbapplications.php');
+                        require_once('database/dbApplications.php');
                         $pendingsignups = all_pending_names();
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
@@ -486,8 +514,8 @@
     </div>
 
     <div class="content-box">
-        <img src="images/GrM.png" />
-        <div class="small-text">Get away from it all.</div>
+        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
+        <div class="small-text" style="color: #3A3A3A;">Get away from it all.</div>
         <div class="large-text">Retreat Applications</div>
 <button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">
     <span class="button-text">Go</span>
@@ -518,33 +546,33 @@
     ?>
 
     <!-- Calendar -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='calendar.php'">
+    <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">Calendar</div>
-        <div class="graph-text">See upcoming events/trainings.</div>
+        
+        <div class="large-text-sub" style="color:#black;">Calendar</div>
+        <div class="graph-text" style="color:#3A3A3A;">See upcoming events/trainings.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Manage Documents -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='view_encrypted_gallery.php'">
+    <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black; position: relative;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">View Pending IDs </div>
-        <div class="graph-text">View pending and arbitrate user submitted IDs.</div>
+       
+        <div class="large-text-sub" style="color:black;">View Pending IDs </div>
+        <div class="graph-text" style="color:#3A3A3A;">View pending and arbitrate user submitted IDs.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- System Notifications -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='inbox.php'">
+    <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
+        
         <div class="large-text-sub">
             System Notifications<?php 
                 if ($unreadMessageCount > 0) {
@@ -552,62 +580,62 @@
                 }
             ?>
         </div>
-        <div class="graph-text">Stay up to date.</div>
+        <div class="graph-text" style="color:#3A3A3A;">Stay up to date.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Generate Report -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='generateReport.php'">
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">Generate Report</div>
-        <div class="graph-text">From this quarter or annual.</div>
+        
+        <div class="large-text-sub"style="color:black;">Generate Report</div>
+        <div class="graph-text"style="color:#3A3A3A;">From this quarter or annual.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Create Email -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='createEmail.php'">
+    <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">Create Email</div>
-        <div class="graph-text">Send new messages to volunteers.</div>
+        
+        <div class="large-text-sub" style="color:black;">Create Email</div>
+        <div class="graph-text" style="color:#3A3A3A;">Send new messages to volunteers.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- View Drafts -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='viewDrafts.php'">
+    <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">View Drafts</div>
-        <div class="graph-text">Check saved email drafts.</div>
+        
+        <div class="large-text-sub" style="color:black;">View Drafts</div>
+        <div class="graph-text" style="color:#3A3A3A;">Check saved email drafts.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Generate Email List -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='generateEmailList.php'">
+    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">Generate Email List</div>
-        <div class="graph-text">Volunteer Emails</div>
+         
+        <div class="large-text-sub" style="color:black;">Generate Email List</div>
+        <div class="graph-text" style="color:#3A3A3A;">Volunteer Emails</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Discussions -->
-    <div class="content-box-test content-box-accent" onclick="window.location.href='viewSuggestions.php'">
+    <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
         </div>
-        <img class="background-image" src="images/blank-white-background.jpg" />
-        <div class="large-text-sub">User Suggestions</div>
-        <div class="graph-text">View user submitted suggestions.</div>
+        
+        <div class="large-text-sub" style="color:black;">User Suggestions</div>
+        <div class="graph-text" style="color:#3A3A3A;">View user submitted suggestions.</div>
         <button class="arrow-button">→</button>
     </div>
 
@@ -686,7 +714,7 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-        <img src="images/VolM.png" />
+    <img src="images/VolM.png" />   
         <div class="small-text">Make a difference.</div>
         <div class="large-text">My Profile</div>
         <div class="nav-buttons">
@@ -698,10 +726,7 @@
                 <span class="arrow"><img src="images/manage-account.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
                 <span class="text">Edit</span>
             </button>
-            <button class="nav-button" onclick="window.location.href='volunteerReport.php'">
-                <span class="arrow"><img src="images/volunteer-history.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-                <span class="text">My Hours</span>
-            </button>
+            
         </div>
     </div>
 
@@ -718,24 +743,11 @@
                 <span class="arrow"><img src="images/list-solid.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
                 <span class="text">Upcoming</span>
             </button>
-            <button class="nav-button" onclick="window.location.href='editHours.php'">
-                <span class="arrow"><img src="images/clock-regular.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
-                <span class="text">Hours</span>
-            </button>
+            
         </div>
     </div>
 
-    <div class="content-box">
-        <img src="images/GrM.png" />
-        <div class="small-text">Our team makes this all possible.</div>
-        <div class="large-text">My Group</div>
-        <div class="nav-buttons">
-            <button class="nav-button" onclick="window.location.href='volunteerViewGroup.php'">
-                <span class="arrow"><img src="images/group.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-                <span class="text">View</span>
-            </button>
-        </div>
-    </div>
+    
     </div>
 
     <div style="margin-top: 50px; padding: 0px 80px;">

@@ -26,7 +26,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volunteer Management Page</title>
+  <title>User Account Management Page</title>
   <link href="css/management_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
@@ -56,6 +56,40 @@ require_once('header.php');
       position: fixed;
   }
 
+  body {
+    background-color: #1F1F21; 
+  }
+
+  .button-left-gray {
+    background-color: #C9AB81 !important;
+  }
+
+
+ .button-section button {
+    background-color: #C9AB81 !important;
+    color: black !important;
+  }
+
+.div-blue {
+    background-color: #C9AB81;
+  }
+
+.button-icon {
+    filter: none !important;
+  } 
+
+.text-section h1 {
+    color: #C9AB81 !important;
+  }
+
+.text-section p {
+    color: #C9AB81 !important;
+  }
+
+.button-section button > div {
+    background-color: transparent !important;
+  }
+
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 
@@ -75,27 +109,28 @@ require_once('header.php');
       <div class="button-section">
         <button onclick="window.location.href='VolunteerRegister.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Register Volunteer</div>
+	  <div>Register New User</div>
 	  <img class="button-icon" src="images/add-person.svg" alt="Person Icon">
         </button>
 
         <button onclick="window.location.href='personSearch.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Search Volunteers</div>
+	  <div>Search Registered Users</div>
 	  <img class="button-icon" src="images/person-search.svg" alt="Person Icon">
         </button>
 
-	<button onclick="window.location.href='noShows.php';">
+    <button onclick="window.location.href='noShows.php';">
 	  <div class="button-left-gray"></div>
 	  <div>View No Shows?</div>
 	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
-        </button>
+    </button>
 
-  <button onclick="window.location.href='deleteUserSearch.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Delete User</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/trash.svg" alt="Person Icon">
-  </button>
+
+    <button onclick="window.location.href='deleteUserSearch.php';">
+        <div class="button-left-gray"></div>
+        <div>Delete User</div>
+        <img class="button-icon h-10 w-10 left-5" src="images/trash.svg" alt="Person Icon">
+    </button>
 
 	<!--<button onclick="window.location.href='selectVOTM.php';">
 	  <div class="button-left-gray"></div>

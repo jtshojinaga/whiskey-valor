@@ -46,6 +46,59 @@ require_once('header.php');
             padding-right: 50px;
         }   
 
+        body, main {
+        background-color: #1F1F21;
+        }
+
+        .text-blue-700,
+        .text-blue-700:visited {
+        color: black !important;
+        }   
+
+        .info-section .info-text {
+         color: #C9AB81 !important;
+        }
+
+        .blue-div {
+        background-color: #C9AB81 !important;
+        }
+
+        .main-content-box label {
+        color: #000000 !important;
+        }
+        
+        .text-blue-700 {
+        color: #000000 !important;
+        }
+        .sub-text {
+        color: black !important;
+        }
+
+        .main-content-box table,
+        .main-content-box table thead,
+        .main-content-box table tbody,
+        .main-content-box table tr,
+        .main-content-box table th,
+        .main-content-box table td {
+            background-color: #1F1F21 !important;
+            color: #C9AB81 !important;
+            border: 1px solid #C9AB81 !important;
+        }
+
+        .main-content-box table a.text-blue-700,
+        .main-content-box table a.text-blue-700:visited {
+            color: #C9AB81 !important;
+            }
+
+        .main-content-box table thead.bg-blue-400 th {
+            background-color: #1F1F21 !important;
+        }
+
+        .main-content-box table a.text-blue-700,
+        .main-content-box table a.text-blue-700:visited {
+            color: #C9AB81 !important;
+        }
+    
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 </head>
@@ -177,32 +230,7 @@ require_once('header.php');
                 <input type="text" id="zip" name="zip" class="w-full" value="<?php if (isset($zip)) echo htmlspecialchars($_GET['zip']); ?>" placeholder="Enter the user's zip code">
             </div>
 
-            <div>
-                <label for="role">Role</label>
-                <select id="role" name="role" class="w-full">
-                    <option value="">Any</option>
-                    <option value="volunteer" <?php if (isset($role) && $role == 'volunteer') echo 'selected'; ?>>Volunteer</option>
-                    <option value="participant" <?php if (isset($role) && $role == 'participant') echo 'selected'; ?>>Participant</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="status">Archive Status</label>
-                <select id="status" name="status" class="w-full">
-                    <option value="">Any</option>
-                    <option value="Active" <?php if (isset($status) && $status == 'Active') echo 'selected'; ?>>Active</option>
-                    <option value="Inactive" <?php if (isset($status) && $status == 'Inactive') echo 'selected'; ?>>Archived</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="photo_release">Photo Release</label>
-                <select id="photo_release" name="photo_release" class="w-full">
-                    <option value="">Any</option>
-                    <option value="Not Restricted" <?php if (isset($photo_release) && $photo_release == 'Not Restricted') echo 'selected'; ?>>Not Restricted</option>
-                    <option value="Restricted" <?php if (isset($photo_release) && $photo_release == 'Restricted') echo 'selected'; ?>>Restricted</option>
-                </select>
-            </div>
+            
 
             <div class="text-center pt-4">
                 <input type="submit" value="Search" class="blue-button">
