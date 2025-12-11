@@ -1113,7 +1113,7 @@ function find_user_names($name) {
 
         else {;
             echo "we have no result";
-            die("Error: " . mysqli_error($con)); // Debugging MySQL error
+            die("Error: " . mysqli_error($connection)); // Debugging MySQL error
 
         }
         mysqli_close($connection);
@@ -1168,57 +1168,6 @@ function find_user_names($name) {
         } else {
             mysqli_close($connection);
             return [];
-        }
-    }
-
-    /* Authored by Blue :) */
-    function log_attendance($userID, $eventID, $value, $note = null) {
-        $conn = connect();
-        // check if attendance record exists
-        $query = "select * from dbeventpersons where 
-                  eventID='$eventID' and userID='$userID'";
-        $result = mysqli_query($conn, $query);
-        if($result) {
-            $query = "update dbeventpersons 
-                      set attended='$value', notes='$note'
-                      where eventID='$eventID' and userID='$userID'";
-            $result = mysqli_query($conn, $query);
-            if($result) {
-                mysqli_close($conn);
-                return $result;
-            } else {
-                mysqli_close($conn);
-                return "Unexpected error 1 with function log_attendance in dbPersons.php";
-            }
-        } else {
-            // no attendence record exists
-            $query = "insert into dbeventpersons (eventID, userID, notes, attended)
-                  VALUES ($eventID, $userID, $note, $value)";
-            $result = mysqli_query($conn, $query);
-            if($result) {
-                $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                mysqli_close($conn);
-                return $row;
-            } else {
-                mysqli_close($conn);
-                return "Unexpected error with function log_attendance in dbPersons.php";
-            }
-        }
-    }
-
-    function check_if_attended($eventID, $personID) {
-        $query = "select attended from dbeventpersons
-                  where userID='$personID' and eventID='$eventID'
-                  and attended=1";
-        $connection = connect();
-        $result = mysqli_query($connection, $query);
-        if($result) {
-            $row = mysqli_fetch_row($result);
-            mysqli_close($connection);
-            return $row;
-        } else {
-            mysqli_close($connection);
-            return "Unexpected error with function check_if_attended in dbPersons.php";
         }
     }
 
@@ -1464,24 +1413,39 @@ function get_total_vol_hours($dateFrom, $dateTo) {
         $result = mysqli_query($con, $query);
         
     }
-    function getUsersAndEmails(): array {
-        $conn = connect();
-        $sql = "SELECT first_name, last_name, email FROM dbPersons ORDER BY last_name ASC";
-        $res = $conn->query($sql);
-
-        $members = [];
-        if ($res) {
-            while ($row = $res->fetch_assoc()) {
-                $members[] = [
-                    'label' => $row['first_name'] . " " . $row['last_name'] . " (" . $row['email'] . ")",
-                    'value' => $row['first_name'] . " " . $row['last_name']
-                ];
-            }
-        }
-        return $members;
-    }
     
-    /**
+    function retrieveEmailsByIds(array $ids): array {
+        $conn = connect();
+        if (empty($ids)) return [];
+
+        // Build placeholders (?, ?, ?, ...)
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $types = str_repeat('s', count($ids)); // 's' for string IDs
+
+        $sql = "SELECT email FROM dbpersons WHERE id IN ($placeholders) AND email_prefs = 'true' AND email IS NOT NULL AND email != ''";
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            error_log("Prepare failed: " . $conn->error);
+            return [];
+        }
+
+        // Bind parameters dynamically
+        $stmt->bind_param($types, ...$ids);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $emails = [];
+        while ($row = $result->fetch_assoc()) {
+            $emails[] = $row['email'];
+        }
+
+        $stmt->close();
+
+        return array_unique($emails);
+    }
+
+     /**
      * Retrieves a list of verified IDs for a specific user.
      * @param string $user_id The user's ID (username)
      * @return array List of associative arrays ['id_type', 'approved_at']
@@ -1492,22 +1456,22 @@ function get_total_vol_hours($dateFrom, $dateTo) {
 
         $query = "SELECT id_type, approved_at FROM user_verified_ids WHERE user_id = ? ORDER BY approved_at DESC";
         $stmt = $con->prepare($query);
-        
+
         if ($stmt) {
             $stmt->bind_param("s", $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
-            
+
             $ids = [];
             while ($row = $result->fetch_assoc()) {
                 $ids[] = $row;
             }
-            
+
             $stmt->close();
             mysqli_close($con);
             return $ids;
         }
-        
+
         mysqli_close($con);
         return [];
     }
